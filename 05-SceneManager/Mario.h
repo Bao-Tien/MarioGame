@@ -7,7 +7,7 @@
 #include "debug.h"
 
 #define MARIO_WALKING_SPEED		0.1f
-#define MARIO_FLY_SPEED		0.4f
+#define MARIO_FLY_SPEED		0.1f
 #define MARIO_RUNNING_SPEED		0.2f
 
 #define MARIO_ACCEL_WALK_X	0.0005f
@@ -15,11 +15,11 @@
 #define MARIO_ACCEL_RUN_X	0.0007f
 
 #define MARIO_JUMP_SPEED_Y		0.5f
-#define MARIO_FLY_SPEED_Y		0.003f
+#define MARIO_FLY_SPEED_Y		0.05f
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
 
 #define MARIO_GRAVITY			0.002f
-
+#define MARIO_FRICTION          0.0002f      
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
 
 #define MARIO_STATE_DIE				-10
@@ -114,6 +114,8 @@ class CMario : public CGameObject
 	float maxVy;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
+	float ms;
+	float g;
 
 	int level; 
 	int untouchable; 
@@ -135,7 +137,9 @@ public:
 		maxVx = 0.0f;
 		maxVy = 0.0f;
 		ax = 0.0f;
-		ay = MARIO_GRAVITY; 
+		ay = 0.0f; 
+		g = MARIO_GRAVITY;
+		ms = 0;
 
 		level = MARIO_LEVEL_BIG;
 		untouchable = 0;

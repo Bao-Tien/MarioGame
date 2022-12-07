@@ -12,8 +12,15 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
-	vy += ay * dt;
-	vx += ax * dt;
+	if (vx > 0) ms = -MARIO_FRICTION;
+	else if (vx < 0) ms = MARIO_FRICTION;
+	else ms = 0;
+
+	vy += (ay + g) * dt;
+	vx += (ax + ms) * dt; // F = ma + m*ms
+
+	if (ms < 0 && vx < 0) vx = 0;
+	if (ms > 0 && vx > 0) vx = 0;
 
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
@@ -203,21 +210,19 @@ int CMario::GetAniIdBig()
 			}
 			else if (vx > 0)
 			{
-				if (ax < 0)
-					aniId = ID_ANI_MARIO_BRACE_RIGHT;
-				else if (ax == MARIO_ACCEL_RUN_X)
+				/*if (ax < 0)
+					aniId = ID_ANI_MARIO_BRACE_RIGHT;*/
+				if (ax == MARIO_ACCEL_RUN_X)
 					aniId = ID_ANI_MARIO_RUNNING_RIGHT;
-				else if (ax == MARIO_ACCEL_WALK_X)
-					aniId = ID_ANI_MARIO_WALKING_RIGHT;
+				else aniId = ID_ANI_MARIO_WALKING_RIGHT;
 			}
 			else // vx < 0
 			{
-				if (ax > 0)
-					aniId = ID_ANI_MARIO_BRACE_LEFT;
-				else if (ax == -MARIO_ACCEL_RUN_X)
+				/*if (ax > 0)
+					aniId = ID_ANI_MARIO_BRACE_LEFT;*/
+				if (ax == -MARIO_ACCEL_RUN_X)
 					aniId = ID_ANI_MARIO_RUNNING_LEFT;
-				else if (ax == -MARIO_ACCEL_WALK_X)
-					aniId = ID_ANI_MARIO_WALKING_LEFT;
+				else aniId = ID_ANI_MARIO_WALKING_LEFT;
 			}
 
 	if (aniId == -1) aniId = ID_ANI_MARIO_IDLE_RIGHT;
@@ -290,7 +295,7 @@ void CMario::SetState(int state)
 		maxVy = -MARIO_FLY_SPEED;
 		maxVx = MARIO_FLY_SPEED;
 		ax = MARIO_ACCEL_FLY_X;
-		vy -= MARIO_FLY_SPEED_Y;
+		vy = -MARIO_FLY_SPEED_Y;
 		nx = 1;
 		break;
 	case MARIO_STATE_FLY_LEFT:
@@ -298,7 +303,7 @@ void CMario::SetState(int state)
 		maxVy = -MARIO_FLY_SPEED;
 		maxVx = -MARIO_FLY_SPEED;
 		ax = -MARIO_ACCEL_FLY_X;
-		vy -= MARIO_FLY_SPEED_Y;
+		vy = -MARIO_FLY_SPEED_Y;
 		nx = -1;
 		break;
 
@@ -327,7 +332,7 @@ void CMario::SetState(int state)
 
 	case MARIO_STATE_IDLE:
 		ax = 0.0f;
-		vx = 0.0f;
+		//vx = 0.0f;
 		break;
 
 	case MARIO_STATE_DIE:

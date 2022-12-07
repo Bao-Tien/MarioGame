@@ -1,6 +1,6 @@
 # list of object assets to load in this scene
 [ASSETS]
-mario.txt
+resources\Animations\MarioAnim.xml
 coin.txt
 cloud.txt
 brick.txt
@@ -34,5 +34,5 @@ ground.txt
 5	140	160	16	15	2	51000	52000	53000
 
 #Portal 
-
+50	200	160	216	180	1
 
