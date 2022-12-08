@@ -7,15 +7,15 @@
 #include "debug.h"
 
 #define MARIO_WALKING_SPEED		0.1f
-#define MARIO_FLY_SPEED		0.1f
+#define MARIO_FLY_SPEED		0.2f
 #define MARIO_RUNNING_SPEED		0.2f
 
 #define MARIO_ACCEL_WALK_X	0.0008f
 #define MARIO_ACCEL_RUN_X	0.001f
 #define MARIO_ACCEL_JUMP_Y	0.025f
 #define MARIO_ACCEL_RUN_JUMP_Y	0.03f
-#define MARIO_ACCEL_FLY_X	0.003f
-#define MARIO_ACCEL_FLY_Y	0.003f
+#define MARIO_ACCEL_FLY_X	0.006f
+#define MARIO_ACCEL_FLY_Y	0.006f
 
 #define MARIO_JUMP_SPEED_Y		0.5f
 #define MARIO_FLY_SPEED_Y		0.05f
@@ -96,6 +96,7 @@
 
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
+#define MARIO_LEVEL_RACCOON 3
 
 #define MARIO_BIG_BBOX_WIDTH  14
 #define MARIO_BIG_BBOX_HEIGHT 24
@@ -165,6 +166,7 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void SetLevel(int l);
+	int GetLevel() { return level; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

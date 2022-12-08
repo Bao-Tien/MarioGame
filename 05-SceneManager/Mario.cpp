@@ -238,7 +238,7 @@ void CMario::Render()
 
 	if (state == MARIO_STATE_DIE)
 		aniId = ID_ANI_MARIO_DIE;
-	else if (level == MARIO_LEVEL_BIG)
+	else if (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_RACCOON)
 		aniId = GetAniIdBig();
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
@@ -299,6 +299,7 @@ void CMario::SetState(int state)
 		break;*/
 	case MARIO_STATE_FLY_RIGHT:
 		if (isSitting) break;
+		vy = 0.0f;
 		maxVy = -MARIO_FLY_SPEED;
 		maxVx = MARIO_FLY_SPEED;
 		ax = MARIO_ACCEL_FLY_X;
@@ -307,6 +308,7 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_FLY_LEFT:
 		if (isSitting) break;
+		vy = 0;
 		maxVy = -MARIO_FLY_SPEED;
 		maxVx = -MARIO_FLY_SPEED;
 		ax = -MARIO_ACCEL_FLY_X;
@@ -349,7 +351,7 @@ void CMario::SetState(int state)
 
 void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
-	if (level==MARIO_LEVEL_BIG)
+	if (level==MARIO_LEVEL_BIG || level == MARIO_LEVEL_RACCOON)
 	{
 		if (isSitting)
 		{
