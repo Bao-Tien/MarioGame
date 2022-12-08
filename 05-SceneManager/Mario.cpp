@@ -34,6 +34,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+	
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -254,6 +255,9 @@ void CMario::SetState(int state)
 	// DIE is the end state, cannot be changed! 
 	if (this->state == MARIO_STATE_DIE) return; 
 
+	ax = 0.0f;
+	ay = 0.0f;
+
 	switch (state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
@@ -285,17 +289,20 @@ void CMario::SetState(int state)
 		if (isOnPlatform)
 		{
 			if (abs(this->vx) == MARIO_RUNNING_SPEED)
-				vy = -MARIO_JUMP_RUN_SPEED_Y;
+				ay = -MARIO_ACCEL_RUN_JUMP_Y;
 			else
-				vy = -MARIO_JUMP_SPEED_Y;
+				ay = -MARIO_ACCEL_JUMP_Y;
 		}
 		break;
+	/*case MARIO_STATE_RELEASE_JUMP:
+		if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
+		break;*/
 	case MARIO_STATE_FLY_RIGHT:
 		if (isSitting) break;
 		maxVy = -MARIO_FLY_SPEED;
 		maxVx = MARIO_FLY_SPEED;
 		ax = MARIO_ACCEL_FLY_X;
-		vy = -MARIO_FLY_SPEED_Y;
+		ay = -MARIO_ACCEL_FLY_Y;
 		nx = 1;
 		break;
 	case MARIO_STATE_FLY_LEFT:
@@ -303,14 +310,9 @@ void CMario::SetState(int state)
 		maxVy = -MARIO_FLY_SPEED;
 		maxVx = -MARIO_FLY_SPEED;
 		ax = -MARIO_ACCEL_FLY_X;
-		vy = -MARIO_FLY_SPEED_Y;
+		ay = -MARIO_ACCEL_FLY_X;
 		nx = -1;
 		break;
-
-	case MARIO_STATE_RELEASE_JUMP:
-		if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
-		break;
-
 	case MARIO_STATE_SIT:
 		if (isOnPlatform && level != MARIO_LEVEL_SMALL)
 		{
