@@ -9,6 +9,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <vector>
+#include "TinyXML/tinystr.h"
+#include "TinyXML/tinyxml.h"
 
 
 using namespace std;

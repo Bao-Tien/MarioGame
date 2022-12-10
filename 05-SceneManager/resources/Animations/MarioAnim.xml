@@ -4,30 +4,30 @@
 
 	<!--Small Mario-->
 	<!-- Animation IDLE FRONT-->
-		<Animation aniId="ani-small-mario-idle-front" frameTime="100" name="IDLE-FRONT">
-		<Sprite id="spr-small-mario-idle-front-0" frameTime="100"/>
+	<Animation aniId="ani-small-mario-idle-front" frameTime="100" name="IDLE-FRONT">
+		<Sprite id="spr-small-mario-idle-front-0" left="397" top="8"  width="16" height="16" frameTime="100"/>
 	</Animation>
 	<!-- Animation IDLE-->
 	<Animation aniId="ani-small-mario-idle" frameTime="100" name="IDLE">
-		<Sprite id="spr-small-mario-idle-0" frameTime="100"/>
+		<Sprite id="spr-small-mario-idle-0" left="254" top="9"  width="12" height="15" frameTime="100"/>
 	</Animation>
 	<!-- Animation WALK-->
 	<Animation aniId="ani-small-mario-walk" frameTime="100" name="WALK">
-		<Sprite id="spr-small-mario-walk-0" frameTime="100"/>
-		<Sprite id="spr-small-mario-walk-1" frameTime="100"/>
+		<Sprite id="spr-small-mario-walk-0" left="254" top="9"  width="12" height="15" frameTime="100"/>
+		<Sprite id="spr-small-mario-walk-1" left="269" top="8"  width="15" height="16" frameTime="100"/>
 	</Animation>
 	<!-- Animation RUN-->
 	<Animation aniId="ani-small-mario-run" frameTime="100" name="WALK">
-		<Sprite id="spr-small-mario-walk-0" frameTime="50"/>
-		<Sprite id="spr-small-mario-walk-1" frameTime="50"/>
+		<Sprite id="spr-small-mario-walk-0" left="254" top="9"  width="12" height="15" frameTime="50"/>
+		<Sprite id="spr-small-mario-walk-1" left="269" top="8"  width="15" height="16" frameTime="50"/>
 	</Animation>
 	<!-- Animation SKID-->
 	<Animation aniId="ani-small-mario-skid" frameTime="100" name="SKID">
-		<Sprite id="spr-small-mario-skid-0" frameTime="100"/>
+		<Sprite id="spr-small-mario-skid-0" left="287" top="8"  width="14" height="16" frameTime="100"/>
 	</Animation>
 	<!-- Animation FALL-->
 	<Animation aniId="ani-small-mario-fall" frameTime="100" name="RUN">
-		<Sprite id="spr-small-mario-walk-1" frameTime="100"/>
+		<Sprite id="spr-small-mario-walk-1" left="269" top="8"  width="15" height="16" frameTime="100"/>
 	</Animation>
 	<!-- Animation JUMP-->
 	<Animation aniId="ani-small-mario-jump" frameTime="100" name="JUMP">

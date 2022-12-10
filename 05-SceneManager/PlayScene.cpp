@@ -21,6 +21,13 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	key_handler = new CSampleKeyHandler(this);
 }
 
+CPlayScene::CPlayScene(string id, string filePath) :
+	CScene(id, filePath)
+{
+	player = NULL;
+	key_handler = new CSampleKeyHandler(this);
+}
+
 
 #define SCENE_SECTION_UNKNOWN -1
 #define SCENE_SECTION_ASSETS	1
@@ -229,6 +236,54 @@ void CPlayScene::Load()
 	f.close();
 
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
+}
+
+void CPlayScene::Load2() {
+	TiXmlDocument document(sceneFilePath2.c_str());
+	if (!document.LoadFile())
+	{
+		OutputDebugStringW(ToLPCWSTR(document.ErrorDesc()));
+		return;
+	}
+
+	TiXmlElement* root = document.RootElement();
+
+	//load texture
+	TiXmlElement* textures = root->FirstChildElement("Textures");
+	for (TiXmlElement* node = textures->FirstChildElement("Texture"); node != nullptr; node = node->NextSiblingElement("Texture"))
+	{
+		string TexturePath = node->Attribute("path");
+		string TextureId = node->Attribute("id");
+
+		CTextures::GetInstance()->LoadTextures(TexturePath, TextureId);
+
+	}
+
+	//load Animation
+	TiXmlElement* animations = root->FirstChildElement("Animations");
+	for (TiXmlElement* node = animations->FirstChildElement("Animation"); node != nullptr; node = node->NextSiblingElement("Animation"))
+	{
+		string AnimationPath = node->Attribute("path");
+		CAnimations::GetInstance()->LoadAnimations(AnimationPath);
+	}
+
+	//load player
+	TiXmlElement* play = root->FirstChildElement("Player");
+	string type_Player = play->Attribute("type");
+	float player_x = stof(play->Attribute("x"));
+	float player_y = stof(play->Attribute("y"));
+	CGameObject* obj = NULL;
+	if (player != NULL)
+	{
+		DebugOut(L"[ERROR] MARIO object was created before!\n");
+		return;
+	}
+	obj = new CMario(player_x, player_y);
+	player = (CMario*)obj;
+
+
+	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", sceneFilePath);
+
 }
 
 void CPlayScene::Update(DWORD dt)

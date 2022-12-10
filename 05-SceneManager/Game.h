@@ -53,8 +53,11 @@ class CGame
 	ID3D10SamplerState* pPointSamplerState;
 
 	unordered_map<int, LPSCENE> scenes;
+	unordered_map<string, LPSCENE> scenes2;
 	int current_scene;
 	int next_scene = -1;
+	string current_scene2;
+	string next_scene2 = "- 1";
 
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
@@ -107,8 +110,11 @@ public:
 	void GetCamPos(float& x, float& y) { x = cam_x; y = cam_y; }
 
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
+	LPSCENE GetCurrentScene2() { return scenes2[current_scene2]; }
 	void Load(LPCWSTR gameFile);
+	void Load2(string gameFile);
 	void SwitchScene();
+	void SwitchScene2();
 	void InitiateSwitchScene(int scene_id);
 
 	void _ParseSection_TEXTURES(string line);

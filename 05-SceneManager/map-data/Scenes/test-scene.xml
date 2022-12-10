@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scence1>
+  <Map path="map-data/Map/World1-1/test.tmx"></Map>
+
+  <Textures>
+    <Texture name="Texture" path="resources/Textures/mario-new.png" id="tex-mario"/>
+    <Texture name="Texture" path="resources/Textures/enemy.png" id="tex-enemy"/>
+    <Texture name="Texture" path="resources/Textures/misc.png" id="tex-misc" tranColorR="239" tranColorG="228" tranColorB="176"/>
+    <Texture name="Texture" path="resources/Textures/bbox.png" id="tex-bbox"/>
+    <Texture name="Texture" path="resources/Textures/Black.png" id="tex-black"/>
+    <Texture name="Texture" path="resources/Textures/UI.png" id="tex-ui"/>
+  </Textures>
+  
+  <Animations>
+    <Animation name="Animation" path="resources/Animations/MarioAnim.xml"/>
+    <Animation name="Animation" path="resources/Animations/EnemyAnim.xml"/>
+    <Animation name="Animation" path="resources/Animations/MiscAnim.xml"/>
+    <Animation name="Animation" path="resources/Animations/UiAnim.xml"/>
+  </Animations>
+  
+
+  <Player name="Player" type="marioSmall" x="100" y="850">
+  </Player>
+</Scence1>

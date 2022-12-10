@@ -31,6 +31,25 @@ LPTEXTURE CTextures::Get(unsigned int i)
 	return t;
 }
 
+void CTextures::Add(string id, LPCWSTR filePath)
+{
+	textures2[id] = CGame::GetInstance()->LoadTexture(filePath);
+}
+
+LPTEXTURE CTextures::Get(string i)
+{
+	LPTEXTURE t = textures2[i];
+	if (t == NULL)
+		DebugOut(L"[ERROR] Texture Id %d not found !\n", i);
+
+	return t;
+}
+
+void CTextures::LoadTextures(string path, string id)
+{
+	Add(id, ToLPCWSTR(path));
+}
+
 /*
 	Clear all loaded textures
 */

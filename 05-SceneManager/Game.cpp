@@ -508,6 +508,36 @@ void CGame::Load(LPCWSTR gameFile)
 	SwitchScene();
 }
 
+void CGame::Load2(string gameFile) {
+	DebugOut(L"[INFO] Start loading game file : %s\n", gameFile);
+
+	TiXmlDocument document(gameFile.c_str());
+	if (!document.LoadFile())
+	{
+		OutputDebugStringW(ToLPCWSTR(document.ErrorDesc()));
+		return;
+	}
+
+	TiXmlElement* root = document.RootElement();
+	TiXmlElement* Scenes = root->FirstChildElement("Scenes");
+	next_scene2 = (Scenes->Attribute("start"));
+
+	for (TiXmlElement* Scene = Scenes->FirstChildElement("Scene"); Scene != nullptr; Scene = Scene->NextSiblingElement("Scene")) {
+		std::string sceneId = Scene->Attribute("id");
+		std::string scenePath = Scene->Attribute("path");
+		std::string type = Scene->Attribute("type");
+
+		if (type == "play-scene") {
+			LPSCENE scene = new CPlayScene(sceneId, scenePath);
+			scenes2[sceneId] = scene;
+		}
+	}
+
+
+	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
+	SwitchScene2();
+}
+
 void CGame::SwitchScene()
 {
 	if (next_scene < 0 || next_scene == current_scene) return; 
@@ -523,6 +553,23 @@ void CGame::SwitchScene()
 	LPSCENE s = scenes[next_scene];
 	this->SetKeyHandler(s->GetKeyEventHandler());
 	s->Load();
+}
+
+void CGame::SwitchScene2()
+{
+	if (next_scene2.empty() || next_scene2.compare(current_scene2) == 0) return;
+
+	DebugOut(L"[INFO] Switching to scene %d\n", ToLPCWSTR(next_scene2));
+
+	if (current_scene2 != "") scenes2[current_scene2]->Unload();
+
+	CSprites::GetInstance()->Clear();
+	CAnimations::GetInstance()->Clear();
+
+	current_scene2 = next_scene2;
+	LPSCENE s = scenes2[next_scene2];
+	this->SetKeyHandler(s->GetKeyEventHandler());
+	s->Load2();
 }
 
 void CGame::InitiateSwitchScene(int scene_id)

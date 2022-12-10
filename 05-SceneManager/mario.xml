@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameSettings>
+  <Scenes start="world1-1">
+    <Scene id="world1-1" path="map-data/Scenes/test-scene.xml" type="play-scene"/> 
+  </Scenes>
+</GameSettings>

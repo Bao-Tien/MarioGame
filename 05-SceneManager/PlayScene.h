@@ -27,8 +27,10 @@ protected:
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
+	CPlayScene(string id, string filePath);
 
 	virtual void Load();
+	virtual void Load2();
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();

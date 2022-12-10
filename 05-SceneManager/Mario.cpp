@@ -299,7 +299,7 @@ void CMario::SetState(int state)
 		break;*/
 	case MARIO_STATE_FLY_RIGHT:
 		if (isSitting) break;
-		vy = 0.0f;
+		vy = 0.0f; // de thi no dang roi nhan S tip thi no cap du luc de bay len lai tuc thi, neu ko reset thi no tip tuc roi vi vy dang > 0
 		maxVy = -MARIO_FLY_SPEED;
 		maxVx = MARIO_FLY_SPEED;
 		ax = MARIO_ACCEL_FLY_X;

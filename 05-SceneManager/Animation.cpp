@@ -14,6 +14,19 @@ void CAnimation::Add(int spriteId, DWORD time)
 	frames.push_back(frame);
 }
 
+void CAnimation::Add(string spriteId, DWORD time)
+{
+	int t = time;
+	if (time == 0) t = this->defaultTime;
+
+	LPSPRITE sprite = CSprites::GetInstance()->Get(spriteId);
+	if (sprite == NULL)
+		DebugOut(L"[ERROR] Sprite ID %d not found!\n", spriteId);
+
+	LPANIMATION_FRAME frame = new CAnimationFrame(sprite, t);
+	frames.push_back(frame);
+}
+
 void CAnimation::Render(float x, float y)
 {
 	ULONGLONG now = GetTickCount64();
