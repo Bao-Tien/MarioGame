@@ -11,7 +11,7 @@
 
 using namespace std;
 
-#define ID_TEX_BBOX -100		// special texture to draw object bounding box
+#define ID_TEX_BBOX "tex-bbox"//-100		// special texture to draw object bounding box
 #define BBOX_ALPHA 0.25f		// Bounding box transparency
 
 class CGameObject
@@ -21,6 +21,9 @@ protected:
 	float x; 
 	float y;
 
+	float flipX = 1.0f;
+	float flipY = 1.0f;
+
 	float vx;
 	float vy;
 
@@ -29,6 +32,8 @@ protected:
 	int state;
 
 	bool isDeleted; 
+
+	string animationId = "";
 
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
@@ -48,8 +53,9 @@ public:
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
-	virtual void Render() = 0;
+	virtual void Render();
 	virtual void SetState(int state) { this->state = state; }
+	virtual void SetAnimation(){};
 
 	//
 	// Collision ON or OFF ? This can change depending on object's state. For example: die

@@ -150,6 +150,24 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	StateDesc.RenderTargetWriteMask[0] = D3D10_COLOR_WRITE_ENABLE_ALL;
 	pD3DDevice->CreateBlendState(&StateDesc, &this->pBlendStateAlpha);
 
+	ID3D10RasterizerState* g_pRasterState;
+	D3D10_RASTERIZER_DESC rasterizerState;
+
+	rasterizerState.FillMode = D3D10_FILL_SOLID;
+	rasterizerState.CullMode = D3D10_CULL_NONE;
+	rasterizerState.FrontCounterClockwise = true;
+	rasterizerState.DepthBias = false;
+	rasterizerState.DepthBiasClamp = 0;
+	rasterizerState.SlopeScaledDepthBias = 0;
+	rasterizerState.DepthClipEnable = true;
+	rasterizerState.ScissorEnable = false;
+	rasterizerState.MultisampleEnable = false;
+	rasterizerState.AntialiasedLineEnable = false;
+
+	pD3DDevice->CreateRasterizerState(&rasterizerState, &g_pRasterState);
+
+	pD3DDevice->RSSetState(g_pRasterState);
+
 	DebugOut((wchar_t*)L"[INFO] InitDirectX has been successful\n");
 
 	return;

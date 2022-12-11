@@ -278,9 +278,13 @@ void CPlayScene::Load2() {
 		DebugOut(L"[ERROR] MARIO object was created before!\n");
 		return;
 	}
-	obj = new CMario(player_x, player_y);
+	obj = new CMario(200.0f, 80.0f);
 	player = (CMario*)obj;
+	objects.push_back(obj);
 
+	// Main ground
+	CPlatform* p = new CPlatform(0.0f, 180.0f, 48, 48, 32);
+	objects.push_back(p);
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", sceneFilePath);
 
@@ -315,7 +319,7 @@ void CPlayScene::Update(DWORD dt)
 
 	if (cx < 0) cx = 0;
 
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+	CGame::GetInstance()->SetCamPos(cx-100.0f, 0);
 
 	PurgeDeletedObjects();
 }

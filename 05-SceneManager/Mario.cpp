@@ -231,9 +231,61 @@ int CMario::GetAniIdBig()
 	return aniId;
 }
 
+void CMario::SetAnimation() {
+	switch (state)
+	{
+	case MARIO_STATE_RUNNING_RIGHT:
+		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-run";
+		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-run";
+		break;
+	case MARIO_STATE_RUNNING_LEFT:
+		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-run";
+		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-run";
+		break;
+	case MARIO_STATE_WALKING_RIGHT:
+		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-walk";
+		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-walk";
+		break;
+	case MARIO_STATE_WALKING_LEFT:
+		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-walk";
+		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-walk";
+		break;
+	case MARIO_STATE_JUMP:
+		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-jump";
+		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-jump";
+		break;
+	case MARIO_STATE_FLY_RIGHT:
+		animationId = "ani-raccoon-mario-fly";
+		break;
+	case MARIO_STATE_FLY_LEFT:
+		animationId = "ani-raccoon-mario-fly";
+		break;
+	case MARIO_STATE_SIT:
+		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-idle";
+		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-idle";
+		break;
+	case MARIO_STATE_SIT_RELEASE:
+		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-idle";
+		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-idle";
+		break;
+
+	case MARIO_STATE_IDLE:
+		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-idle";
+		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-idle";
+		break;
+
+	case MARIO_STATE_DIE:
+		animationId = "ani-small-mario-die";
+		break;
+	default:
+		animationId = "ani-small-mario-idle";
+		break;
+	}
+}
+
 void CMario::Render()
 {
-	CAnimations* animations = CAnimations::GetInstance();
+	/*CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
 
 	if (state == MARIO_STATE_DIE)
@@ -243,9 +295,10 @@ void CMario::Render()
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
 
-	animations->Get(aniId)->Render(x, y);
+	animations->Get(aniId)->Render(x, y);*/
+	CGameObject::Render();
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 	
 	DebugOutTitle(L"Coins: %d", coin);
 }
@@ -345,6 +398,8 @@ void CMario::SetState(int state)
 		ax = 0;
 		break;
 	}
+
+	flipX = nx > 0 ? 1 : -1;
 
 	CGameObject::SetState(state);
 }

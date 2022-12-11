@@ -45,7 +45,7 @@
 
 #pragma region ANIMATION_ID
 
-#define ID_ANI_MARIO_IDLE_RIGHT 400
+#define ID_ANI_MARIO_IDLE_RIGHT  400
 #define ID_ANI_MARIO_IDLE_LEFT 401
 
 #define ID_ANI_MARIO_WALKING_RIGHT 500
@@ -67,6 +67,8 @@
 #define ID_ANI_MARIO_BRACE_LEFT 1001
 
 #define ID_ANI_MARIO_DIE 999
+
+
 
 // SMALL MARIO
 #define ID_ANI_MARIO_SMALL_IDLE_RIGHT 1100
@@ -98,8 +100,8 @@
 #define	MARIO_LEVEL_BIG		2
 #define MARIO_LEVEL_RACCOON 3
 
-#define MARIO_BIG_BBOX_WIDTH  14
-#define MARIO_BIG_BBOX_HEIGHT 24
+#define MARIO_BIG_BBOX_WIDTH  14*3
+#define MARIO_BIG_BBOX_HEIGHT 27*3
 #define MARIO_BIG_SITTING_BBOX_WIDTH  14
 #define MARIO_BIG_SITTING_BBOX_HEIGHT 16
 
@@ -155,6 +157,7 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
+	void SetAnimation();
 
 	int IsCollidable()
 	{ 

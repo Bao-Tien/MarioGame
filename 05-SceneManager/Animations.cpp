@@ -28,16 +28,17 @@ LPANIMATION CAnimations::Get(int id)
 void CAnimations::Add(string id, LPANIMATION ani)
 {
 	if (animations2[id] != NULL)
-		DebugOut(L"[WARNING] Animation %d already exists\n", id);
+		DebugOut(L"[WARNING] Animation %s already exists\n", ToLPCWSTR(id));
 
 	animations2[id] = ani;
+	DebugOut(L"[INFO] Animation %s added\n", ToLPCWSTR(id));
 }
 
 LPANIMATION CAnimations::Get(string id)
 {
 	LPANIMATION ani = animations2[id];
 	if (ani == NULL)
-		DebugOut(L"[ERROR] Animation ID %d not found\n", id);
+		DebugOut(L"[ERROR] Animation ID %s not found\n", ToLPCWSTR(id));
 	return ani;
 }
 
