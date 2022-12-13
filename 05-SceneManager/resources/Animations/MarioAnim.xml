@@ -160,7 +160,7 @@
 	</Animation>
 	<!-- Animation IDLE-->
 	<Animation aniId="ani-raccoon-mario-idle" frameTime="100" name="IDLE">
-		<Sprite id="spr-raccoon-mario-idle-0" />
+		<Sprite id="spr-raccoon-mario-idle-0" left="80" top="142"  width="21" height="28" frameTime="100"/>
 	</Animation>
 	<!-- Animation WALK-->
 	<Animation aniId="ani-raccoon-mario-walk" frameTime="100" name="WALK">

@@ -110,192 +110,118 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 }
 
-//
-// Get animation ID for small Mario
-//
-int CMario::GetAniIdSmall()
-{
-	int aniId = -1;
-	if (!isOnPlatform)
-	{
-		if (abs(ax) == MARIO_ACCEL_RUN_X)
-		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT;
-		}
-		else
-		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_SMALL_JUMP_WALK_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_SMALL_JUMP_WALK_LEFT;
-		}
-	}
-	else
-		if (isSitting)
-		{
-			if (nx > 0)
-				aniId = ID_ANI_MARIO_SIT_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_SIT_LEFT;
-		}
-		else
-			if (vx == 0)
-			{
-				if (nx > 0) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
-				else aniId = ID_ANI_MARIO_SMALL_IDLE_LEFT;
-			}
-			else if (vx > 0)
-			{
-				if (ax < 0)
-					aniId = ID_ANI_MARIO_SMALL_BRACE_RIGHT;
-				else if (ax == MARIO_ACCEL_RUN_X)
-					aniId = ID_ANI_MARIO_SMALL_RUNNING_RIGHT;
-				else if (ax == MARIO_ACCEL_WALK_X)
-					aniId = ID_ANI_MARIO_SMALL_WALKING_RIGHT;
-			}
-			else // vx < 0
-			{
-				if (ax > 0)
-					aniId = ID_ANI_MARIO_SMALL_BRACE_LEFT;
-				else if (ax == -MARIO_ACCEL_RUN_X)
-					aniId = ID_ANI_MARIO_SMALL_RUNNING_LEFT;
-				else if (ax == -MARIO_ACCEL_WALK_X)
-					aniId = ID_ANI_MARIO_SMALL_WALKING_LEFT;
-			}
-
-	if (aniId == -1) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
-
-	return aniId;
-}
-
-
-//
-// Get animdation ID for big Mario
-//
-int CMario::GetAniIdBig()
-{
-	int aniId = -1;
-	if (!isOnPlatform)
-	{
-		if (abs(ax) == MARIO_ACCEL_RUN_X)
-		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_JUMP_RUN_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_JUMP_RUN_LEFT;
-		}
-		else
-		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_JUMP_WALK_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_JUMP_WALK_LEFT;
-		}
-	}
-	else
-		if (isSitting)
-		{
-			if (nx > 0)
-				aniId = ID_ANI_MARIO_SIT_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_SIT_LEFT;
-		}
-		else
-			if (vx == 0)
-			{
-				if (nx > 0) aniId = ID_ANI_MARIO_IDLE_RIGHT;
-				else aniId = ID_ANI_MARIO_IDLE_LEFT;
-			}
-			else if (vx > 0)
-			{
-				/*if (ax < 0)
-					aniId = ID_ANI_MARIO_BRACE_RIGHT;*/
-				if (ax == MARIO_ACCEL_RUN_X)
-					aniId = ID_ANI_MARIO_RUNNING_RIGHT;
-				else aniId = ID_ANI_MARIO_WALKING_RIGHT;
-			}
-			else // vx < 0
-			{
-				/*if (ax > 0)
-					aniId = ID_ANI_MARIO_BRACE_LEFT;*/
-				if (ax == -MARIO_ACCEL_RUN_X)
-					aniId = ID_ANI_MARIO_RUNNING_LEFT;
-				else aniId = ID_ANI_MARIO_WALKING_LEFT;
-			}
-
-	if (aniId == -1) aniId = ID_ANI_MARIO_IDLE_RIGHT;
-
-	return aniId;
-}
-
 void CMario::SetAnimation() {
-	switch (state)
-	{
-	case MARIO_STATE_RUNNING_RIGHT:
-		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-run";
-		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-run";
-		break;
-	case MARIO_STATE_RUNNING_LEFT:
-		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-run";
-		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-run";
-		break;
-	case MARIO_STATE_WALKING_RIGHT:
-		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-walk";
-		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-walk";
-		break;
-	case MARIO_STATE_WALKING_LEFT:
-		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-walk";
-		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-walk";
-		break;
-	case MARIO_STATE_JUMP:
-		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-jump";
-		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-jump";
-		break;
-	case MARIO_STATE_FLY_RIGHT:
-		animationId = "ani-raccoon-mario-fly";
-		break;
-	case MARIO_STATE_FLY_LEFT:
-		animationId = "ani-raccoon-mario-fly";
-		break;
-	case MARIO_STATE_SIT:
-		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-idle";
-		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-idle";
-		break;
-	case MARIO_STATE_SIT_RELEASE:
-		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-idle";
-		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-idle";
-		break;
-
-	case MARIO_STATE_IDLE:
-		if (level == MARIO_LEVEL_SMALL) animationId = "ani-small-mario-idle";
-		if (level == MARIO_LEVEL_BIG) animationId = "ani-big-mario-idle";
-		break;
-
-	case MARIO_STATE_DIE:
-		animationId = "ani-small-mario-die";
-		break;
-	default:
-		animationId = "ani-small-mario-idle";
-		break;
+	if (state == MARIO_STATE_RUNNING_RIGHT || state == MARIO_STATE_RUNNING_LEFT) {
+		switch (level)
+		{ 
+		case MARIO_LEVEL_SMALL:
+			animationId = "ani-small-mario-run";
+			break;
+		case MARIO_LEVEL_BIG:
+			animationId = "ani-big-mario-run";
+			break;
+		case MARIO_LEVEL_RACCOON:
+			animationId = "ani-raccoon-mario-run";
+			break;
+		default:
+			animationId = "ani-small-mario-run";
+			break;
+		}
 	}
+	else if (state == MARIO_STATE_WALKING_RIGHT || state == MARIO_STATE_WALKING_LEFT) {
+		switch (level)
+		{
+		case MARIO_LEVEL_SMALL:
+			animationId = "ani-small-mario-walk";
+			break;
+		case MARIO_LEVEL_BIG:
+			animationId = "ani-big-mario-walk";
+			break;
+		case MARIO_LEVEL_RACCOON:
+			animationId = "ani-raccoon-mario-walk";
+			break;
+		default:
+			animationId = "ani-small-mario-walk";
+			break;
+		}
+	}
+	else if (state == MARIO_STATE_JUMP) {
+		switch (level)
+		{
+		case MARIO_LEVEL_SMALL:
+			animationId = "ani-small-mario-jump";
+			break;
+		case MARIO_LEVEL_BIG:
+			animationId = "ani-big-mario-jump";
+			break;
+		case MARIO_LEVEL_RACCOON:
+			animationId = "ani-raccoon-mario-jump";
+			break;
+		default:
+			animationId = "ani-small-mario-jump";
+			break;
+		}
+	}
+	else if (state == MARIO_STATE_FLY_RIGHT || state == MARIO_STATE_FLY_LEFT) {
+		animationId = "ani-raccoon-mario-fly";
+	}
+	else if (state == MARIO_STATE_SIT || state == MARIO_STATE_SIT_RELEASE) {
+		// not have animation sit
+		switch (level)
+		{
+		case MARIO_LEVEL_SMALL:
+			animationId = "ani-small-mario-idle";
+			break;
+		case MARIO_LEVEL_BIG:
+			animationId = "ani-big-mario-idle";
+			break;
+		case MARIO_LEVEL_RACCOON:
+			animationId = "ani-raccoon-mario-idle";
+			break;
+		default:
+			animationId = "ani-small-mario-idle";
+			break;
+		}
+	}
+	else if (state == MARIO_STATE_IDLE) {
+		switch (level)
+		{
+		case MARIO_LEVEL_SMALL:
+			animationId = "ani-small-mario-idle";
+			break;
+		case MARIO_LEVEL_BIG:
+			animationId = "ani-big-mario-idle";
+			break;
+		case MARIO_LEVEL_RACCOON:
+			animationId = "ani-raccoon-mario-idle";
+			break;
+		default:
+			animationId = "ani-small-mario-idle";
+			break;
+		}
+	}
+	else if (state == MARIO_STATE_DIE) {
+		switch (level)
+		{
+		case MARIO_LEVEL_SMALL:
+			animationId = "ani-small-mario-die";
+			break;
+		case MARIO_LEVEL_BIG:
+			animationId = "ani-big-mario-die";
+			break;
+		case MARIO_LEVEL_RACCOON:
+			animationId = "ani-raccoon-mario-die";
+			break;
+		default:
+			animationId = "ani-small-mario-die";
+			break;
+		}
+	}
+	else animationId = "ani-small-mario-idle";
 }
 
 void CMario::Render()
 {
-	/*CAnimations* animations = CAnimations::GetInstance();
-	int aniId = -1;
-
-	if (state == MARIO_STATE_DIE)
-		aniId = ID_ANI_MARIO_DIE;
-	else if (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_RACCOON)
-		aniId = GetAniIdBig();
-	else if (level == MARIO_LEVEL_SMALL)
-		aniId = GetAniIdSmall();
-
-	animations->Get(aniId)->Render(x, y);*/
 	CGameObject::Render();
 
 	RenderBoundingBox();
@@ -437,7 +363,7 @@ void CMario::SetLevel(int l)
 	// Adjust position to avoid falling off platform
 	if (this->level == MARIO_LEVEL_SMALL)
 	{
-		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
+		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
 	}
 	level = l;
 }

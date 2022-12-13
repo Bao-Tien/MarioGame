@@ -6,14 +6,14 @@
 
 #include "debug.h"
 
-#define MARIO_WALKING_SPEED		0.1f
+#define MARIO_WALKING_SPEED		0.2f
 #define MARIO_FLY_SPEED		0.2f
-#define MARIO_RUNNING_SPEED		0.2f
+#define MARIO_RUNNING_SPEED		0.3f
 
-#define MARIO_ACCEL_WALK_X	0.0008f
-#define MARIO_ACCEL_RUN_X	0.001f
-#define MARIO_ACCEL_JUMP_Y	0.025f
-#define MARIO_ACCEL_RUN_JUMP_Y	0.03f
+#define MARIO_ACCEL_WALK_X	0.0009f
+#define MARIO_ACCEL_RUN_X	0.003f
+#define MARIO_ACCEL_JUMP_Y	0.04f
+#define MARIO_ACCEL_RUN_JUMP_Y	0.05f
 #define MARIO_ACCEL_FLY_X	0.006f
 #define MARIO_ACCEL_FLY_Y	0.006f
 
@@ -107,8 +107,8 @@
 
 #define MARIO_SIT_HEIGHT_ADJUST ((MARIO_BIG_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
 
-#define MARIO_SMALL_BBOX_WIDTH  13
-#define MARIO_SMALL_BBOX_HEIGHT 12
+#define MARIO_SMALL_BBOX_WIDTH  13*3
+#define MARIO_SMALL_BBOX_HEIGHT 12*3
 
 
 #define MARIO_UNTOUCHABLE_TIME 2500
@@ -132,9 +132,6 @@ class CMario : public CGameObject
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
-
-	int GetAniIdBig();
-	int GetAniIdSmall();
 
 public:
 	CMario(float x, float y) : CGameObject(x, y)

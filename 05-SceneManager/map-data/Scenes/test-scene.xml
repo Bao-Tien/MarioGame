@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scence1>
-  <Map path="map-data/Map/World1-1/test.tmx"></Map>
+  <Map path="map-data/Map/World1-1/test1.tmx"></Map>
 
   <Textures>
     <Texture name="Texture" path="resources/Textures/mario-new.png" id="tex-mario"/>
