@@ -227,5 +227,8 @@
     <ClInclude Include="TinyXML\tinyxml.h">
       <Filter>TinyXML</Filter>
     </ClInclude>
+    <ClInclude Include="define-mario.h">
+      <Filter>Framework\Object\Mario</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

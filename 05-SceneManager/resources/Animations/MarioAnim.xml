@@ -194,6 +194,10 @@
 	<Animation aniId="ani-raccoon-mario-jump" frameTime="100" name="JUMP">
 		<Sprite id="spr-raccoon-mario-jump-0" left="257" top="143"  width="23" height="27" frameTime="100"/>
 	</Animation>
+  <!-- Animation HIGH JUMP-->
+  <Animation aniId="ani-raccoon-mario-high-jump" frameTime="100" name="JUMP">
+    <Sprite id="spr-raccoon-mario-jump-0" left="257" top="143"  width="23" height="27" frameTime="100"/>
+  </Animation>
 	<!-- Animation SPEED UP-->
 	<Animation aniId="ani-raccoon-mario-speed-up" frameTime="100" name="SPEED-UP">
 		<Sprite id="spr-raccoon-mario-speed-up-0" left="360" top="142"  width="24" height="28" frameTime="100"/>

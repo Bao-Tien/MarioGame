@@ -111,114 +111,42 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 }
 
 void CMario::SetAnimation() {
-	if (state == MARIO_STATE_RUNNING_RIGHT || state == MARIO_STATE_RUNNING_LEFT) {
-		switch (level)
-		{ 
-		case MARIO_LEVEL_SMALL:
-			animationId = "ani-small-mario-run";
-			break;
-		case MARIO_LEVEL_BIG:
-			animationId = "ani-big-mario-run";
-			break;
-		case MARIO_LEVEL_RACCOON:
-			animationId = "ani-raccoon-mario-run";
-			break;
-		default:
-			animationId = "ani-small-mario-run";
-			break;
-		}
-	}
-	else if (state == MARIO_STATE_WALKING_RIGHT || state == MARIO_STATE_WALKING_LEFT) {
-		switch (level)
+	string typeString, stateString;
+	if (level == MARIO_LEVEL_SMALL) typeString = ANI_MARIO_LEVEL_SMALL;
+	else if (level == MARIO_LEVEL_BIG) typeString = ANI_MARIO_LEVEL_BIG;
+	else if (level == MARIO_LEVEL_RACCOON) typeString = ANI_MARIO_LEVEL_RACCOON;
+	else typeString = ANI_MARIO_LEVEL_SMALL;
+
+
+	if (!isOnPlatform)
+	{
+		if (abs(ax) == MARIO_ACCEL_RUN_X)
 		{
-		case MARIO_LEVEL_SMALL:
-			animationId = "ani-small-mario-walk";
-			break;
-		case MARIO_LEVEL_BIG:
-			animationId = "ani-big-mario-walk";
-			break;
-		case MARIO_LEVEL_RACCOON:
-			animationId = "ani-raccoon-mario-walk";
-			break;
-		default:
-			animationId = "ani-small-mario-walk";
-			break;
+			stateString = ANI_MARIO_STATE_RUN_JUMP;
 		}
+		else stateString = ANI_MARIO_STATE_WALK_JUMP;
 	}
-	else if (state == MARIO_STATE_JUMP) {
-		switch (level)
+	else
+		if (isSitting)
 		{
-		case MARIO_LEVEL_SMALL:
-			animationId = "ani-small-mario-jump";
-			break;
-		case MARIO_LEVEL_BIG:
-			animationId = "ani-big-mario-jump";
-			break;
-		case MARIO_LEVEL_RACCOON:
-			animationId = "ani-raccoon-mario-jump";
-			break;
-		default:
-			animationId = "ani-small-mario-jump";
-			break;
+			stateString = ANI_MARIO_STATE_SIT;
 		}
-	}
-	else if (state == MARIO_STATE_FLY_RIGHT || state == MARIO_STATE_FLY_LEFT) {
-		animationId = "ani-raccoon-mario-fly";
-	}
-	else if (state == MARIO_STATE_SIT || state == MARIO_STATE_SIT_RELEASE) {
-		// not have animation sit
-		switch (level)
-		{
-		case MARIO_LEVEL_SMALL:
-			animationId = "ani-small-mario-idle";
-			break;
-		case MARIO_LEVEL_BIG:
-			animationId = "ani-big-mario-idle";
-			break;
-		case MARIO_LEVEL_RACCOON:
-			animationId = "ani-raccoon-mario-idle";
-			break;
-		default:
-			animationId = "ani-small-mario-idle";
-			break;
-		}
-	}
-	else if (state == MARIO_STATE_IDLE) {
-		switch (level)
-		{
-		case MARIO_LEVEL_SMALL:
-			animationId = "ani-small-mario-idle";
-			break;
-		case MARIO_LEVEL_BIG:
-			animationId = "ani-big-mario-idle";
-			break;
-		case MARIO_LEVEL_RACCOON:
-			animationId = "ani-raccoon-mario-idle";
-			break;
-		default:
-			animationId = "ani-small-mario-idle";
-			break;
-		}
-	}
-	else if (state == MARIO_STATE_DIE) {
-		switch (level)
-		{
-		case MARIO_LEVEL_SMALL:
-			animationId = "ani-small-mario-die";
-			break;
-		case MARIO_LEVEL_BIG:
-			animationId = "ani-big-mario-die";
-			break;
-		case MARIO_LEVEL_RACCOON:
-			animationId = "ani-raccoon-mario-die";
-			break;
-		default:
-			animationId = "ani-small-mario-die";
-			break;
-		}
-	}
-	else animationId = "ani-small-mario-idle";
+		else
+			if (vx == 0)
+			{
+				stateString = ANI_MARIO_STATE_IDLE;
+			}
+			else 
+			{
+				if ((vx > 0 && ax < 0) || (vx < 0 && ax>0)) stateString = ANI_MARIO_STATE_SKID;
+				else if (abs(ax) == MARIO_ACCEL_RUN_X)
+					stateString = ANI_MARIO_STATE_RUN;
+				else stateString = ANI_MARIO_STATE_WALK;
+			}
+	animationId = typeString + "-" + stateString;
 }
+
+
 
 void CMario::Render()
 {
@@ -267,8 +195,10 @@ void CMario::SetState(int state)
 		if (isSitting) break;
 		if (isOnPlatform)
 		{
-			if (abs(this->vx) == MARIO_RUNNING_SPEED)
+			if (abs(this->vx) == MARIO_RUNNING_SPEED) {
+				state = MARIO_STATE_HIGH_JUMP;
 				ay = -MARIO_ACCEL_RUN_JUMP_Y;
+			}
 			else
 				ay = -MARIO_ACCEL_JUMP_Y;
 		}
@@ -300,7 +230,7 @@ void CMario::SetState(int state)
 			state = MARIO_STATE_IDLE;
 			isSitting = true;
 			vx = 0; vy = 0.0f;
-			y +=MARIO_SIT_HEIGHT_ADJUST;
+			y += MARIO_SIT_HEIGHT_ADJUST;
 		}
 		break;
 
@@ -309,7 +239,7 @@ void CMario::SetState(int state)
 		{
 			isSitting = false;
 			state = MARIO_STATE_IDLE;
-			y -= MARIO_SIT_HEIGHT_ADJUST;
+			y = y - MARIO_SIT_HEIGHT_ADJUST - 1.0f;
 		}
 		break;
 
