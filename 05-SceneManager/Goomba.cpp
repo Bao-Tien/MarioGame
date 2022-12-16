@@ -62,16 +62,18 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
+void CGoomba::SetAnimation() {
+	animationId = "ani-goomba-walk";
+	if (state == GOOMBA_STATE_DIE)
+	{
+		animationId = "ani-goomba-die";
+	}
+}
+
 
 void CGoomba::Render()
 {
-	int aniId = ID_ANI_GOOMBA_WALKING;
-	if (state == GOOMBA_STATE_DIE) 
-	{
-		aniId = ID_ANI_GOOMBA_DIE;
-	}
-
-	CAnimations::GetInstance()->Get(aniId)->Render(x,y);
+	CGameObject::Render();
 	RenderBoundingBox();
 }
 

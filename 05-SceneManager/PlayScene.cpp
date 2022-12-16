@@ -286,6 +286,10 @@ void CPlayScene::Load2() {
 	CPlatform* p = new CPlatform(0.0f, 180.0f, 48, 48, 32);
 	objects.push_back(p);
 
+	//Goomba
+	CGoomba* goomba = new CGoomba(280.0f, 100.0f);
+	objects.push_back(goomba);
+
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", sceneFilePath);
 
 }

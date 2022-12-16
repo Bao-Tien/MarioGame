@@ -15,6 +15,7 @@ class CMario : public CGameObject
 	float ay;				// acceleration on y 
 	float ms;
 	float g;
+	float accelerated;
 
 	int level; 
 	int untouchable; 
@@ -36,17 +37,18 @@ public:
 		ay = 0.0f; 
 		g = MARIO_GRAVITY;
 		ms = 0;
+		accelerated = 1.0f;
 
 		level = MARIO_LEVEL_BIG;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;
 		coin = 0;
-		SetState(MARIO_STATE_IDLE);
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void UpdateState();
 	void Render();
-	void SetState(int state);
+	//void SetState(int state);
 	void SetAnimation();
 
 	int IsCollidable()
@@ -58,6 +60,8 @@ public:
 
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+
+	virtual void KeyboardHandle(int KeyCode, int type);
 
 	void SetLevel(int l);
 	int GetLevel() { return level; }

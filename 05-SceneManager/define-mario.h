@@ -2,10 +2,11 @@
 #define MARIO_WALKING_SPEED		0.2f
 #define MARIO_FLY_SPEED		0.2f
 #define MARIO_RUNNING_SPEED		0.3f
+#define MARIO_JUMP_SPEED		0.9f
 
-#define MARIO_ACCEL_WALK_X	0.0009f
+#define MARIO_ACCEL_WALK_X	0.002f
 #define MARIO_ACCEL_RUN_X	0.003f
-#define MARIO_ACCEL_JUMP_Y	0.04f
+#define MARIO_ACCEL_JUMP_Y	0.05f
 #define MARIO_ACCEL_RUN_JUMP_Y	0.05f
 #define MARIO_ACCEL_FLY_X	0.006f
 #define MARIO_ACCEL_FLY_Y	0.006f
@@ -15,7 +16,7 @@
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
 
 #define MARIO_GRAVITY			0.002f
-#define MARIO_FRICTION          0.0002f      
+#define MARIO_FRICTION          0.0005f      
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
 
 #define MARIO_STATE_DIE				-10
@@ -35,6 +36,12 @@
 
 #define MARIO_STATE_SIT				600
 #define MARIO_STATE_SIT_RELEASE		601
+
+#define MARIO_STATE_WALK	101
+#define MARIO_STATE_RUN	501
+#define MARIO_STATE_FALL	502
+#define MARIO_STATE_SKID	503
+#define MARIO_STATE_FLY			504
 
 #pragma endregion
 
@@ -72,3 +79,5 @@
 #define ANI_MARIO_STATE_SKID "skid"
 #define ANI_MARIO_STATE_RUN "run"
 #define ANI_MARIO_STATE_WALK "walk"
+#define ANI_MARIO_STATE_FLY "fly"
+#define ANI_MARIO_STATE_FALL "fall"
