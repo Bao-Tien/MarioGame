@@ -3,6 +3,8 @@
 #include "Animation.h"
 #include "Sprite.h"
 #include "Utils.h"
+class CAnimation;
+typedef CAnimation* LPANIMATION;
 
 class CAnimations
 {

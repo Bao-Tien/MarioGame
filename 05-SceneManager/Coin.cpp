@@ -1,4 +1,5 @@
 #include "Coin.h"
+#include "Animations.h"
 
 void CCoin::Render()
 {

@@ -5,7 +5,7 @@
 #include "Utils.h"
 
 #include "Texture.h"
-#include "Animations.h"
+#include "Animation.h"
 #include "PlayScene.h"
 
 CGame * CGame::__instance = NULL;

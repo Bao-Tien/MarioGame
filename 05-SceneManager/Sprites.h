@@ -13,6 +13,9 @@ using namespace std;
 /*
 	Manage sprite database
 */
+class CSprite;
+typedef CSprite* LPSPRITE;
+
 class CSprites
 {
 	static CSprites* __instance;

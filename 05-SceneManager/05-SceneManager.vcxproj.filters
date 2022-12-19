@@ -73,6 +73,9 @@
     <Filter Include="TinyXML">
       <UniqueIdentifier>{0b73aadc-094f-4556-8212-a791bd5840b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Map">
+      <UniqueIdentifier>{aa983bab-4e86-4d87-a6c9-a061198224c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -82,9 +85,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
-      <Filter>Framework\Animations</Filter>
-    </ClCompile>
-    <ClCompile Include="Animations.cpp">
       <Filter>Framework\Animations</Filter>
     </ClCompile>
     <ClCompile Include="Brick.cpp">
@@ -147,12 +147,21 @@
     <ClCompile Include="TinyXML\tinyxmlparser.cpp">
       <Filter>TinyXML</Filter>
     </ClCompile>
+    <ClCompile Include="TileSet.cpp">
+      <Filter>Framework\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MapLayer.cpp">
+      <Filter>Framework\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMap.cpp">
+      <Filter>Framework\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Animations.cpp">
+      <Filter>Framework\Animations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
-      <Filter>Framework\Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="Animations.h">
       <Filter>Framework\Animations</Filter>
     </ClInclude>
     <ClInclude Include="AnimationFrame.h">
@@ -226,6 +235,18 @@
     </ClInclude>
     <ClInclude Include="define-mario.h">
       <Filter>Framework\Object\Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="TileSet.h">
+      <Filter>Framework\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapLayer.h">
+      <Filter>Framework\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMap.h">
+      <Filter>Framework\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Animations.h">
+      <Filter>Framework\Animations</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

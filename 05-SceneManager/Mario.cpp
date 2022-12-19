@@ -223,7 +223,6 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 }
 
 void CMario::UpdateState() {
-	DebugOut(L"isOnPlatform %d \n", isOnPlatform);
 
 	if (isOnPlatform)
 	{

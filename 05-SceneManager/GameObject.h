@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "Animation.h"
-#include "Animations.h"
 #include "Sprites.h"
 #include "Collision.h"
 
@@ -13,6 +12,7 @@ using namespace std;
 
 #define ID_TEX_BBOX "tex-bbox"//-100		// special texture to draw object bounding box
 #define BBOX_ALPHA 0.25f		// Bounding box transparency
+
 
 class CGameObject
 {

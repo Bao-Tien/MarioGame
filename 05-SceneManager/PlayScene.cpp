@@ -248,6 +248,12 @@ void CPlayScene::Load2() {
 
 	TiXmlElement* root = document.RootElement();
 
+	//load filemap
+	TiXmlElement* loadMap = root->FirstChildElement("Map");
+	string loadMapPath = loadMap->Attribute("path");
+	OutputDebugStringW(ToLPCWSTR("MapPath : " + loadMapPath + '\n'));
+	map = CGameMap().LoadFromTMXFile(loadMapPath, &staticObjects);
+
 	//load texture
 	TiXmlElement* textures = root->FirstChildElement("Textures");
 	for (TiXmlElement* node = textures->FirstChildElement("Texture"); node != nullptr; node = node->NextSiblingElement("Texture"))
@@ -278,12 +284,12 @@ void CPlayScene::Load2() {
 		DebugOut(L"[ERROR] MARIO object was created before!\n");
 		return;
 	}
-	obj = new CMario(200.0f, 80.0f);
+	obj = new CMario(150.0f, 50.0f);
 	player = (CMario*)obj;
 	objects.push_back(obj);
 
 	// Main ground
-	CPlatform* p = new CPlatform(0.0f, 180.0f, 48, 48, 32);
+	CPlatform* p = new CPlatform(100.0f, 1248.0f, 48, 48, 32);
 	objects.push_back(p);
 
 	//Goomba
@@ -323,13 +329,14 @@ void CPlayScene::Update(DWORD dt)
 
 	if (cx < 0) cx = 0;
 
-	CGame::GetInstance()->SetCamPos(cx-100.0f, 0);
+	CGame::GetInstance()->SetCamPos(cx, cy);
 
 	PurgeDeletedObjects();
 }
 
 void CPlayScene::Render()
 {
+	map->Render();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 }

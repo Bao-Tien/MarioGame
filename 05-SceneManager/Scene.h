@@ -2,6 +2,8 @@
 
 #include "KeyEventHandler.h"
 #include <string>
+#include "GameMap.h"
+
 using namespace std;
 
 
@@ -16,7 +18,7 @@ protected:
 	LPCWSTR sceneFilePath;
 	string id2;
 	string sceneFilePath2;
-	//shared_ptr<CGameMap> map;
+	shared_ptr<CGameMap> map;
 
 public: 
 	CScene(int id, LPCWSTR filePath)

@@ -5,6 +5,9 @@
 /*
 	Sprite animation
 */
+class CSprite;
+typedef CSprite* LPSPRITE;
+
 class CAnimationFrame
 {
 	LPSPRITE sprite;

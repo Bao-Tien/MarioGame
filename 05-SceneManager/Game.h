@@ -12,6 +12,7 @@ using namespace std;
 #include "Texture.h"
 #include "KeyEventHandler.h"
 #include "Scene.h"
+#include "Animations.h"
 
 #define MAX_FRAME_RATE 100
 #define KEYBOARD_BUFFER_SIZE 1024
@@ -108,6 +109,9 @@ public:
 
 	void SetCamPos(float x, float y) { cam_x = x; cam_y = y; }
 	void GetCamPos(float& x, float& y) { x = cam_x; y = cam_y; }
+	D3DXVECTOR2 GetCamPos() {
+		return D3DXVECTOR2(cam_x, cam_y);
+	}
 
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	LPSCENE GetCurrentScene2() { return scenes2[current_scene2]; }

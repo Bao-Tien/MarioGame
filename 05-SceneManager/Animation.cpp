@@ -49,3 +49,4 @@ void CAnimation::Render(float x, float y, float flipX, float flipY)
 
 	frames[currentFrame]->GetSprite()->Draw(x, y, flipX, flipY);
 }
+
