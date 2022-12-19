@@ -5,6 +5,7 @@
 
 #include "debug.h"
 #include"define-mario.h"
+#include "SampleKeyEventHandler.h"
 
 class CMario : public CGameObject
 {
@@ -61,7 +62,7 @@ public:
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
-	virtual void KeyboardHandle(int KeyCode, int type);
+	virtual void KeyboardHandle(int KeyCode, EKeyType type);
 
 	void SetLevel(int l);
 	int GetLevel() { return level; }

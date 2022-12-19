@@ -71,6 +71,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 }
 
+// Enemy
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
 	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
@@ -142,95 +143,11 @@ void CMario::SetAnimation() {
 void CMario::Render()
 {
 	CGameObject::Render();
-
 	RenderBoundingBox();
-	
 	DebugOutTitle(L"Coins: %d", coin);
 }
 
-void CMario::KeyboardHandle(int KeyCode, int type) {
-	//switch (type)
-	//{
-	//case 1: // OnKeyDown
-	//	switch (KeyCode)
-	//	{
-	//	case DIK_DOWN:
-	//		if (isOnPlatform && level != MARIO_LEVEL_SMALL)
-	//		{
-	//			isSitting = true;
-	//			vx = 0; vy = 0.0f;
-	//			y += MARIO_SIT_HEIGHT_ADJUST;
-	//		}
-	//		break;
-	//	case DIK_S:
-	//		if (isSitting) break;
-	//		if (isOnPlatform)
-	//		{
-	//			if (abs(this->vx) > MARIO_WALKING_SPEED) {
-	//				ay = -MARIO_ACCEL_JUMP_Y * 5/4;
-	//				maxVy = MARIO_JUMP_SPEED * 5/4;
-	//			}
-	//			else {
-	//				ay = -MARIO_ACCEL_JUMP_Y;
-	//				maxVy = MARIO_JUMP_SPEED;
-	//			}
-	//		}
-	//		break;
-	//	case DIK_1:
-	//		SetLevel(MARIO_LEVEL_SMALL);
-	//		break;
-	//	case DIK_2:
-	//		SetLevel(MARIO_LEVEL_BIG);
-	//		break;
-	//	case DIK_3:
-	//		SetLevel(MARIO_LEVEL_RACCOON);
-	//		break;
-	//	case DIK_0:
-	//		SetState(MARIO_STATE_DIE);
-	//		break;
-	//	case DIK_R: // reset
-	//		//Reload();
-	//		break;
-	//	}
-	//	break;
-	//case 2: // OnKeyUp
-	//	switch (KeyCode)
-	//	{
-	//	case DIK_DOWN:
-	//		if (isSitting)
-	//		{
-	//			isSitting = false;
-	//			state = MARIO_STATE_IDLE;
-	//			y = y - MARIO_SIT_HEIGHT_ADJUST - 1.0f;
-	//		}
-	//		break;
-	//	}
-	//	break;
-	//case 3: // KeyState
-	//	switch (KeyCode)
-	//	{
-	//	case DIK_RIGHT:
-	//		if (isSitting) break;
-	//		maxVx = MARIO_WALKING_SPEED * accelerated;
-	//		ax = MARIO_ACCEL_WALK_X * accelerated * 3 / 4;
-	//		nx = 1;
-	//		break;
-	//	case DIK_LEFT:
-	//		if (isSitting) break;
-	//		maxVx = -MARIO_WALKING_SPEED * accelerated;
-	//		ax = -MARIO_ACCEL_WALK_X * accelerated * 3 / 4;
-	//		nx = -1;
-	//		break;
-	//	case DIK_A:
-	//		if (isSitting) break;
-	//		accelerated = 2.0f;
-	//	default:
-	//		break;
-	//	}
-	//default:
-	//	break;
-	//}
-
+void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 	switch (KeyCode)
 	{
 	case DIK_1:
@@ -249,7 +166,7 @@ void CMario::KeyboardHandle(int KeyCode, int type) {
 		//Reload();
 		break;
 	case DIK_A:
-		if (type == 3)
+		if (type == EKeyType::KEY_STATE)
 		{
 			if (isSitting) break;
 			accelerated = 2.0f;
@@ -282,7 +199,7 @@ void CMario::KeyboardHandle(int KeyCode, int type) {
 		}
 		break;
 	case DIK_DOWN:
-		if (type == 1) {
+		if (type == EKeyType::KEY_DOWN) {
 			if (isOnPlatform && level != MARIO_LEVEL_SMALL)
 			{
 				isSitting = true;
@@ -291,7 +208,7 @@ void CMario::KeyboardHandle(int KeyCode, int type) {
 			}
 			break;
 		}
-		else if (type == 2) {
+		else if (type == EKeyType::KEY_UP) {
 			if (isSitting)
 			{
 				isSitting = false;
@@ -306,8 +223,34 @@ void CMario::KeyboardHandle(int KeyCode, int type) {
 }
 
 void CMario::UpdateState() {
-	if (!isOnPlatform)
+	DebugOut(L"isOnPlatform %d \n", isOnPlatform);
+
+	if (isOnPlatform)
 	{
+		if (isSitting)
+		{
+			SetState(MARIO_STATE_SIT);
+		}
+		else {
+			if (vx == 0)
+			{
+				SetState(MARIO_STATE_IDLE);
+			}
+			else
+			{
+				if ((vx > 0 && ax < 0) || (vx < 0 && ax>0)) {
+					SetState(MARIO_STATE_SKID);
+				}
+				else if (abs(vx) > MARIO_WALKING_SPEED) {
+					SetState(MARIO_STATE_RUN);
+				}
+				else {
+					SetState(MARIO_STATE_WALK);
+				}
+			}
+		}
+	}
+	else {
 		if (abs(ay) == MARIO_ACCEL_FLY_X) {
 			SetState(MARIO_STATE_FLY);
 		}
@@ -319,24 +262,11 @@ void CMario::UpdateState() {
 			SetState(MARIO_STATE_JUMP);
 		}
 		else SetState(MARIO_STATE_FALL);
+
+
+			
 	}
-	else
-		if (isSitting)
-		{
-			SetState(MARIO_STATE_SIT);
-		}
-		else
-			if (vx == 0)
-			{
-				SetState(MARIO_STATE_IDLE);
-			}
-			else
-			{
-				if ((vx > 0 && ax < 0) || (vx < 0 && ax>0)) SetState(MARIO_STATE_SKID);
-				else if (abs(vx) > MARIO_WALKING_SPEED)
-					SetState(MARIO_STATE_RUN);
-				else SetState(MARIO_STATE_WALK);
-			}
+		
 }
 
 void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)

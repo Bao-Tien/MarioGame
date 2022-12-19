@@ -19,9 +19,6 @@
     <Filter Include="Framework\Animations">
       <UniqueIdentifier>{9d722fb3-f595-4b14-bb95-62e1c16f7e8a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Camera">
-      <UniqueIdentifier>{5171cfaf-b603-4828-a1bf-779eb805fb3d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Game">
       <UniqueIdentifier>{6cb9f10f-bbdc-41e7-9323-be6cf9a5d162}</UniqueIdentifier>
     </Filter>

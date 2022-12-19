@@ -3,7 +3,7 @@
 #include "KeyEventHandler.h"
 #include <string>
 using namespace std;
-//#include "GameMap.h"
+
 
 /*
 *  Abstract class for a game scene
@@ -16,7 +16,7 @@ protected:
 	LPCWSTR sceneFilePath;
 	string id2;
 	string sceneFilePath2;
-	//shared_ptr<CGameMap> MAP;
+	//shared_ptr<CGameMap> map;
 
 public: 
 	CScene(int id, LPCWSTR filePath)
