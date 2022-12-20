@@ -189,12 +189,10 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 		if (isOnPlatform)
 		{
 			if (abs(this->vx) > MARIO_WALKING_SPEED) {
-				ay = -MARIO_ACCEL_JUMP_Y * 5 / 4;
-				maxVy = MARIO_JUMP_SPEED * 5 / 4;
+				ay = -MARIO_ACCEL_JUMP_Y * 1.2f;
 			}
 			else {
 				ay = -MARIO_ACCEL_JUMP_Y;
-				maxVy = MARIO_JUMP_SPEED;
 			}
 		}
 		break;
