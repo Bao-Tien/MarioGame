@@ -18,21 +18,12 @@ protected:
 
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> staticObjects;
-
-	void _ParseSection_SPRITES(string line);
-	void _ParseSection_ANIMATIONS(string line);
-
-	void _ParseSection_ASSETS(string line);
-	void _ParseSection_OBJECTS(string line);
-
-	void LoadAssets(LPCWSTR assetFile);
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
 	CPlayScene(string id, string filePath);
 
 	virtual void Load();
-	virtual void Load2();
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();

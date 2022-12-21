@@ -60,8 +60,6 @@ class CGame
 	string current_scene2;
 	string next_scene2 = "- 1";
 
-	void _ParseSection_SETTINGS(string line);
-	void _ParseSection_SCENES(string line);
 
 public:
 	// Init DirectX, Sprite Handler
@@ -115,8 +113,8 @@ public:
 
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	LPSCENE GetCurrentScene2() { return scenes2[current_scene2]; }
-	void Load(LPCWSTR gameFile);
-	void Load2(string gameFile);
+
+	void Load(string gameFile);
 	void SwitchScene();
 	void SwitchScene2();
 	void InitiateSwitchScene(int scene_id);
