@@ -49,7 +49,7 @@ public:
 	void UpdateState();
 	void Render();
 	//void SetState(int state);
-	void SetAnimation();
+	void GetAnimationFromState();
 
 	int IsCollidable()
 	{ 

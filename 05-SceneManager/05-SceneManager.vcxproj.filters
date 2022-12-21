@@ -76,6 +76,9 @@
     <Filter Include="Framework\Map">
       <UniqueIdentifier>{aa983bab-4e86-4d87-a6c9-a061198224c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Object\RectCollision">
+      <UniqueIdentifier>{f1ea7475-7b9b-4dcc-ae58-2eb169be2646}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -158,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="Animations.cpp">
       <Filter>Framework\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="RectCollision.cpp">
+      <Filter>Framework\Object\RectCollision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="Animations.h">
       <Filter>Framework\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="RectCollision.h">
+      <Filter>Framework\Object\RectCollision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

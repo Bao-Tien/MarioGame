@@ -35,7 +35,7 @@ public:
 		this->cellWidth = cell_width;
 		this->cellHeight = cell_height;
 	}
-	void SetAnimation() {
+	void GetAnimationFromState() {
 		this->spriteIdBegin2 = ID_SPR_PLATFORM;
 		this->spriteIdMiddle2 = ID_SPR_PLATFORM;
 		this->spriteIdEnd2 = ID_SPR_PLATFORM;

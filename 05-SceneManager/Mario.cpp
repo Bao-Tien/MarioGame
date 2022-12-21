@@ -118,7 +118,7 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 }
 
-void CMario::SetAnimation() {
+void CMario::GetAnimationFromState() {
 	string typeString, stateString;
 	if (level == MARIO_LEVEL_SMALL) typeString = ANI_MARIO_LEVEL_SMALL;
 	else if (level == MARIO_LEVEL_BIG) typeString = ANI_MARIO_LEVEL_BIG;

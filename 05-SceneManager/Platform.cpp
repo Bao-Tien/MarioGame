@@ -30,7 +30,7 @@ void CPlatform::RenderBoundingBox()
 
 void CPlatform::Render()
 {
-	SetAnimation();
+	GetAnimationFromState();
 	if (this->length <= 0) return; 
 	float xx = x; 
 	CSprites * s = CSprites::GetInstance();

@@ -55,7 +55,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
 	virtual void Render();
 	virtual void SetState(int state) { this->state = state; }
-	virtual void SetAnimation(){};
+	virtual void GetAnimationFromState(){};
 
 	//
 	// Collision ON or OFF ? This can change depending on object's state. For example: die

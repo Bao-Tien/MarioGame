@@ -62,7 +62,7 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
-void CGoomba::SetAnimation() {
+void CGoomba::GetAnimationFromState() {
 	animationId = "ani-goomba-walk";
 	if (state == GOOMBA_STATE_DIE)
 	{

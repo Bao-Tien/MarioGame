@@ -39,7 +39,7 @@ void CGameObject::RenderBoundingBox()
 }
 
 void CGameObject::Render() {
-	SetAnimation();
+	GetAnimationFromState();
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(animationId)->Render(x, y, flipX, flipY);
 	//RenderBoundingBox();
