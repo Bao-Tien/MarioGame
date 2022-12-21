@@ -1,5 +1,6 @@
 #include "GameMap.h"
 #include "Game.h"
+#include "RectCollision.h"
 
 #define CAMERA_MARGIN			150
 
@@ -127,6 +128,22 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 		for (TiXmlElement* node = root->FirstChildElement("layer"); node != nullptr; node = node->NextSiblingElement("layer")) {
 			shared_ptr<CMapLayer> layer = shared_ptr<CMapLayer>(new CMapLayer(node));
 			gameMap->AddLayer(layer);
+		}
+
+		// Load collision group objects
+		for (TiXmlElement* objGroupNode = root->FirstChildElement("objectgroup"); objGroupNode != nullptr; objGroupNode = objGroupNode->NextSiblingElement("objectgroup")) {
+			if (std::string(objGroupNode->Attribute("name")) == "RectCollision"
+				|| std::string(objGroupNode->Attribute("name")) == "CanNotGo") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					LPGAMEOBJECT obj = new CRectCollision(
+						atoi(objNode->Attribute("x")),
+						atoi(objNode->Attribute("y")),
+						atoi(objNode->Attribute("width")),
+						atoi(objNode->Attribute("height"))
+					);
+					staticObjects->push_back(obj);
+				}
+			}
 		}
 
 		return gameMap;

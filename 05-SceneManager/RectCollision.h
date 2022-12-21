@@ -9,6 +9,7 @@ protected:
 
 public:
 	CRectCollision(int x, int y, int width, int height);
+	void RenderBoundingBox();
 	virtual void Render();
 };
 

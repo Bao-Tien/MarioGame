@@ -90,7 +90,7 @@ void CPlayScene::Load() {
 	objects.push_back(obj);
 
 	// Main ground
-	CPlatform* p = new CPlatform(100.0f, 1248.0f, 48, 48, 32);
+	CPlatform* p = new CPlatform(100.0f, 1248.0f, 48, 48, 60);
 	objects.push_back(p);
 
 	//Goomba
@@ -138,6 +138,11 @@ void CPlayScene::Update(DWORD dt)
 void CPlayScene::Render()
 {
 	map->Render();
+	for (int i = 0; i < staticObjects.size(); i++)
+	{
+		if (!staticObjects[i]->GetIsHidden())
+			staticObjects[i]->Render();
+	}
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 }

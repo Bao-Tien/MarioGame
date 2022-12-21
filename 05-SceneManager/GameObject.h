@@ -32,6 +32,7 @@ protected:
 	int state;
 
 	bool isDeleted; 
+	bool isHidden = false;
 
 	string animationId = "";
 
@@ -44,6 +45,7 @@ public:
 	int GetState() { return this->state; }
 	virtual void Delete() { isDeleted = true;  }
 	bool IsDeleted() { return isDeleted; }
+	bool GetIsHidden() { return isHidden; }
 
 	void RenderBoundingBox();
 
