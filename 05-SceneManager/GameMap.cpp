@@ -94,7 +94,7 @@ void CGameMap::Render()
 				int id = layer->GetTileID(i % width, j % height);
 				CTileSet* tilesetPtr = this->GetTileSetByTileID(id);
 				if (tilesetPtr != nullptr) {
-					tilesetPtr->Draw(id, D3DXVECTOR2(x - camPos.x, y - camPos.y));
+					tilesetPtr->Draw(id, D3DXVECTOR2(x + tileWidth / 2 - camPos.x, y + tileWidth / 2 - camPos.y));
 				}
 				
 			}
@@ -135,11 +135,16 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 			if (std::string(objGroupNode->Attribute("name")) == "RectCollision"
 				|| std::string(objGroupNode->Attribute("name")) == "CanNotGo") {
 				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
 					LPGAMEOBJECT obj = new CRectCollision(
-						atoi(objNode->Attribute("x")),
-						atoi(objNode->Attribute("y")),
-						atoi(objNode->Attribute("width")),
-						atoi(objNode->Attribute("height"))
+						x + width / 2,
+						y + height / 2,
+						width,
+						height
 					);
 					staticObjects->push_back(obj);
 				}

@@ -79,23 +79,22 @@ void CPlayScene::Load() {
 	string type_Player = play->Attribute("type");
 	float player_x = stof(play->Attribute("x"));
 	float player_y = stof(play->Attribute("y"));
-	CGameObject* obj = NULL;
+	CMario* obj = NULL;
 	if (player != NULL)
 	{
 		DebugOut(L"[ERROR] MARIO object was created before!\n");
 		return;
 	}
-	obj = new CMario(150.0f, 50.0f);
-	player = (CMario*)obj;
-	objects.push_back(obj);
+	obj = new CBigMario(150.0f, 50.0f);
+	player = obj;
 
-	// Main ground
-	CPlatform* p = new CPlatform(100.0f, 1248.0f, 48, 48, 60);
-	objects.push_back(p);
 
 	//Goomba
-	CGoomba* goomba = new CGoomba(280.0f, 100.0f);
-	objects.push_back(goomba);
+	/*CGoomba* goomba = new CGoomba(280.0f, 100.0f);
+	this->enemyObjects.push_back(goomba);*/
+
+	/*CPlatform* p = new CPlatform(100.0f, 1048.0f, 48, 48, 60);
+	this->staticObjects.push_back(p);*/
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", sceneFilePath);
 
@@ -107,18 +106,30 @@ void CPlayScene::Update(DWORD dt)
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 1; i < objects.size(); i++)
+
+	// Xet va cham voi Enemy
+	for (size_t i = 0; i < staticObjects.size(); i++)
 	{
-		coObjects.push_back(objects[i]);
+		coObjects.push_back(staticObjects[i]);
+	}
+	for (size_t i = 0; i < enemyObjects.size(); i++)
+	{
+		enemyObjects[i]->Update(dt, &coObjects);
 	}
 
-	for (size_t i = 0; i < objects.size(); i++)
-	{
-		objects[i]->Update(dt, &coObjects);
-	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
-	if (player == NULL) return; 
+	if (player == NULL) return;
+
+	// Xet va cham voi Mario
+	for (size_t i = 0; i < enemyObjects.size(); i++)
+	{
+		coObjects.push_back(enemyObjects[i]);
+	}
+	player->Update(dt, &coObjects);
+
+
+	
 
 	// Update camera to follow mario
 	float cx, cy;
@@ -137,14 +148,24 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
+	// Render enemyObjectsBehindMap
+	// ...
+
+
+	// Render Map
 	map->Render();
 	for (int i = 0; i < staticObjects.size(); i++)
 	{
 		if (!staticObjects[i]->GetIsHidden())
 			staticObjects[i]->Render();
 	}
-	for (int i = 0; i < objects.size(); i++)
-		objects[i]->Render();
+
+	// Render enemyObjectsInfrontOfMap
+	for (int i = 0; i < enemyObjects.size(); i++)
+		enemyObjects[i]->Render();
+
+	// Render Mario
+	this->player->Render();
 }
 
 /*
@@ -153,11 +174,17 @@ void CPlayScene::Render()
 void CPlayScene::Clear()
 {
 	vector<LPGAMEOBJECT>::iterator it;
-	for (it = objects.begin(); it != objects.end(); it++)
+	for (it = enemyObjects.begin(); it != enemyObjects.end(); it++)
 	{
 		delete (*it);
 	}
-	objects.clear();
+	enemyObjects.clear();
+
+	for (it = staticObjects.begin(); it != staticObjects.end(); it++)
+	{
+		delete (*it);
+	}
+	staticObjects.clear();
 }
 
 /*
@@ -168,10 +195,17 @@ void CPlayScene::Clear()
 */
 void CPlayScene::Unload()
 {
-	for (int i = 0; i < objects.size(); i++)
-		delete objects[i];
+	// Unload enemy
+	for (int i = 0; i < enemyObjects.size(); i++) {
+		delete enemyObjects[i];
+	}
+	enemyObjects.clear();
 
-	objects.clear();
+	// Unload staticObjects
+	for (int i = 0; i < staticObjects.size(); i++) {
+		delete staticObjects[i];
+	}
+	staticObjects.clear();
 	player = NULL;
 
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);
@@ -182,7 +216,7 @@ bool CPlayScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; 
 void CPlayScene::PurgeDeletedObjects()
 {
 	vector<LPGAMEOBJECT>::iterator it;
-	for (it = objects.begin(); it != objects.end(); it++)
+	for (it = enemyObjects.begin(); it != enemyObjects.end(); it++)
 	{
 		LPGAMEOBJECT o = *it;
 		if (o->IsDeleted())
@@ -194,7 +228,7 @@ void CPlayScene::PurgeDeletedObjects()
 
 	// NOTE: remove_if will swap all deleted items to the end of the vector
 	// then simply trim the vector, this is much more efficient than deleting individual items
-	objects.erase(
-		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
-		objects.end());
+	enemyObjects.erase(
+		std::remove_if(enemyObjects.begin(), enemyObjects.end(), CPlayScene::IsGameObjectDeleted),
+		enemyObjects.end());
 }

@@ -39,10 +39,13 @@ void CGameObject::RenderBoundingBox()
 }
 
 void CGameObject::Render() {
-	GetAnimationFromState();
-	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(animationId)->Render(x, y, flipX, flipY);
-	//RenderBoundingBox();
+	std::string animationId = GetAnimationFromState();
+	if (animationId.length() > 0) {
+		CAnimations* animations = CAnimations::GetInstance();
+		animations->Get(animationId)->Render(x, y, flipX, flipY);
+	}
+	
+	// RenderBoundingBox();
 }
 
 CGameObject::~CGameObject()

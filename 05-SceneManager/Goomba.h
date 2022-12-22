@@ -14,8 +14,8 @@
 #define GOOMBA_STATE_WALKING 100
 #define GOOMBA_STATE_DIE 200
 
-#define ID_ANI_GOOMBA_WALKING 5000
-#define ID_ANI_GOOMBA_DIE 5001
+#define ID_ANI_GOOMBA_WALKING  "ani-goomba-walk"// 5000
+#define ID_ANI_GOOMBA_DIE "ani-goomba-die"//5001
 
 class CGoomba : public CGameObject
 {
@@ -38,5 +38,5 @@ protected:
 public: 	
 	CGoomba(float x, float y);
 	virtual void SetState(int state);
-	void GetAnimationFromState();
+	string GetAnimationFromState();
 };

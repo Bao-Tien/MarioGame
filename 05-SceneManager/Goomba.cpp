@@ -62,12 +62,12 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
-void CGoomba::GetAnimationFromState() {
-	animationId = "ani-goomba-walk";
+string CGoomba::GetAnimationFromState() {
 	if (state == GOOMBA_STATE_DIE)
 	{
-		animationId = "ani-goomba-die";
+		return ID_ANI_GOOMBA_DIE;
 	}
+	return ID_ANI_GOOMBA_WALKING;
 }
 
 

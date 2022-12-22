@@ -34,7 +34,9 @@ protected:
 	bool isDeleted; 
 	bool isHidden = false;
 
-	string animationId = "";
+	int BoundingBox_Width = 0;
+	int BoundingBox_Height = 0;
+
 
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
@@ -52,12 +54,22 @@ public:
 	CGameObject();
 	CGameObject(float x, float y) :CGameObject() { this->x = x; this->y = y; }
 
+	void setBoundingBoxSize(int width, int height) {
+		this->BoundingBox_Width = width;
+		this->BoundingBox_Height = height;
+	}
 
-	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
+		left = this->x - this->BoundingBox_Width / 2;
+		top = this->y - this->BoundingBox_Height / 2;
+		right = this->x + this->BoundingBox_Width / 2;
+		bottom = this->y + this->BoundingBox_Height / 2;
+	}
+
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
 	virtual void Render();
 	virtual void SetState(int state) { this->state = state; }
-	virtual void GetAnimationFromState(){};
+	virtual string GetAnimationFromState() { return ""; };
 
 	//
 	// Collision ON or OFF ? This can change depending on object's state. For example: die

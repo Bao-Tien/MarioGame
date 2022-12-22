@@ -9,6 +9,7 @@
 #include "Portal.h"
 
 #include "Collision.h"
+#include "RectCollision.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -50,6 +51,9 @@ void CMario::OnNoCollision(DWORD dt)
 	y += vy * dt;
 }
 
+// e->ny < 0 : va cham o duoi chan mario
+// e->ny > 0 : va cham tren dau mario
+// e->nx != 0 : va cham phuong ngang
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->ny != 0 && e->obj->IsBlocking())
@@ -69,6 +73,15 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
+}
+
+// RectCollision
+void CMario::OnCollisionWithRectCollision(LPCOLLISIONEVENT e) {
+	CRectCollision* rectCollision = dynamic_cast<CRectCollision*>(e->obj);
+
+	if (e->ny != 0) {
+
+	}
 }
 
 // Enemy
@@ -91,15 +104,15 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 		{
 			if (goomba->GetState() != GOOMBA_STATE_DIE)
 			{
-				if (level > MARIO_LEVEL_SMALL)
+				if (level > EMario_Level::SMALL)
 				{
-					level = MARIO_LEVEL_SMALL;
+					level = EMario_Level::SMALL;
 					StartUntouchable();
 				}
 				else
 				{
 					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
+					SetState(EMario_State::DIE);
 				}
 			}
 		}
@@ -118,24 +131,24 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 }
 
-void CMario::GetAnimationFromState() {
+string CMario::GetAnimationFromState() {
 	string typeString, stateString;
-	if (level == MARIO_LEVEL_SMALL) typeString = ANI_MARIO_LEVEL_SMALL;
-	else if (level == MARIO_LEVEL_BIG) typeString = ANI_MARIO_LEVEL_BIG;
-	else if (level == MARIO_LEVEL_RACCOON) typeString = ANI_MARIO_LEVEL_RACCOON;
-	else typeString = ANI_MARIO_LEVEL_SMALL;
+	if (level == EMario_Level::SMALL) typeString = ANI_MARIO_LEVEL_SMALL;
+	else if (level == EMario_Level::BIG) typeString = ANI_MARIO_LEVEL_BIG;
+	else if (level == EMario_Level::RACCOON) typeString = ANI_MARIO_LEVEL_RACCOON;
+	else typeString = EMario_Level::SMALL;
 
-	if (state == MARIO_STATE_IDLE) stateString = ANI_MARIO_STATE_IDLE;
-	else if (state == MARIO_STATE_WALK) stateString = ANI_MARIO_STATE_WALK;
-	else if (state == MARIO_STATE_RUN) stateString = ANI_MARIO_STATE_RUN;
-	else if (state == MARIO_STATE_JUMP) stateString = ANI_MARIO_STATE_WALK_JUMP;
-	else if (state == MARIO_STATE_HIGH_JUMP) stateString = ANI_MARIO_STATE_RUN_JUMP;
-	else if (state == MARIO_STATE_SIT) stateString = ANI_MARIO_STATE_SIT;
-	else if (state == MARIO_STATE_FALL) stateString = ANI_MARIO_STATE_FALL;
-	else if (state == MARIO_STATE_SKID) stateString = ANI_MARIO_STATE_SKID;
+	if (state == EMario_State::IDLE) stateString = ANI_MARIO_STATE_IDLE;
+	else if (state == EMario_State::WALK) stateString = ANI_MARIO_STATE_WALK;
+	else if (state == EMario_State::RUN) stateString = ANI_MARIO_STATE_RUN;
+	else if (state == EMario_State::JUMP) stateString = ANI_MARIO_STATE_WALK_JUMP;
+	else if (state == EMario_State::JUMP_HIGH) stateString = ANI_MARIO_STATE_RUN_JUMP;
+	else if (state == EMario_State::SIT) stateString = ANI_MARIO_STATE_SIT;
+	else if (state == EMario_State::FALL) stateString = ANI_MARIO_STATE_FALL;
+	else if (state == EMario_State::SKID) stateString = ANI_MARIO_STATE_SKID;
 	else stateString = ANI_MARIO_STATE_IDLE;
 
-	animationId = typeString + "-" + stateString;
+	return typeString + "-" + stateString;
 }
 
 
@@ -143,24 +156,24 @@ void CMario::GetAnimationFromState() {
 void CMario::Render()
 {
 	CGameObject::Render();
-	RenderBoundingBox();
-	DebugOutTitle(L"Coins: %d", coin);
+	CGameObject::RenderBoundingBox();
+	DebugOutTitle(L"MarioState: %d", state);
 }
 
 void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 	switch (KeyCode)
 	{
 	case DIK_1:
-		SetLevel(MARIO_LEVEL_SMALL);
+		SetLevel(EMario_Level::SMALL);
 		break;
 	case DIK_2:
-		SetLevel(MARIO_LEVEL_BIG);
+		SetLevel(EMario_Level::BIG);
 		break;
 	case DIK_3:
-		SetLevel(MARIO_LEVEL_RACCOON);
+		SetLevel(EMario_Level::RACCOON);
 		break;
 	case DIK_0:
-		SetState(MARIO_STATE_DIE);
+		SetState(EMario_State::DIE);
 		break;
 	case DIK_R: // reset
 		//Reload();
@@ -210,7 +223,7 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 			if (isSitting)
 			{
 				isSitting = false;
-				state = MARIO_STATE_IDLE;
+				state = EMario_State::IDLE;
 				y = y - MARIO_SIT_HEIGHT_ADJUST - 1.0f;
 			}
 			break;
@@ -220,84 +233,58 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 	flipX = nx > 0 ? 1 : -1;
 }
 
+
+
 void CMario::UpdateState() {
 
 	if (isOnPlatform)
 	{
 		if (isSitting)
 		{
-			SetState(MARIO_STATE_SIT);
+			SetState(EMario_State::SIT);
 		}
 		else {
 			if (vx == 0)
 			{
-				SetState(MARIO_STATE_IDLE);
+				SetState(EMario_State::IDLE);
 			}
 			else
 			{
 				if ((vx > 0 && ax < 0) || (vx < 0 && ax>0)) {
-					SetState(MARIO_STATE_SKID);
+					SetState(EMario_State::SKID);
 				}
 				else if (abs(vx) > MARIO_WALKING_SPEED) {
-					SetState(MARIO_STATE_RUN);
+					SetState(EMario_State::RUN);
 				}
 				else {
-					SetState(MARIO_STATE_WALK);
+					SetState(EMario_State::WALK);
 				}
 			}
 		}
 	}
 	else {
 		if (abs(ay) == MARIO_ACCEL_FLY_X) {
-			SetState(MARIO_STATE_FLY);
+			SetState(EMario_State::FLY);
 		}
 		else if (abs(vx) > MARIO_WALKING_SPEED)
 		{
-			SetState(MARIO_STATE_HIGH_JUMP);
+			SetState(EMario_State::JUMP_HIGH);
 		}
 		else if (abs(maxVx) <= MARIO_WALKING_SPEED) {
-			SetState(MARIO_STATE_JUMP);
+			SetState(EMario_State::JUMP);
 		}
-		else SetState(MARIO_STATE_FALL);
-
-
-			
-	}
-		
-}
-
-void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
-{
-	if (level==MARIO_LEVEL_BIG || level == MARIO_LEVEL_RACCOON)
-	{
-		if (isSitting)
-		{
-			left = x - MARIO_BIG_SITTING_BBOX_WIDTH / 2;
-			top = y - MARIO_BIG_SITTING_BBOX_HEIGHT / 2;
-			right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
-			bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT;
-		}
-		else 
-		{
-			left = x - MARIO_BIG_BBOX_WIDTH/2;
-			top = y - MARIO_BIG_BBOX_HEIGHT/2;
-			right = left + MARIO_BIG_BBOX_WIDTH;
-			bottom = top + MARIO_BIG_BBOX_HEIGHT;
-		}
-	}
-	else
-	{
-		left = x - MARIO_SMALL_BBOX_WIDTH/2;
-		top = y - MARIO_SMALL_BBOX_HEIGHT/2;
-		right = left + MARIO_SMALL_BBOX_WIDTH;
-		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
+		else SetState(EMario_State::FALL);
 	}
 }
 
-void CMario::SetLevel(int l)
+void CMario::SetState(EMario_State s) {
+	state = s;
+}
+
+void CMario::SetLevel(EMario_Level l)
 {
 	// Adjust position to avoid falling off platform
-	if (this->level == MARIO_LEVEL_SMALL)
+	if (this->level == EMario_Level::SMALL)
 	{
 		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
 	}

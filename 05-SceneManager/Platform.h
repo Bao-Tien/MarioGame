@@ -26,6 +26,8 @@ public:
 		this->spriteIdBegin = sprite_id_begin;
 		this->spriteIdMiddle = sprite_id_middle;
 		this->spriteIdEnd = sprite_id_end;
+		this->BoundingBox_Width = cell_width * length;
+		this->BoundingBox_Height = cell_height * length;
 	}
 
 	CPlatform(float x, float y,
@@ -34,11 +36,14 @@ public:
 		this->length = length;
 		this->cellWidth = cell_width;
 		this->cellHeight = cell_height;
+		this->BoundingBox_Width = cell_width * length;
+		this->BoundingBox_Height = cell_height * length;
 	}
-	void GetAnimationFromState() {
+	string GetAnimationFromState() {
 		this->spriteIdBegin2 = ID_SPR_PLATFORM;
 		this->spriteIdMiddle2 = ID_SPR_PLATFORM;
 		this->spriteIdEnd2 = ID_SPR_PLATFORM;
+		return "";
 	}
 	void Render() override;
 	void Update(DWORD dt) {}

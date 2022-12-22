@@ -5,6 +5,8 @@
 #include "GameObject.h"
 #include "Brick.h"
 #include "Mario.h"
+#include "SmallMario.h"
+#include "BigMario.h"
 #include "Goomba.h"
 #include "Animations.h"
 //#include "Koopas.h"
@@ -14,9 +16,10 @@ class CPlayScene: public CScene
 {
 protected: 
 	// A play scene has to have player, right? 
-	LPGAMEOBJECT player;					
+	CMario* player;
 
-	vector<LPGAMEOBJECT> objects;
+	// enemyObjectsBehindMap, enemyObjectsInfrontOfMap
+	vector<LPGAMEOBJECT> enemyObjects;
 	vector<LPGAMEOBJECT> staticObjects;
 	
 public: 
