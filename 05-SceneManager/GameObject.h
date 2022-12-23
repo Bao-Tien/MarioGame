@@ -38,6 +38,20 @@ protected:
 	int BoundingBox_Height = 0;
 
 
+
+	D3DXVECTOR2 prevBoundingBoxSize = D3DXVECTOR2(0, 0);
+	
+	virtual void BeforeSetBoundBox() {
+		prevBoundingBoxSize = GetBoundingBoxSize();
+	}
+
+	virtual void AfterSetBoundBox() {
+		D3DXVECTOR2 currentBoundingBoxSize = GetBoundingBoxSize();
+		x = x + (prevBoundingBoxSize.x - currentBoundingBoxSize.x) / 2;
+		y = y + (prevBoundingBoxSize.y - currentBoundingBoxSize.y) / 2;
+	}
+
+
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
@@ -54,10 +68,17 @@ public:
 	CGameObject();
 	CGameObject(float x, float y) :CGameObject() { this->x = x; this->y = y; }
 
-	void setBoundingBoxSize(int width, int height) {
+	void SetBoundingBoxSize(int width, int height) {
+		this->BeforeSetBoundBox();
 		this->BoundingBox_Width = width;
 		this->BoundingBox_Height = height;
+		this->AfterSetBoundBox();
 	}
+	D3DXVECTOR2 GetBoundingBoxSize() {
+		return D3DXVECTOR2(this->BoundingBox_Width, this->BoundingBox_Height);
+	}
+
+	
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 		left = this->x - this->BoundingBox_Width / 2;

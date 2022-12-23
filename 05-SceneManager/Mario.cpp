@@ -10,6 +10,7 @@
 
 #include "Collision.h"
 #include "RectCollision.h"
+#include "Enemy.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -67,8 +68,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		vx = 0;
 	}
 
-	if (dynamic_cast<CGoomba*>(e->obj))
-		OnCollisionWithGoomba(e);
+	if (dynamic_cast<CEnemy*>(e->obj))
+		OnCollisionWithEnemy(e);
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
@@ -85,6 +86,38 @@ void CMario::OnCollisionWithRectCollision(LPCOLLISIONEVENT e) {
 }
 
 // Enemy
+void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
+	CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
+
+	// jump on top >> kill Goomba and deflect a bit 
+	if (e->ny < 0)
+	{
+		if (enemy->GetState() != EEnemy_State::DIE)
+		{
+			//enemy->SetState(EEnemy_State::DIE);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+	}
+	else // hit by Goomba
+	{
+		if (untouchable == 0)
+		{
+			if (enemy->GetState() != EEnemy_State::DIE)
+			{
+				if (level > EMario_Level::SMALL)
+				{
+					level = EMario_Level::SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(EMario_State::DIE);
+				}
+			}
+		}
+	}
+}
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
 	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
@@ -136,7 +169,7 @@ string CMario::GetAnimationFromState() {
 	if (level == EMario_Level::SMALL) typeString = ANI_MARIO_LEVEL_SMALL;
 	else if (level == EMario_Level::BIG) typeString = ANI_MARIO_LEVEL_BIG;
 	else if (level == EMario_Level::RACCOON) typeString = ANI_MARIO_LEVEL_RACCOON;
-	else typeString = EMario_Level::SMALL;
+	else typeString = ANI_MARIO_LEVEL_SMALL;
 
 	if (state == EMario_State::IDLE) stateString = ANI_MARIO_STATE_IDLE;
 	else if (state == EMario_State::WALK) stateString = ANI_MARIO_STATE_WALK;
@@ -211,7 +244,7 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 		break;
 	case DIK_DOWN:
 		if (type == EKeyType::KEY_DOWN) {
-			if (isOnPlatform && level != MARIO_LEVEL_SMALL)
+			if (isOnPlatform && level != EMario_Level::SMALL)
 			{
 				isSitting = true;
 				vx = 0; vy = 0.0f;

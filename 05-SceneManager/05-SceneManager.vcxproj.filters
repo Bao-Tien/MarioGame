@@ -85,6 +85,12 @@
     <Filter Include="Framework\Object\Mario\SmallMario">
       <UniqueIdentifier>{0dc89a76-44ca-4141-8250-512d3328e9e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Object\Enemy">
+      <UniqueIdentifier>{5203214b-ea5e-49a3-ae37-87d563b4458c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Object\Enemy\Goomba">
+      <UniqueIdentifier>{966e2e8a-19b6-4566-94b7-3ed9b5d3197f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -176,6 +182,12 @@
     </ClCompile>
     <ClCompile Include="BigMario.cpp">
       <Filter>Framework\Object\Mario\BigMario</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Framework\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba1.cpp">
+      <Filter>Framework\Object\Enemy\Goomba</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -274,6 +286,12 @@
     </ClInclude>
     <ClInclude Include="BigMario.h">
       <Filter>Framework\Object\Mario\BigMario</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Framework\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba1.h">
+      <Filter>Framework\Object\Enemy\Goomba</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

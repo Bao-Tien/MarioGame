@@ -9,6 +9,7 @@
 #include "Portal.h"
 #include "Coin.h"
 #include "Platform.h"
+#include "Goomba1.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -92,9 +93,8 @@ void CPlayScene::Load() {
 	//Goomba
 	/*CGoomba* goomba = new CGoomba(280.0f, 100.0f);
 	this->enemyObjects.push_back(goomba);*/
-
-	/*CPlatform* p = new CPlatform(100.0f, 1048.0f, 48, 48, 60);
-	this->staticObjects.push_back(p);*/
+	CGoomba1* g = new CGoomba1(280.0f, 100.0f);
+	this->enemyObjects.push_back(g);
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", sceneFilePath);
 
@@ -185,6 +185,7 @@ void CPlayScene::Clear()
 		delete (*it);
 	}
 	staticObjects.clear();
+	player = NULL;
 }
 
 /*
@@ -216,6 +217,7 @@ bool CPlayScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; 
 void CPlayScene::PurgeDeletedObjects()
 {
 	vector<LPGAMEOBJECT>::iterator it;
+	// Enemy Object
 	for (it = enemyObjects.begin(); it != enemyObjects.end(); it++)
 	{
 		LPGAMEOBJECT o = *it;
@@ -231,4 +233,19 @@ void CPlayScene::PurgeDeletedObjects()
 	enemyObjects.erase(
 		std::remove_if(enemyObjects.begin(), enemyObjects.end(), CPlayScene::IsGameObjectDeleted),
 		enemyObjects.end());
+
+	// Static Object
+	for (it = staticObjects.begin(); it != staticObjects.end(); it++)
+	{
+		LPGAMEOBJECT o = *it;
+		if (o->IsDeleted())
+		{
+			delete o;
+			*it = NULL;
+		}
+	}
+
+	staticObjects.erase(
+		std::remove_if(staticObjects.begin(), staticObjects.end(), CPlayScene::IsGameObjectDeleted),
+		staticObjects.end());
 }

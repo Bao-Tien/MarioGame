@@ -6,7 +6,7 @@
 #include"define-mario.h"
 #include "SampleKeyEventHandler.h"
 
-enum EMario_State {
+enum class EMario_State {
 	DIE = 0,
 	IDLE = 1,
 	WALK = 2,
@@ -19,7 +19,7 @@ enum EMario_State {
 	SKID = 9,
 };
 
-enum EMario_Level {
+enum class EMario_Level {
 	SMALL = 0,
 	BIG = 1,
 	RACCOON = 2,
@@ -28,6 +28,7 @@ enum EMario_Level {
 
 class CMario : public CGameObject
 {
+protected:
 	BOOLEAN isSitting;
 	float maxVx; 
 	float maxVy;
@@ -44,6 +45,7 @@ class CMario : public CGameObject
 	BOOLEAN isOnPlatform;
 	int coin; 
 
+	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
@@ -89,5 +91,4 @@ public:
 	void SetState(EMario_State s);
 	EMario_Level GetLevel() { return level; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
-
 };

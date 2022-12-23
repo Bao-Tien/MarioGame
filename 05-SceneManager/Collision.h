@@ -46,6 +46,7 @@ struct CCollisionEvent
 class CCollision
 {
 	static CCollision* __instance;
+	void CallCollisionEventOnDestObject(LPGAMEOBJECT objSrc, LPCOLLISIONEVENT colEvent);
 public: 
 	static void SweptAABB(
 		float ml,			// move left 
