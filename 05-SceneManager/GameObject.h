@@ -56,6 +56,9 @@ public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
+	D3DXVECTOR2 GetPosition() {
+		return D3DXVECTOR2(this->x, this->y);
+	}
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 
 	int GetState() { return this->state; }
@@ -77,8 +80,6 @@ public:
 	D3DXVECTOR2 GetBoundingBoxSize() {
 		return D3DXVECTOR2(this->BoundingBox_Width, this->BoundingBox_Height);
 	}
-
-	
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 		left = this->x - this->BoundingBox_Width / 2;
@@ -105,6 +106,13 @@ public:
 	
 	// Is this object blocking other object? If YES, collision framework will automatically push the other object
 	virtual int IsBlocking() { return 1; }
+
+
+	virtual int IsBlockingLeft() { return 1; }
+	virtual int IsBlockingTop() { return 1; }
+	virtual int IsBlockingRight() { return 1; }
+	virtual int IsBlockingBottom() { return 1; }
+
 
 	~CGameObject();
 

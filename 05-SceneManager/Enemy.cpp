@@ -1,12 +1,14 @@
 #include "Enemy.h"
 #include "Mario.h"
+#include "RectPlatform.h"
+#include "RectCollision.h"
+#include "Paragoomba.h"
 
 CEnemy::CEnemy(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = ENEMY_GRAVITY;
 	die_start = -1;
-	vx = -ENEMY_MOVE_SPEED;
 }
 
 void CEnemy::OnNoCollision(DWORD dt)
@@ -28,11 +30,29 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+
+	if (e->ny > 0) {
+		if (dynamic_cast<CMario*>(e->obj)) {
+			if (level > 0) {
+				level--;
+				OnChangeLevel();
+			}
+		}
+	}
+
+	if (isAutoChangeDirectionWhenMoveOverRangeX == true) {
+		if (dynamic_cast<CRectPlatform*>(e->obj) || dynamic_cast<CRectCollision*>(e->obj)) {
+			if (moveRangeX.x == 0 && moveRangeX.y == 0) {
+				moveRangeX.x = e->obj->GetPosition().x - e->obj->GetBoundingBoxSize().x / 2 + this->BoundingBox_Width / 2;
+				moveRangeX.y = e->obj->GetPosition().x + e->obj->GetBoundingBoxSize().x / 2 - this->BoundingBox_Width / 2;
+			}
+		}
+	}
 }
 
 void CEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if ((state == EEnemy_State::DIE))
+	if ((level == 0))
 	{
 		if ((GetTickCount64() - die_start > ENEMY_DIE_TIMEOUT)) {
 			isDeleted = true;
@@ -40,16 +60,35 @@ void CEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 
-	vy += ay * dt;
+	if (dynamic_cast<CParagoomba*>(this)) {
+		int a = 9;
+	}
+	vy += (ay + g) * dt;
 	vx += ax * dt;
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
-	UpdateState();
+
+	if (isAutoChangeDirectionWhenMoveOverRangeX == true) {
+		if (moveRangeX.x != 0 && moveRangeX.y != 0) {
+			if (x < moveRangeX.x) {
+				x = moveRangeX.x;
+				nx *= -1;
+				vx *= -1;
+			}
+			if (x > moveRangeX.y) {
+				x = moveRangeX.y;
+				nx *= -1;
+				vx *= -1;
+			}
+		}
+	}
+	flipX = nx > 0 ? 1 : -1;
 }
 
 void CEnemy::Render()
 {
+
 	CGameObject::Render();
 	RenderBoundingBox();
 }
@@ -59,11 +98,5 @@ void CEnemy::SetState(EEnemy_State s) {
 }
 
 string CEnemy::GetAnimationFromState() {
-	string typeString, stateString;
-	if (type == EEnemy_Type::GOOMBA) typeString = "ani-goomba";
-
-	if (state == EEnemy_State::DIE) stateString = "die";
-	else if (state == EEnemy_State::MOVE) stateString = "walk";
-
-	return typeString + "-" + stateString;
+	return enemyAnimationId;
 }

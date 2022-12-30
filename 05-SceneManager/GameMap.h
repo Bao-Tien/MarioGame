@@ -44,7 +44,7 @@ public:
 
 	virtual void GetMapSize(D3DXVECTOR2& out);
 
-	static shared_ptr<CGameMap> LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* staticObjects);
+	static shared_ptr<CGameMap> LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* staticObjects, vector<LPGAMEOBJECT>* dynamicObjects);
 	~CGameMap();
 };
 

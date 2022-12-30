@@ -159,10 +159,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapLayer.cpp" />
     <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="Paragoomba.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="RectCollision.cpp" />
+    <ClCompile Include="RectPlatform.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
     <ClCompile Include="SmallMario.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -173,6 +175,7 @@
     <ClCompile Include="TinyXML\tinyxml.cpp" />
     <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="Troopas.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -195,10 +198,12 @@
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="MapLayer.h" />
     <ClInclude Include="Mario.h" />
+    <ClInclude Include="Paragoomba.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Portal.h" />
     <ClInclude Include="RectCollision.h" />
+    <ClInclude Include="RectPlatform.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SmallMario.h" />
@@ -209,6 +214,7 @@
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="TinyXML\tinystr.h" />
     <ClInclude Include="TinyXML\tinyxml.h" />
+    <ClInclude Include="Troopas.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

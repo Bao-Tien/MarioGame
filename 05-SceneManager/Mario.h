@@ -46,10 +46,8 @@ protected:
 	int coin; 
 
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
-	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
-	void OnCollisionWithRectCollision(LPCOLLISIONEVENT e);
 
 public:
 	CMario(float x, float y) : CGameObject(x, y)
@@ -91,4 +89,5 @@ public:
 	void SetState(EMario_State s);
 	EMario_Level GetLevel() { return level; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

@@ -3,13 +3,14 @@
 
 class CRectCollision : public CGameObject
 {
-protected:
-	
-
 public:
-	CRectCollision(int x, int y, int width, int height);
+	CRectCollision(int x, int y, int width, int height) {
+		this->x = x;
+		this->y = y;
+		this->BoundingBox_Width = width;
+		this->BoundingBox_Height = height;
+	}
 	void Render() {
-		CGameObject::Render();
 		CGameObject::RenderBoundingBox();
 	}
 };

@@ -1,6 +1,10 @@
 #include "GameMap.h"
 #include "Game.h"
 #include "RectCollision.h"
+#include "RectPlatform.h"
+#include "Goomba1.h"
+#include "Troopas.h"
+#include "Paragoomba.h"
 
 #define CAMERA_MARGIN			150
 
@@ -104,7 +108,7 @@ void CGameMap::Render()
 
 
 
-shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* staticObjects)
+shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* staticObjects, vector<LPGAMEOBJECT>* dynamicObjects)
 {
 	string fullPath = filePath;
 	TiXmlDocument doc(fullPath.c_str());
@@ -132,8 +136,7 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 
 		// Load collision group objects
 		for (TiXmlElement* objGroupNode = root->FirstChildElement("objectgroup"); objGroupNode != nullptr; objGroupNode = objGroupNode->NextSiblingElement("objectgroup")) {
-			if (std::string(objGroupNode->Attribute("name")) == "RectCollision"
-				|| std::string(objGroupNode->Attribute("name")) == "CanNotGo") {
+			if (std::string(objGroupNode->Attribute("name")) == "RectCollision") {
 				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
 					int x = atoi(objNode->Attribute("x"));
 					int y = atoi(objNode->Attribute("y"));
@@ -147,6 +150,50 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 						height
 					);
 					staticObjects->push_back(obj);
+				}
+			}
+			else if (std::string(objGroupNode->Attribute("name")) == "RectPlatform") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj = new CRectPlatform(
+						x + width / 2,
+						y + height / 2,
+						width,
+						height
+					);
+					staticObjects->push_back(obj);
+				}
+			}
+			else if (std::string(objGroupNode->Attribute("name")) == "Enemy_Troopas") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj = new CTroopas(
+						x + width / 2,
+						y + height / 2
+					);
+					dynamicObjects->push_back(obj);
+				}
+			}
+			else if (std::string(objGroupNode->Attribute("name")) == "Enemy_Paragoomba") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj = new CParagoomba(
+						x + width / 2,
+						y + height / 2
+					);
+					dynamicObjects->push_back(obj);
 				}
 			}
 		}

@@ -54,7 +54,7 @@ void CPlayScene::Load() {
 	TiXmlElement* loadMap = root->FirstChildElement("Map");
 	string loadMapPath = loadMap->Attribute("path");
 	OutputDebugStringW(ToLPCWSTR("MapPath : " + loadMapPath + '\n'));
-	map = CGameMap().LoadFromTMXFile(loadMapPath, &staticObjects);
+	map = CGameMap().LoadFromTMXFile(loadMapPath, &staticObjects, &dynamicObjects);
 
 	//load texture
 	TiXmlElement* textures = root->FirstChildElement("Textures");
@@ -86,7 +86,7 @@ void CPlayScene::Load() {
 		DebugOut(L"[ERROR] MARIO object was created before!\n");
 		return;
 	}
-	obj = new CBigMario(150.0f, 50.0f);
+	obj = new CBigMario(1356.0f + 24.0f, 800.0f);
 	player = obj;
 
 
@@ -94,7 +94,7 @@ void CPlayScene::Load() {
 	/*CGoomba* goomba = new CGoomba(280.0f, 100.0f);
 	this->enemyObjects.push_back(goomba);*/
 	CGoomba1* g = new CGoomba1(280.0f, 100.0f);
-	this->enemyObjects.push_back(g);
+	this->dynamicObjects.push_back(g);
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", sceneFilePath);
 
@@ -112,9 +112,9 @@ void CPlayScene::Update(DWORD dt)
 	{
 		coObjects.push_back(staticObjects[i]);
 	}
-	for (size_t i = 0; i < enemyObjects.size(); i++)
+	for (size_t i = 0; i < dynamicObjects.size(); i++)
 	{
-		enemyObjects[i]->Update(dt, &coObjects);
+		dynamicObjects[i]->Update(dt, &coObjects);
 	}
 
 
@@ -122,9 +122,9 @@ void CPlayScene::Update(DWORD dt)
 	if (player == NULL) return;
 
 	// Xet va cham voi Mario
-	for (size_t i = 0; i < enemyObjects.size(); i++)
+	for (size_t i = 0; i < dynamicObjects.size(); i++)
 	{
-		coObjects.push_back(enemyObjects[i]);
+		coObjects.push_back(dynamicObjects[i]);
 	}
 	player->Update(dt, &coObjects);
 
@@ -161,8 +161,8 @@ void CPlayScene::Render()
 	}
 
 	// Render enemyObjectsInfrontOfMap
-	for (int i = 0; i < enemyObjects.size(); i++)
-		enemyObjects[i]->Render();
+	for (int i = 0; i < dynamicObjects.size(); i++)
+		dynamicObjects[i]->Render();
 
 	// Render Mario
 	this->player->Render();
@@ -174,11 +174,11 @@ void CPlayScene::Render()
 void CPlayScene::Clear()
 {
 	vector<LPGAMEOBJECT>::iterator it;
-	for (it = enemyObjects.begin(); it != enemyObjects.end(); it++)
+	for (it = dynamicObjects.begin(); it != dynamicObjects.end(); it++)
 	{
 		delete (*it);
 	}
-	enemyObjects.clear();
+	dynamicObjects.clear();
 
 	for (it = staticObjects.begin(); it != staticObjects.end(); it++)
 	{
@@ -197,10 +197,10 @@ void CPlayScene::Clear()
 void CPlayScene::Unload()
 {
 	// Unload enemy
-	for (int i = 0; i < enemyObjects.size(); i++) {
-		delete enemyObjects[i];
+	for (int i = 0; i < dynamicObjects.size(); i++) {
+		delete dynamicObjects[i];
 	}
-	enemyObjects.clear();
+	dynamicObjects.clear();
 
 	// Unload staticObjects
 	for (int i = 0; i < staticObjects.size(); i++) {
@@ -218,7 +218,7 @@ void CPlayScene::PurgeDeletedObjects()
 {
 	vector<LPGAMEOBJECT>::iterator it;
 	// Enemy Object
-	for (it = enemyObjects.begin(); it != enemyObjects.end(); it++)
+	for (it = dynamicObjects.begin(); it != dynamicObjects.end(); it++)
 	{
 		LPGAMEOBJECT o = *it;
 		if (o->IsDeleted())
@@ -230,9 +230,9 @@ void CPlayScene::PurgeDeletedObjects()
 
 	// NOTE: remove_if will swap all deleted items to the end of the vector
 	// then simply trim the vector, this is much more efficient than deleting individual items
-	enemyObjects.erase(
-		std::remove_if(enemyObjects.begin(), enemyObjects.end(), CPlayScene::IsGameObjectDeleted),
-		enemyObjects.end());
+	dynamicObjects.erase(
+		std::remove_if(dynamicObjects.begin(), dynamicObjects.end(), CPlayScene::IsGameObjectDeleted),
+		dynamicObjects.end());
 
 	// Static Object
 	for (it = staticObjects.begin(); it != staticObjects.end(); it++)

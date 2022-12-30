@@ -2,12 +2,12 @@
 #include "Mario.h"
 
 void CGoomba1::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
-	switch (state) {
-		case EEnemy_State::DIE: {
+	switch (level) {
+		case 0: {
 			SetBoundingBoxSize(GOOMBA_BBOX_WIDTH, GOOMBA_BBOX_HEIGHT_DIE);
 			break;
 		}
-		case EEnemy_State::MOVE: {
+		case 1: {
 			SetBoundingBoxSize(GOOMBA_BBOX_WIDTH, GOOMBA_BBOX_HEIGHT);
 			break;
 		}
@@ -16,14 +16,24 @@ void CGoomba1::GetBoundingBox(float& left, float& top, float& right, float& bott
 	CGameObject::GetBoundingBox(left, top, right, bottom);
 }
 
-void CGoomba1::OnCollisionWith(LPCOLLISIONEVENT e) {
-	CEnemy::OnCollisionWith(e);
-	if (e->ny > 0) {
-		if (dynamic_cast<CMario*>(e->obj)) {
+void CGoomba1::OnChangeLevel() {
+	switch (level)
+	{
+		case 0: {
 			die_start = GetTickCount64();
 			vx = 0;
 			vy = 0;
 			ay = 0;
+			enemyAnimationId = ANI_GOOMBA_DIE;
+			break;
+		}
+		case 1: {
+			enemyAnimationId = ANI_GOOMBA_MOVE;
+			vx = -ENEMY_MOVE_SPEED;
+			break;
+		}
+		default: {
+			break;
 		}
 	}
 }

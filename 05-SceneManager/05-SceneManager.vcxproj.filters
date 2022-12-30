@@ -70,9 +70,6 @@
     <Filter Include="Framework\PlayScene">
       <UniqueIdentifier>{977b749c-63df-463a-a6b1-a7749392788b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TinyXML">
-      <UniqueIdentifier>{0b73aadc-094f-4556-8212-a791bd5840b1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Map">
       <UniqueIdentifier>{aa983bab-4e86-4d87-a6c9-a061198224c7}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,15 @@
     </Filter>
     <Filter Include="Framework\Object\Enemy\Goomba">
       <UniqueIdentifier>{966e2e8a-19b6-4566-94b7-3ed9b5d3197f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Object\Enemy\Troopas">
+      <UniqueIdentifier>{96addf41-b066-4b5d-81c0-79defd8598ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TinyXML">
+      <UniqueIdentifier>{a4287056-962f-467b-91c9-fd77420cec3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Object\Enemy\Paragoomba">
+      <UniqueIdentifier>{fc31a038-30c2-43dd-8035-4a664a703e3e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -150,18 +156,6 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Framework\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="TinyXML\tinystr.cpp">
-      <Filter>TinyXML</Filter>
-    </ClCompile>
-    <ClCompile Include="TinyXML\tinyxml.cpp">
-      <Filter>TinyXML</Filter>
-    </ClCompile>
-    <ClCompile Include="TinyXML\tinyxmlerror.cpp">
-      <Filter>TinyXML</Filter>
-    </ClCompile>
-    <ClCompile Include="TinyXML\tinyxmlparser.cpp">
-      <Filter>TinyXML</Filter>
-    </ClCompile>
     <ClCompile Include="TileSet.cpp">
       <Filter>Framework\Map</Filter>
     </ClCompile>
@@ -188,6 +182,27 @@
     </ClCompile>
     <ClCompile Include="Goomba1.cpp">
       <Filter>Framework\Object\Enemy\Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="RectPlatform.cpp">
+      <Filter>Framework\Object\RectCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinystr.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxml.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxmlerror.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxmlparser.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Troopas.cpp">
+      <Filter>Framework\Object\Enemy\Troopas</Filter>
+    </ClCompile>
+    <ClCompile Include="Paragoomba.cpp">
+      <Filter>Framework\Object\Enemy\Paragoomba</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,15 +269,6 @@
     <ClInclude Include="PlayScene.h">
       <Filter>Framework\PlayScene</Filter>
     </ClInclude>
-    <ClInclude Include="AssetIDs.h">
-      <Filter>TinyXML</Filter>
-    </ClInclude>
-    <ClInclude Include="TinyXML\tinystr.h">
-      <Filter>TinyXML</Filter>
-    </ClInclude>
-    <ClInclude Include="TinyXML\tinyxml.h">
-      <Filter>TinyXML</Filter>
-    </ClInclude>
     <ClInclude Include="define-mario.h">
       <Filter>Framework\Object\Mario</Filter>
     </ClInclude>
@@ -292,6 +298,24 @@
     </ClInclude>
     <ClInclude Include="Goomba1.h">
       <Filter>Framework\Object\Enemy\Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="RectPlatform.h">
+      <Filter>Framework\Object\RectCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetIDs.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="TinyXML\tinystr.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="TinyXML\tinyxml.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Troopas.h">
+      <Filter>Framework\Object\Enemy\Troopas</Filter>
+    </ClInclude>
+    <ClInclude Include="Paragoomba.h">
+      <Filter>Framework\Object\Enemy\Paragoomba</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

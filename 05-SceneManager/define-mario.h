@@ -17,7 +17,7 @@
 
 #define MARIO_GRAVITY			0.002f
 #define MARIO_FRICTION          0.00035f      
-#define MARIO_JUMP_DEFLECT_SPEED  0.4f
+#define MARIO_JUMP_DEFLECT_SPEED  0.0095f
 
 #define MARIO_STATE_DIE				-10
 #define MARIO_STATE_IDLE			0

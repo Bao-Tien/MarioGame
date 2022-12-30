@@ -10,6 +10,7 @@
 
 #include "Collision.h"
 #include "RectCollision.h"
+#include "RectPlatform.h"
 #include "Enemy.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -17,7 +18,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (vx > 0) ms = -MARIO_FRICTION;
 	else if (vx < 0) ms = MARIO_FRICTION;
 	else ms = 0;
-
+	// a -> v -> s
 	vy += (ay + g) * dt;
 	vx += (ax + ms) * dt; // F = ma + m*ms
 
@@ -36,14 +37,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 
 	isOnPlatform = false;
-
-	CCollision::GetInstance()->Process(this, dt, coObjects);
-	UpdateState();
 	// reset nha nut A
 	accelerated = 1;
 	// reset nha nut Left , Right
 	ax = 0;
 	ay = 0;
+
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+
+	UpdateState();
+	
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -76,14 +79,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 }
 
-// RectCollision
-void CMario::OnCollisionWithRectCollision(LPCOLLISIONEVENT e) {
-	CRectCollision* rectCollision = dynamic_cast<CRectCollision*>(e->obj);
-
-	if (e->ny != 0) {
-
-	}
-}
 
 // Enemy
 void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
@@ -92,50 +87,16 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
 	{
-		if (enemy->GetState() != EEnemy_State::DIE)
+		if (enemy->GetLevel() != 0)
 		{
-			//enemy->SetState(EEnemy_State::DIE);
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			ay = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
 	else // hit by Goomba
 	{
 		if (untouchable == 0)
 		{
-			if (enemy->GetState() != EEnemy_State::DIE)
-			{
-				if (level > EMario_Level::SMALL)
-				{
-					level = EMario_Level::SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(EMario_State::DIE);
-				}
-			}
-		}
-	}
-}
-void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
-{
-	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-
-	// jump on top >> kill Goomba and deflect a bit 
-	if (e->ny < 0)
-	{
-		if (goomba->GetState() != GOOMBA_STATE_DIE)
-		{
-			goomba->SetState(GOOMBA_STATE_DIE);
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
-		}
-	}
-	else // hit by Goomba
-	{
-		if (untouchable == 0)
-		{
-			if (goomba->GetState() != GOOMBA_STATE_DIE)
+			if (enemy->GetLevel() != 0)
 			{
 				if (level > EMario_Level::SMALL)
 				{
@@ -324,3 +285,46 @@ void CMario::SetLevel(EMario_Level l)
 	level = l;
 }
 
+void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
+	/*if (level == EMario_Level::BIG || level == EMario_Level::RACCOON || level == EMario_Level::FIRE)
+	{
+		if (isSitting)
+		{
+			SetBoundingBoxSize(MARIO_BIG_SITTING_BBOX_WIDTH, MARIO_BIG_SITTING_BBOX_HEIGHT);
+		}
+		else
+		{
+			SetBoundingBoxSize(MARIO_BIG_BBOX_WIDTH, MARIO_BIG_BBOX_HEIGHT);
+		}
+	}
+	else
+	{
+		SetBoundingBoxSize(MARIO_SMALL_BBOX_WIDTH, MARIO_SMALL_BBOX_HEIGHT);
+	}
+	CGameObject::GetBoundingBox(left, top, right, bottom);*/
+
+	if (level == EMario_Level::BIG || level == EMario_Level::RACCOON || level == EMario_Level::FIRE)
+	{
+		if (isSitting)
+		{
+			left = x - MARIO_BIG_SITTING_BBOX_WIDTH / 2;
+			top = y - MARIO_BIG_SITTING_BBOX_HEIGHT / 2;
+			right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
+			bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT;
+		}
+		else
+		{
+			left = x - MARIO_BIG_BBOX_WIDTH / 2;
+			top = y - MARIO_BIG_BBOX_HEIGHT / 2;
+			right = left + MARIO_BIG_BBOX_WIDTH;
+			bottom = top + MARIO_BIG_BBOX_HEIGHT;
+		}
+	}
+	else
+	{
+		left = x - MARIO_SMALL_BBOX_WIDTH / 2;
+		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;
+		right = left + MARIO_SMALL_BBOX_WIDTH;
+		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
+	}
+}
