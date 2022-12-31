@@ -5,7 +5,7 @@
 #define ENEMY_MOVE_SPEED 0.05f
 #define ENEMY_DIE_TIMEOUT 500
 #define ENEMY_CROUCH_TIMEOUT 5000
-#define ENEMY_CHANGESTATE_TIMEOUT 1000
+#define ENEMY_CHANGESTATE_TIMEOUT 5000
 
 enum class EEnemy_State {
 	DIE = 0,
@@ -15,6 +15,7 @@ enum class EEnemy_State {
 enum class EEnemy_Type {
 	GOOMBA = 0,
 	TROOPAS = 1,
+	RED_VENUS = 2,
 };
 
 class CEnemy : public CGameObject

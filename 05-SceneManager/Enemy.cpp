@@ -7,7 +7,8 @@
 CEnemy::CEnemy(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
-	this->ay = ENEMY_GRAVITY;
+	this->ay = 0;
+	this->g = ENEMY_GRAVITY;
 	die_start = -1;
 }
 

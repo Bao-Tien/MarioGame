@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Framework">
       <UniqueIdentifier>{460e5947-3d41-4ef1-b13d-1c063fed32e9}</UniqueIdentifier>
     </Filter>
@@ -96,6 +92,13 @@
     </Filter>
     <Filter Include="Framework\Object\Enemy\Paragoomba">
       <UniqueIdentifier>{fc31a038-30c2-43dd-8035-4a664a703e3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Object\Enemy\RedVenus">
+      <UniqueIdentifier>{c9fa79bd-366c-467f-a5bf-09dab760ce39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +206,9 @@
     </ClCompile>
     <ClCompile Include="Paragoomba.cpp">
       <Filter>Framework\Object\Enemy\Paragoomba</Filter>
+    </ClCompile>
+    <ClCompile Include="RedVenus.cpp">
+      <Filter>Framework\Object\Enemy\RedVenus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -316,6 +322,9 @@
     </ClInclude>
     <ClInclude Include="Paragoomba.h">
       <Filter>Framework\Object\Enemy\Paragoomba</Filter>
+    </ClInclude>
+    <ClInclude Include="RedVenus.h">
+      <Filter>Framework\Object\Enemy\RedVenus</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

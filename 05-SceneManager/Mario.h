@@ -44,6 +44,7 @@ protected:
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 	int coin; 
+	bool isDie;
 
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -60,6 +61,7 @@ public:
 		g = MARIO_GRAVITY;
 		ms = 0;
 		accelerated = 1.0f;
+		isDie = 0;
 
 		level = EMario_Level::BIG;
 		untouchable = 0;

@@ -165,6 +165,7 @@
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="RectCollision.cpp" />
     <ClCompile Include="RectPlatform.cpp" />
+    <ClCompile Include="RedVenus.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
     <ClCompile Include="SmallMario.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Portal.h" />
     <ClInclude Include="RectCollision.h" />
     <ClInclude Include="RectPlatform.h" />
+    <ClInclude Include="RedVenus.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SmallMario.h" />

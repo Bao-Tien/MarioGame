@@ -37,10 +37,3 @@ void CGoomba1::OnChangeLevel() {
 		}
 	}
 }
-
-void CGoomba1::UpdateState() {
-	if (vx != 0) {
-		SetState(EEnemy_State::MOVE);
-	}
-	else SetState(EEnemy_State::DIE);
-}

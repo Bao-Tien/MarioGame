@@ -38,6 +38,9 @@ void CTroopas::OnChangeLevel() {
 			break;
 		}
 		case 2: {
+			if (crouch_start) {
+				int a = 0;
+			}
 			enemyAnimationId = ANI_TROOPAS_MOVE;
 			vx = -ENEMY_MOVE_SPEED;
 			break;

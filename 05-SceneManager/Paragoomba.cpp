@@ -21,7 +21,6 @@ void CParagoomba::GetBoundingBox(float& left, float& top, float& right, float& b
 }
 
 void CParagoomba::OnChangeLevel() {
-	DebugOut(L"Troopas level: %d", level);
 	switch (level)
 	{
 	case 0: {
@@ -40,17 +39,20 @@ void CParagoomba::OnChangeLevel() {
 	}
 	case 2: {
 		enemyAnimationId = ANI_PARAGOOMBA_FLAP;
-		vx = -ENEMY_MOVE_SPEED;
-		//newStateInLevel2_start = GetTickCount64();
-		//if (stateInLevel2 == ESTATE_INLEVEL2::MOVE) {
-		//	ax = -ENEMY_MOVE_SPEED;
-		//}
-		//else if (stateInLevel2 == ESTATE_INLEVEL2::JUMP) {
-		//	//ay = -0.01f;
-		//}
-		//else if (stateInLevel2 == ESTATE_INLEVEL2::FLAP) {
-		//	//ay = -0.05f;
-		//}
+		newStateInLevel2_start = GetTickCount64();
+		if (stateInLevel2 == ESTATE_INLEVEL2::MOVE) {
+			vx = -ENEMY_MOVE_SPEED;
+		}
+		else if (stateInLevel2 == ESTATE_INLEVEL2::JUMP) {
+			//ay = -0.01f;
+			vy = -ENEMY_MOVE_SPEED*2;
+			vx = -ENEMY_MOVE_SPEED;
+		}
+		else if (stateInLevel2 == ESTATE_INLEVEL2::FLAP) {
+			//ay = -0.05f;
+			vx = -ENEMY_MOVE_SPEED*2;
+			vy = -ENEMY_MOVE_SPEED;
+		}
 		break;
 	}
 	default: {
@@ -60,22 +62,25 @@ void CParagoomba::OnChangeLevel() {
 }
 
 void CParagoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	/*if ((level == 2))
+	if ((level == 2))
 	{
+		DebugOut(L"tg da qua: %d \n", GetTickCount64() - newStateInLevel2_start);
 		if ((GetTickCount64() - newStateInLevel2_start > ENEMY_CHANGESTATE_TIMEOUT)) {
 			if (stateInLevel2 == ESTATE_INLEVEL2::MOVE) {
-				stateInLevel2 == ESTATE_INLEVEL2::JUMP;
+				stateInLevel2 = ESTATE_INLEVEL2::JUMP;
+				//DebugOut(L"tg chuyen: %d, statecu: MOVE, statemoi: JUMP \n", GetTickCount64() - newStateInLevel2_start);
 			}
 			else if (stateInLevel2 == ESTATE_INLEVEL2::JUMP) {
-				stateInLevel2 == ESTATE_INLEVEL2::FLAP;
+				stateInLevel2 = ESTATE_INLEVEL2::FLAP;
+				//DebugOut(L"tg chuyen: %d, statecu: JUMP, statemoi: FLAP \n", GetTickCount64() - newStateInLevel2_start);
 			}
 			else if (stateInLevel2 == ESTATE_INLEVEL2::FLAP) {
-				stateInLevel2 == ESTATE_INLEVEL2::MOVE;
+				stateInLevel2 = ESTATE_INLEVEL2::MOVE;
+				//DebugOut(L"tg chuyen: %d, statecu: FLAP, statemoi: MOVE \n", GetTickCount64() - newStateInLevel2_start);
 			}
 			OnChangeLevel();
 		}
-		return;
-	}*/
+	}
 
 	CEnemy::Update(dt, coObjects);
 }

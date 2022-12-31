@@ -92,13 +92,23 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 			ay = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
-	else // hit by Goomba
+	else // hit by Enemy
 	{
 		if (untouchable == 0)
 		{
 			if (enemy->GetLevel() != 0)
 			{
-				if (level > EMario_Level::SMALL)
+				if (level == EMario_Level::FIRE)
+				{
+					level = EMario_Level::RACCOON;
+					StartUntouchable();
+				}
+				else if (level == EMario_Level::RACCOON)
+				{
+					level = EMario_Level::BIG;
+					StartUntouchable();
+				}
+				else if (level == EMario_Level::BIG)
 				{
 					level = EMario_Level::SMALL;
 					StartUntouchable();
@@ -106,7 +116,9 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 				else
 				{
 					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(EMario_State::DIE);
+					ay = -MARIO_JUMP_DEFLECT_SPEED;
+					ax = 0;
+					isDie = 1;
 				}
 			}
 		}
@@ -140,6 +152,7 @@ string CMario::GetAnimationFromState() {
 	else if (state == EMario_State::SIT) stateString = ANI_MARIO_STATE_SIT;
 	else if (state == EMario_State::FALL) stateString = ANI_MARIO_STATE_FALL;
 	else if (state == EMario_State::SKID) stateString = ANI_MARIO_STATE_SKID;
+	else if (state == EMario_State::DIE) stateString = ANI_MARIO_STATE_DIE;
 	else stateString = ANI_MARIO_STATE_IDLE;
 
 	return typeString + "-" + stateString;
@@ -268,6 +281,10 @@ void CMario::UpdateState() {
 			SetState(EMario_State::JUMP);
 		}
 		else SetState(EMario_State::FALL);
+	}
+
+	if (isDie) {
+		SetState(EMario_State::DIE);
 	}
 }
 

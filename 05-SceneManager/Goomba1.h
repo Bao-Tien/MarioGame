@@ -19,7 +19,6 @@ public:
 		OnChangeLevel();
 	}
 	void OnChangeLevel() override;
-	virtual void UpdateState();
 
 };
 

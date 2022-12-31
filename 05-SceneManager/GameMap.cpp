@@ -5,6 +5,7 @@
 #include "Goomba1.h"
 #include "Troopas.h"
 #include "Paragoomba.h"
+#include "RedVenus.h"
 
 #define CAMERA_MARGIN			150
 
@@ -108,7 +109,7 @@ void CGameMap::Render()
 
 
 
-shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* staticObjects, vector<LPGAMEOBJECT>* dynamicObjects)
+shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* staticObjects, vector<LPGAMEOBJECT>* dynamicObjects, vector<LPGAMEOBJECT>* dynamicObjectsAfterMap)
 {
 	string fullPath = filePath;
 	TiXmlDocument doc(fullPath.c_str());
@@ -194,6 +195,20 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 						y + height / 2
 					);
 					dynamicObjects->push_back(obj);
+				}
+			}
+			else if (std::string(objGroupNode->Attribute("name")) == "Enemy_RedVenus") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj = new CRedVenus(
+						x + width / 2,
+						y + height / 2
+					);
+					dynamicObjectsAfterMap->push_back(obj);
 				}
 			}
 		}

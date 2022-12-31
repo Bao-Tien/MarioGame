@@ -19,7 +19,8 @@ protected:
 	CMario* player;
 
 	// enemyObjectsBehindMap, enemyObjectsInfrontOfMap
-	vector<LPGAMEOBJECT> dynamicObjects;
+	vector<LPGAMEOBJECT> dynamicObjectsAfterMap;
+	vector<LPGAMEOBJECT> dynamicObjectsFrontMap;
 	vector<LPGAMEOBJECT> staticObjects;
 	
 public: 
