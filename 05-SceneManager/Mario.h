@@ -45,6 +45,7 @@ protected:
 	BOOLEAN isOnPlatform;
 	int coin; 
 	bool isDie;
+	float isFly;
 
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -62,6 +63,7 @@ public:
 		ms = 0;
 		accelerated = 1.0f;
 		isDie = 0;
+		isFly = 0;
 
 		level = EMario_Level::BIG;
 		untouchable = 0;

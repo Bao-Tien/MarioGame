@@ -89,13 +89,6 @@ void CPlayScene::Load() {
 	obj = new CBigMario(1356.0f + 24.0f, 800.0f);
 	player = obj;
 
-
-	//Goomba
-	/*CGoomba* goomba = new CGoomba(280.0f, 100.0f);
-	this->enemyObjects.push_back(goomba);*/
-	CGoomba1* g = new CGoomba1(280.0f, 100.0f);
-	this->dynamicObjectsFrontMap.push_back(g);
-
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", sceneFilePath);
 
 }

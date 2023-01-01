@@ -6,6 +6,7 @@
 #include "Troopas.h"
 #include "Paragoomba.h"
 #include "RedVenus.h"
+#include "Coin.h"
 
 #define CAMERA_MARGIN			150
 
@@ -109,7 +110,8 @@ void CGameMap::Render()
 
 
 
-shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* staticObjects, vector<LPGAMEOBJECT>* dynamicObjects, vector<LPGAMEOBJECT>* dynamicObjectsAfterMap)
+shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* staticObjects, 
+	vector<LPGAMEOBJECT>* dynamicObjectsFrontMap, vector<LPGAMEOBJECT>* dynamicObjectsAfterMap)
 {
 	string fullPath = filePath;
 	TiXmlDocument doc(fullPath.c_str());
@@ -169,6 +171,20 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 					staticObjects->push_back(obj);
 				}
 			}
+			else if (std::string(objGroupNode->Attribute("name")) == "Enemy_Goomba") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj = new CGoomba1(
+						x + width / 2,
+						y + height / 2
+					);
+					dynamicObjectsFrontMap->push_back(obj);
+				}
+			}
 			else if (std::string(objGroupNode->Attribute("name")) == "Enemy_Troopas") {
 				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
 					int x = atoi(objNode->Attribute("x"));
@@ -180,7 +196,7 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 						x + width / 2,
 						y + height / 2
 					);
-					dynamicObjects->push_back(obj);
+					dynamicObjectsFrontMap->push_back(obj);
 				}
 			}
 			else if (std::string(objGroupNode->Attribute("name")) == "Enemy_Paragoomba") {
@@ -194,7 +210,21 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 						x + width / 2,
 						y + height / 2
 					);
-					dynamicObjects->push_back(obj);
+					dynamicObjectsFrontMap->push_back(obj);
+				}
+			}
+			else if (std::string(objGroupNode->Attribute("name")) == "Coin") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj = new CCoin(
+						x + width / 2,
+						y + height / 2
+					);
+					dynamicObjectsFrontMap->push_back(obj);
 				}
 			}
 			else if (std::string(objGroupNode->Attribute("name")) == "Enemy_RedVenus") {

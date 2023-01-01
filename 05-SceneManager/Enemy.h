@@ -7,11 +7,6 @@
 #define ENEMY_CROUCH_TIMEOUT 5000
 #define ENEMY_CHANGESTATE_TIMEOUT 5000
 
-enum class EEnemy_State {
-	DIE = 0,
-	MOVE = 1,
-};
-
 enum class EEnemy_Type {
 	GOOMBA = 0,
 	TROOPAS = 1,
@@ -26,7 +21,6 @@ protected:
 	float g = ENEMY_GRAVITY;
 
 	ULONGLONG die_start;
-	EEnemy_State state;
 	EEnemy_Type type;
 	string enemyAnimationId;
 
@@ -47,9 +41,7 @@ protected:
 
 public:
 	CEnemy(float x, float y);
-	virtual void SetState(EEnemy_State s);
 	int GetLevel() { return level; }
-	virtual EEnemy_State GetState() { return state; }
 	string GetAnimationFromState();
 };
 

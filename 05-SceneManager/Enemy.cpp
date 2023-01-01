@@ -89,13 +89,8 @@ void CEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CEnemy::Render()
 {
-
 	CGameObject::Render();
 	RenderBoundingBox();
-}
-
-void CEnemy::SetState(EEnemy_State s) {
-	state = s;
 }
 
 string CEnemy::GetAnimationFromState() {

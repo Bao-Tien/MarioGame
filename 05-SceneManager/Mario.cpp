@@ -39,7 +39,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	isOnPlatform = false;
 	// reset nha nut A
 	accelerated = 1;
-	// reset nha nut Left , Right
+	// reset nha nut 
 	ax = 0;
 	ay = 0;
 
@@ -208,12 +208,18 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 		if (isSitting) break;
 		if (isOnPlatform)
 		{
-			if (abs(this->vx) > MARIO_WALKING_SPEED) {
+			if (state == EMario_State::RUN) {
 				ay = -MARIO_ACCEL_JUMP_Y * 1.2f;
 			}
 			else {
 				ay = -MARIO_ACCEL_JUMP_Y;
 			}
+		}
+		if (level == EMario_Level::RACCOON && state == EMario_State::RUN) {
+			isFly = 1;
+		}
+		if (level == EMario_Level::RACCOON && isFly == 1) {
+			ay = -MARIO_ACCEL_JUMP_Y / 2.0f;
 		}
 		break;
 	case DIK_DOWN:
@@ -268,6 +274,7 @@ void CMario::UpdateState() {
 				}
 			}
 		}
+		isFly = 0;
 	}
 	else {
 		if (abs(ay) == MARIO_ACCEL_FLY_X) {
