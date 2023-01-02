@@ -14,6 +14,7 @@ void CRedVenus::GetBoundingBox(float& left, float& top, float& right, float& bot
 	}
 
 	CGameObject::GetBoundingBox(left, top, right, bottom);
+	
 }
 
 void CRedVenus::OnChangeLevel() {

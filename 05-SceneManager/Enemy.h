@@ -26,7 +26,10 @@ protected:
 
 	int level = 0;
 
+	// Behaviours
 	bool isAutoChangeDirectionWhenMoveOverRangeX = false;
+	bool isAutoChangeDirectionWhenHitCollision = true;
+
 	D3DXVECTOR2 moveRangeX = D3DXVECTOR2(0, 0);
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -39,9 +42,17 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void OnChangeLevel() {};
 
+	
+
+
 public:
 	CEnemy(float x, float y);
 	int GetLevel() { return level; }
 	string GetAnimationFromState();
+
+	bool attackFromLeft = true;
+	bool attackFromTop = false;
+	bool attackFromRight = true;
+	bool attackFromBottom = true;
 };
 

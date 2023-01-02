@@ -20,10 +20,11 @@ enum class EMario_State {
 };
 
 enum class EMario_Level {
-	SMALL = 0,
-	BIG = 1,
-	RACCOON = 2,
-	FIRE = 3,
+	DIE = 0,
+	SMALL = 1,
+	BIG = 2,
+	RACCOON = 3,
+	FIRE = 4,
 };
 
 class CMario : public CGameObject
@@ -44,7 +45,6 @@ protected:
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 	int coin; 
-	bool isDie;
 	float isFly;
 
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
@@ -62,7 +62,6 @@ public:
 		g = MARIO_GRAVITY;
 		ms = 0;
 		accelerated = 1.0f;
-		isDie = 0;
 		isFly = 0;
 
 		level = EMario_Level::BIG;

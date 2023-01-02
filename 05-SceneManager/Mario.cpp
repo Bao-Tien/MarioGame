@@ -18,6 +18,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (vx > 0) ms = -MARIO_FRICTION;
 	else if (vx < 0) ms = MARIO_FRICTION;
 	else ms = 0;
+	
 	// a -> v -> s
 	vy += (ay + g) * dt;
 	vx += (ax + ms) * dt; // F = ma + m*ms
@@ -42,6 +43,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// reset nha nut 
 	ax = 0;
 	ay = 0;
+
+	DebugOut(L"vx = %f \n", vx);
+	DebugOut(L"x = %f \n", x);
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
@@ -79,24 +83,20 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 }
 
-
 // Enemy
 void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 	CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
 
-	// jump on top >> kill Goomba and deflect a bit 
-	if (e->ny < 0)
-	{
-		if (enemy->GetLevel() != 0)
-		{
-			ay = -MARIO_JUMP_DEFLECT_SPEED;
-		}
-	}
-	else // hit by Enemy
-	{
-		if (untouchable == 0)
-		{
-			if (enemy->GetLevel() != 0)
+	if ((enemy->GetLevel() != 0)) {
+		// Conditions when Mario is attacked
+		bool condition1 = e->nx < 0 && enemy->attackFromLeft == true;
+		bool condition2 = e->ny < 0 && enemy->attackFromTop == true;
+		bool condition3 = e->nx > 0 && enemy->attackFromRight == true;
+		bool condition4 = e->ny > 0 && enemy->attackFromBottom == true;
+
+		if (condition1 || condition2 || condition3 || condition4) {
+			// Mario is attacked
+			if (untouchable == 0)
 			{
 				if (level == EMario_Level::FIRE)
 				{
@@ -118,9 +118,14 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 					DebugOut(L">>> Mario DIE >>> \n");
 					ay = -MARIO_JUMP_DEFLECT_SPEED;
 					ax = 0;
-					isDie = 1;
+					vx = 0;
+					SetState(EMario_State::DIE);
 				}
 			}
+		}
+		else {
+			// Enemy is attacked (Mario attack enemy)
+			ay = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
 }
@@ -162,7 +167,19 @@ string CMario::GetAnimationFromState() {
 
 void CMario::Render()
 {
-	CGameObject::Render();
+	ULONGLONG currentTime = GetTickCount64();
+	if (untouchable == 1) {
+		// Bat tu
+		if (currentTime % 2 == 0) {
+			CGameObject::Render();
+		}
+		
+	}
+	else {
+		// Binh thuong
+		CGameObject::Render();
+	}
+	
 	CGameObject::RenderBoundingBox();
 	DebugOutTitle(L"MarioState: %d", state);
 }
@@ -249,7 +266,7 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 
 
 void CMario::UpdateState() {
-
+	if (state == EMario_State::DIE) return;
 	if (isOnPlatform)
 	{
 		if (isSitting)
@@ -289,10 +306,6 @@ void CMario::UpdateState() {
 		}
 		else SetState(EMario_State::FALL);
 	}
-
-	if (isDie) {
-		SetState(EMario_State::DIE);
-	}
 }
 
 void CMario::SetState(EMario_State s) {
@@ -310,45 +323,8 @@ void CMario::SetLevel(EMario_Level l)
 }
 
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
-	/*if (level == EMario_Level::BIG || level == EMario_Level::RACCOON || level == EMario_Level::FIRE)
-	{
-		if (isSitting)
-		{
-			SetBoundingBoxSize(MARIO_BIG_SITTING_BBOX_WIDTH, MARIO_BIG_SITTING_BBOX_HEIGHT);
-		}
-		else
-		{
-			SetBoundingBoxSize(MARIO_BIG_BBOX_WIDTH, MARIO_BIG_BBOX_HEIGHT);
-		}
+	if (state == EMario_State::DIE) {
+		SetBoundingBoxSize(0, 0);
 	}
-	else
-	{
-		SetBoundingBoxSize(MARIO_SMALL_BBOX_WIDTH, MARIO_SMALL_BBOX_HEIGHT);
-	}
-	CGameObject::GetBoundingBox(left, top, right, bottom);*/
-
-	if (level == EMario_Level::BIG || level == EMario_Level::RACCOON || level == EMario_Level::FIRE)
-	{
-		if (isSitting)
-		{
-			left = x - MARIO_BIG_SITTING_BBOX_WIDTH / 2;
-			top = y - MARIO_BIG_SITTING_BBOX_HEIGHT / 2;
-			right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
-			bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT;
-		}
-		else
-		{
-			left = x - MARIO_BIG_BBOX_WIDTH / 2;
-			top = y - MARIO_BIG_BBOX_HEIGHT / 2;
-			right = left + MARIO_BIG_BBOX_WIDTH;
-			bottom = top + MARIO_BIG_BBOX_HEIGHT;
-		}
-	}
-	else
-	{
-		left = x - MARIO_SMALL_BBOX_WIDTH / 2;
-		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;
-		right = left + MARIO_SMALL_BBOX_WIDTH;
-		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
-	}
+	CGameObject::GetBoundingBox(left, top, right, bottom);
 }

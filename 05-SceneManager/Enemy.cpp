@@ -21,24 +21,17 @@ void CEnemy::OnNoCollision(DWORD dt)
 void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return;
+	
 	if (dynamic_cast<CEnemy*>(e->obj)) return;
 
 	if (e->ny < 0)
 	{
 		vy = 0;
 	}
-	else if (e->nx != 0)
+
+	if (e->nx != 0 && this->isAutoChangeDirectionWhenHitCollision == true)
 	{
 		vx = -vx;
-	}
-
-	if (e->ny > 0) {
-		if (dynamic_cast<CMario*>(e->obj)) {
-			if (level > 0) {
-				level--;
-				OnChangeLevel();
-			}
-		}
 	}
 
 	if (isAutoChangeDirectionWhenMoveOverRangeX == true) {
@@ -47,6 +40,21 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 				moveRangeX.x = e->obj->GetPosition().x - e->obj->GetBoundingBoxSize().x / 2 + this->BoundingBox_Width / 2;
 				moveRangeX.y = e->obj->GetPosition().x + e->obj->GetBoundingBoxSize().x / 2 - this->BoundingBox_Width / 2;
 			}
+		}
+	}
+
+	if (dynamic_cast<CMario*>(e->obj) && level > 0) {
+		bool condition1 = e->nx < 0 && this->attackFromLeft == true;
+		bool condition2 = e->ny < 0 && this->attackFromTop == true;
+		bool condition3 = e->nx > 0 && this->attackFromRight == true;
+		bool condition4 = e->ny > 0 && this->attackFromBottom == true;
+
+		if (condition1 && condition2 && condition3 && condition4) {
+			// Enemy an toan
+		}
+		else {
+			level--;
+			OnChangeLevel();
 		}
 	}
 }

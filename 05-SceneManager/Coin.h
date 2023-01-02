@@ -1,11 +1,7 @@
 #pragma once
-
 #include "GameObject.h"
-#include "Animation.h"
 
 #define ID_ANI_COIN "ani-coin"
-
-#define	COIN_WIDTH 10
 #define COIN_BBOX_WIDTH 48
 #define COIN_BBOX_HEIGHT 48
 

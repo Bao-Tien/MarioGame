@@ -65,7 +65,7 @@
 #define MARIO_SMALL_BBOX_HEIGHT 13*3
 
 
-#define MARIO_UNTOUCHABLE_TIME 2500
+#define MARIO_UNTOUCHABLE_TIME 5000
 
 #define ANI_MARIO_LEVEL_SMALL "ani-small-mario"
 #define ANI_MARIO_LEVEL_BIG "ani-big-mario"

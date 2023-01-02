@@ -27,6 +27,8 @@ public:
 		vy = 0;
 		ax = 0;
 		ay = 0;
+		attackFromTop = true;
+
 	}
 	void OnChangeLevel() override;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

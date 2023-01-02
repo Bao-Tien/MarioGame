@@ -7,6 +7,7 @@
 #include "Paragoomba.h"
 #include "RedVenus.h"
 #include "Coin.h"
+#include "BrickQuestion.h"
 
 #define CAMERA_MARGIN			150
 
@@ -100,7 +101,7 @@ void CGameMap::Render()
 				int id = layer->GetTileID(i % width, j % height);
 				CTileSet* tilesetPtr = this->GetTileSetByTileID(id);
 				if (tilesetPtr != nullptr) {
-					tilesetPtr->Draw(id, D3DXVECTOR2(x + tileWidth / 2 - camPos.x, y + tileWidth / 2 - camPos.y));
+					tilesetPtr->Draw(id, D3DXVECTOR2(x + tileWidth / 2 - camPos.x, y + tileHeight / 2 - camPos.y));
 				}
 				
 			}
@@ -221,6 +222,20 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 					int height = atoi(objNode->Attribute("height"));
 
 					LPGAMEOBJECT obj = new CCoin(
+						x + width / 2,
+						y + height / 2
+					);
+					dynamicObjectsFrontMap->push_back(obj);
+				}
+			}
+			else if (std::string(objGroupNode->Attribute("name")) == "Brick_Question") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj = new CBrickQuestion(
 						x + width / 2,
 						y + height / 2
 					);

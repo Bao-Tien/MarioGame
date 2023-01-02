@@ -38,7 +38,6 @@ protected:
 	int BoundingBox_Height = 0;
 
 
-
 	D3DXVECTOR2 prevBoundingBoxSize = D3DXVECTOR2(0, 0);
 	
 	virtual void BeforeSetBoundBox() {
@@ -47,8 +46,10 @@ protected:
 
 	virtual void AfterSetBoundBox() {
 		D3DXVECTOR2 currentBoundingBoxSize = GetBoundingBoxSize();
-		x = x + (prevBoundingBoxSize.x - currentBoundingBoxSize.x) / 2;
-		y = y + (prevBoundingBoxSize.y - currentBoundingBoxSize.y) / 2;
+		if (prevBoundingBoxSize.x != 0 && prevBoundingBoxSize.y != 0 && currentBoundingBoxSize.x != 0 && currentBoundingBoxSize.y != 0) {
+			x = x + (prevBoundingBoxSize.x - currentBoundingBoxSize.x) / 2;
+			y = y + (prevBoundingBoxSize.y - currentBoundingBoxSize.y) / 2;
+		}
 	}
 
 

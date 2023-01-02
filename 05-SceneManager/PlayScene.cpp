@@ -93,11 +93,41 @@ void CPlayScene::Load() {
 
 }
 
+void CPlayScene::UpdatePlayer() {
+	EMario_Level actualLevel = player->GetLevel();
+
+	EMario_Level currentLevel = EMario_Level::DIE;
+	if (dynamic_cast<CSmallMario*>(player)) {
+		currentLevel = EMario_Level::SMALL;
+	}
+	else if (dynamic_cast<CBigMario*>(player)) {
+		currentLevel = EMario_Level::BIG;
+	}
+	
+	if (actualLevel != currentLevel) {
+		D3DXVECTOR2 position = player->GetPosition();
+		if (actualLevel == EMario_Level::SMALL) {
+			delete(player);
+			player = new CSmallMario(position.x, position.y);
+		}
+		else if (actualLevel == EMario_Level::BIG) {
+			delete(player);
+			player = new CBigMario(position.x, position.y);
+		}
+
+
+
+		if (currentLevel > actualLevel) {
+			player->StartUntouchable();
+		}
+	}
+}
+
 void CPlayScene::Update(DWORD dt)
 {
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
-
+	
 	vector<LPGAMEOBJECT> coObjects;
 
 	// Xet va cham voi Enemy
@@ -127,6 +157,7 @@ void CPlayScene::Update(DWORD dt)
 	{
 		coObjects.push_back(dynamicObjectsAfterMap[i]);
 	}
+	UpdatePlayer();
 	player->Update(dt, &coObjects);
 
 
