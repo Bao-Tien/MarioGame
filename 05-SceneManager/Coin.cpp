@@ -9,10 +9,35 @@ void CCoin::Render()
 
 void CCoin::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	SetBoundingBoxSize(COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT);
+	switch (level)
+	{
+	case 0:
+		SetBoundingBoxSize(0, 0);
+		break;
+	case 1:
+		SetBoundingBoxSize(COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT);
+		break;
+	default:
+		break;
+	}
+	
 	CGameObject::GetBoundingBox(l, t, r, b);
 }
 
 string CCoin::GetAnimationFromState() {
-	return ID_ANI_COIN;
+	switch (level)
+	{
+	case 0:
+		return "";
+	case 1:
+		return ID_ANI_COIN;
+	default:
+		break;
+	}
+}
+
+void CCoin::OnCollisionWith(LPCOLLISIONEVENT e) {
+	if (e->obj) {
+		level = 0;
+	}
 }

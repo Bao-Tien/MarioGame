@@ -75,9 +75,6 @@ void CEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += (ay + g) * dt;
 	vx += ax * dt;
 
-	CGameObject::Update(dt, coObjects);
-	CCollision::GetInstance()->Process(this, dt, coObjects);
-
 	if (isAutoChangeDirectionWhenMoveOverRangeX == true) {
 		if (moveRangeX.x != 0 && moveRangeX.y != 0) {
 			if (x < moveRangeX.x) {
@@ -92,7 +89,10 @@ void CEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
-	flipX = nx > 0 ? 1 : -1;
+	flipX = nx < 0 ? 1 : -1;
+
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void CEnemy::Render()

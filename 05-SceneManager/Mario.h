@@ -48,8 +48,7 @@ protected:
 	float isFly;
 
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
-	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
-	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
+	void OnCollisionWithDeathPlatform(LPCOLLISIONEVENT e);
 
 public:
 	CMario(float x, float y) : CGameObject(x, y)

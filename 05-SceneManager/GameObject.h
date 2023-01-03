@@ -118,6 +118,10 @@ public:
 	~CGameObject();
 
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }
+
+	int Getnx() {
+		return nx;
+	}
 };
 
 typedef CGameObject* LPGAMEOBJECT;

@@ -42,7 +42,7 @@ void CTroopas::OnChangeLevel() {
 				int a = 0;
 			}
 			enemyAnimationId = ANI_TROOPAS_MOVE;
-			vx = -ENEMY_MOVE_SPEED;
+			vx = nx * ENEMY_MOVE_SPEED;
 			break;
 		}
 		default: {

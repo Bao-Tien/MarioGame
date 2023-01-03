@@ -86,7 +86,7 @@ void CPlayScene::Load() {
 		DebugOut(L"[ERROR] MARIO object was created before!\n");
 		return;
 	}
-	obj = new CBigMario(1356.0f + 24.0f, 800.0f);
+	obj = new CBigMario(1556.0f + 24.0f, 800.0f, 1);
 	player = obj;
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", sceneFilePath);
@@ -106,13 +106,14 @@ void CPlayScene::UpdatePlayer() {
 	
 	if (actualLevel != currentLevel) {
 		D3DXVECTOR2 position = player->GetPosition();
+		int nx = player->Getnx();
 		if (actualLevel == EMario_Level::SMALL) {
 			delete(player);
-			player = new CSmallMario(position.x, position.y);
+			player = new CSmallMario(position.x, position.y, nx);
 		}
 		else if (actualLevel == EMario_Level::BIG) {
 			delete(player);
-			player = new CBigMario(position.x, position.y);
+			player = new CBigMario(position.x, position.y, nx);
 		}
 
 

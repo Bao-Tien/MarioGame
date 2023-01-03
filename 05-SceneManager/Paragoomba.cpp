@@ -34,24 +34,23 @@ void CParagoomba::OnChangeLevel() {
 	}
 	case 1: {
 		enemyAnimationId = ANI_PARAGOOMBA_MOVE;
-		vx = -ENEMY_MOVE_SPEED;
+		vx = nx * ENEMY_MOVE_SPEED;
 		break;
 	}
 	case 2: {
 		enemyAnimationId = ANI_PARAGOOMBA_FLAP;
-		newStateInLevel2_start = GetTickCount64();
+		newActionInLevel2_start = GetTickCount64();
 		if (stateInLevel2 == ESTATE_INLEVEL2::MOVE) {
-			vx = -ENEMY_MOVE_SPEED;
+			stateInLevel2 = ESTATE_INLEVEL2::JUMP;
+			//DebugOut(L"tg chuyen: %d, statecu: MOVE, statemoi: JUMP \n", GetTickCount64() - newStateInLevel2_start);
 		}
 		else if (stateInLevel2 == ESTATE_INLEVEL2::JUMP) {
-			//ay = -0.01f;
-			vy = -ENEMY_MOVE_SPEED*2;
-			vx = -ENEMY_MOVE_SPEED;
+			stateInLevel2 = ESTATE_INLEVEL2::FLAP;
+			//DebugOut(L"tg chuyen: %d, statecu: JUMP, statemoi: FLAP \n", GetTickCount64() - newStateInLevel2_start);
 		}
 		else if (stateInLevel2 == ESTATE_INLEVEL2::FLAP) {
-			//ay = -0.05f;
-			vx = -ENEMY_MOVE_SPEED*2;
-			vy = -ENEMY_MOVE_SPEED;
+			stateInLevel2 = ESTATE_INLEVEL2::MOVE;
+			//DebugOut(L"tg chuyen: %d, statecu: FLAP, statemoi: MOVE \n", GetTickCount64() - newStateInLevel2_start);
 		}
 		break;
 	}
@@ -61,25 +60,55 @@ void CParagoomba::OnChangeLevel() {
 	}
 }
 
+void CParagoomba::ChangeAction() {
+	replayActionInLevel2_start = GetTickCount64();
+	if (stateInLevel2 == ESTATE_INLEVEL2::MOVE) {
+			vx = nx * ENEMY_MOVE_SPEED;
+			DebugOut(L"MOVE: %f\n", vy);
+		}
+		else if (stateInLevel2 == ESTATE_INLEVEL2::JUMP) {
+		//ay = -0.01f;
+		vx = nx * ENEMY_MOVE_SPEED;
+		vy = -ENEMY_MOVE_SPEED * 5;
+		DebugOut(L"JUMP: %f\n", vy);
+	}
+	else if (stateInLevel2 == ESTATE_INLEVEL2::FLAP) {
+		//ay = -0.05f;
+		vx = nx * ENEMY_MOVE_SPEED;
+		vy = -ENEMY_MOVE_SPEED * 6;
+		DebugOut(L"FLAP: %f\n", vy);
+	}
+}
+
 void CParagoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if ((level == 2))
 	{
-		DebugOut(L"tg da qua: %d \n", GetTickCount64() - newStateInLevel2_start);
-		if ((GetTickCount64() - newStateInLevel2_start > ENEMY_CHANGESTATE_TIMEOUT)) {
-			if (stateInLevel2 == ESTATE_INLEVEL2::MOVE) {
-				stateInLevel2 = ESTATE_INLEVEL2::JUMP;
-				//DebugOut(L"tg chuyen: %d, statecu: MOVE, statemoi: JUMP \n", GetTickCount64() - newStateInLevel2_start);
-			}
-			else if (stateInLevel2 == ESTATE_INLEVEL2::JUMP) {
-				stateInLevel2 = ESTATE_INLEVEL2::FLAP;
-				//DebugOut(L"tg chuyen: %d, statecu: JUMP, statemoi: FLAP \n", GetTickCount64() - newStateInLevel2_start);
-			}
-			else if (stateInLevel2 == ESTATE_INLEVEL2::FLAP) {
-				stateInLevel2 = ESTATE_INLEVEL2::MOVE;
-				//DebugOut(L"tg chuyen: %d, statecu: FLAP, statemoi: MOVE \n", GetTickCount64() - newStateInLevel2_start);
-			}
+		if (GetTickCount64() - newActionInLevel2_start > ENEMY_CHANGESTATE_TIMEOUT) {
 			OnChangeLevel();
+			ChangeAction();
 		}
+		else if (vy == 0) {
+			ChangeAction();
+		}
+		/*else {
+			if ()
+			if (stateInLevel2 == ESTATE_INLEVEL2::FLAP) {
+				if (GetTickCount64() - replayActionInLevel2_start >= 100) {
+					ChangeAction();
+					DebugOut(L"state: %d\n", stateInLevel2);
+				}
+			}
+			else {
+				if (GetTickCount64() - replayActionInLevel2_start >= 1000) {
+					ChangeAction();
+					DebugOut(L"state: %d\n", stateInLevel2);
+				}
+				else {
+					vy = 0;
+				}
+			}
+		}*/
+		
 	}
 
 	CEnemy::Update(dt, coObjects);

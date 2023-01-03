@@ -103,6 +103,12 @@
     <Filter Include="Framework\Object\BrickQuestion">
       <UniqueIdentifier>{ae9e7252-adab-4dbb-aefe-e7ae4b802bac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Object\Mario\RaccoonMario">
+      <UniqueIdentifier>{62669d82-641d-4dad-9cf2-28760d7c859a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Object\DeathPlatform">
+      <UniqueIdentifier>{e6d49525-f260-4d50-8295-59cee5c137c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -215,6 +221,12 @@
     </ClCompile>
     <ClCompile Include="BrickQuestion.cpp">
       <Filter>Framework\Object\BrickQuestion</Filter>
+    </ClCompile>
+    <ClCompile Include="RaccoonMario.cpp">
+      <Filter>Framework\Object\Mario\RaccoonMario</Filter>
+    </ClCompile>
+    <ClCompile Include="DeathPlatform.cpp">
+      <Filter>Framework\Object\DeathPlatform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +346,12 @@
     </ClInclude>
     <ClInclude Include="BrickQuestion.h">
       <Filter>Framework\Object\BrickQuestion</Filter>
+    </ClInclude>
+    <ClInclude Include="RaccoonMario.h">
+      <Filter>Framework\Object\Mario\RaccoonMario</Filter>
+    </ClInclude>
+    <ClInclude Include="DeathPlatform.h">
+      <Filter>Framework\Object\DeathPlatform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,9 +9,8 @@
 #include "Portal.h"
 
 #include "Collision.h"
-#include "RectCollision.h"
-#include "RectPlatform.h"
 #include "Enemy.h"
+#include "DeathPlatform.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -44,9 +43,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	ax = 0;
 	ay = 0;
 
-	DebugOut(L"vx = %f \n", vx);
-	DebugOut(L"x = %f \n", x);
-
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 	UpdateState();
@@ -77,10 +73,13 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<CEnemy*>(e->obj))
 		OnCollisionWithEnemy(e);
-	else if (dynamic_cast<CCoin*>(e->obj))
-		OnCollisionWithCoin(e);
-	else if (dynamic_cast<CPortal*>(e->obj))
-		OnCollisionWithPortal(e);
+	else if (dynamic_cast<CDeathPlatform*>(e->obj))
+		OnCollisionWithDeathPlatform(e);
+}
+//DeathPlatform
+void CMario::OnCollisionWithDeathPlatform(LPCOLLISIONEVENT e) {
+	SetState(EMario_State::DIE);
+	DebugOut(L">>> Mario DIE >>> \n");
 }
 
 // Enemy
@@ -128,18 +127,6 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 			ay = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
-}
-
-void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
-{
-	e->obj->Delete();
-	coin++;
-}
-
-void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
-{
-	CPortal* p = (CPortal*)e->obj;
-	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 }
 
 string CMario::GetAnimationFromState() {

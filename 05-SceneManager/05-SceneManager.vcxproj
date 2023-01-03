@@ -143,6 +143,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DeathPlatform.cpp" />
+    <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BigMario.cpp" />
@@ -190,6 +192,7 @@
     <ClInclude Include="BrickQuestion.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="DeathPlatform.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="define-mario.h" />
     <ClInclude Include="Enemy.h" />
@@ -205,6 +208,7 @@
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Portal.h" />
+    <ClInclude Include="RaccoonMario.h" />
     <ClInclude Include="RectCollision.h" />
     <ClInclude Include="RectPlatform.h" />
     <ClInclude Include="RedVenus.h" />

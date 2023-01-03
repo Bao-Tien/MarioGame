@@ -8,6 +8,7 @@
 #include "RedVenus.h"
 #include "Coin.h"
 #include "BrickQuestion.h"
+#include "DeathPlatform.h"
 
 #define CAMERA_MARGIN			150
 
@@ -101,9 +102,8 @@ void CGameMap::Render()
 				int id = layer->GetTileID(i % width, j % height);
 				CTileSet* tilesetPtr = this->GetTileSetByTileID(id);
 				if (tilesetPtr != nullptr) {
-					tilesetPtr->Draw(id, D3DXVECTOR2(x + tileWidth / 2 - camPos.x, y + tileHeight / 2 - camPos.y));
+					tilesetPtr->Draw(id, D3DXVECTOR2(x + floor(tileWidth / 2 - camPos.x), floor(y + tileHeight / 2 - camPos.y)));
 				}
-				
 			}
 		}
 	}
@@ -164,6 +164,22 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 					int height = atoi(objNode->Attribute("height"));
 
 					LPGAMEOBJECT obj = new CRectPlatform(
+						x + width / 2,
+						y + height / 2,
+						width,
+						height
+					);
+					staticObjects->push_back(obj);
+				}
+			}
+			else if (std::string(objGroupNode->Attribute("name")) == "DeathPlatform") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj = new CDeathPlatform(
 						x + width / 2,
 						y + height / 2,
 						width,
