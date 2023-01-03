@@ -64,19 +64,19 @@ void CParagoomba::ChangeAction() {
 	replayActionInLevel2_start = GetTickCount64();
 	if (stateInLevel2 == ESTATE_INLEVEL2::MOVE) {
 			vx = nx * ENEMY_MOVE_SPEED;
-			DebugOut(L"MOVE: %f\n", vy);
+			//DebugOut(L"MOVE: %f\n", vy);
 		}
 		else if (stateInLevel2 == ESTATE_INLEVEL2::JUMP) {
 		//ay = -0.01f;
 		vx = nx * ENEMY_MOVE_SPEED;
 		vy = -ENEMY_MOVE_SPEED * 5;
-		DebugOut(L"JUMP: %f\n", vy);
+		//DebugOut(L"JUMP: %f\n", vy);
 	}
 	else if (stateInLevel2 == ESTATE_INLEVEL2::FLAP) {
 		//ay = -0.05f;
 		vx = nx * ENEMY_MOVE_SPEED;
 		vy = -ENEMY_MOVE_SPEED * 6;
-		DebugOut(L"FLAP: %f\n", vy);
+		//DebugOut(L"FLAP: %f\n", vy);
 	}
 }
 

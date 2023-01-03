@@ -39,6 +39,9 @@ public:
 
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
 	void UpdatePlayer();
+	void PushToDynamicObjectsFrontMap(LPGAMEOBJECT obj) {
+		dynamicObjectsFrontMap.push_back(obj);
+	}
 };
 
 typedef CPlayScene* LPPLAYSCENE;

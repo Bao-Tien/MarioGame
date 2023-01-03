@@ -109,6 +109,9 @@
     <Filter Include="Framework\Object\DeathPlatform">
       <UniqueIdentifier>{e6d49525-f260-4d50-8295-59cee5c137c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Object\BrickQuestion\Leaf">
+      <UniqueIdentifier>{f4d5a39a-9716-4dd2-965f-9e81007fc7a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -227,6 +230,9 @@
     </ClCompile>
     <ClCompile Include="DeathPlatform.cpp">
       <Filter>Framework\Object\DeathPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Leaf.cpp">
+      <Filter>Framework\Object\BrickQuestion\Leaf</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="DeathPlatform.h">
       <Filter>Framework\Object\DeathPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Leaf.h">
+      <Filter>Framework\Object\BrickQuestion\Leaf</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

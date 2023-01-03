@@ -7,6 +7,8 @@
 class CGameObject;
 typedef CGameObject* LPGAMEOBJECT;
 
+class CPlayScene;
+
 struct TilesetRender {
 	CTileSet* tileset;
 	D3DXVECTOR2 rangeId = D3DXVECTOR2(0, 0);
@@ -44,7 +46,7 @@ public:
 
 	virtual void GetMapSize(D3DXVECTOR2& out);
 
-	static shared_ptr<CGameMap> LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* staticObjects, 
+	static shared_ptr<CGameMap> LoadFromTMXFile(string filePath, CPlayScene* playScene, vector<LPGAMEOBJECT>* staticObjects, 
 		vector<LPGAMEOBJECT>* dynamicObjectsFrontMap, vector<LPGAMEOBJECT>* dynamicObjectsAfterMap);
 	~CGameMap();
 };

@@ -16,9 +16,6 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_DOWN:
 		mario->KeyboardHandle(DIK_DOWN, EKeyType::KEY_DOWN);
 		break;
-	case DIK_S:
-		mario->KeyboardHandle(DIK_S, EKeyType::KEY_DOWN);
-		break;
 	case DIK_1:
 		mario->KeyboardHandle(DIK_1, EKeyType::KEY_DOWN);
 		break;
@@ -45,9 +42,6 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	if (mario->GetState() == MARIO_STATE_DIE) return;
 	switch (KeyCode)
 	{
-		/*case DIK_S:
-			mario->SetState(MARIO_STATE_RELEASE_JUMP);
-			break;*/
 	case DIK_DOWN:
 		mario->KeyboardHandle(DIK_DOWN, EKeyType::KEY_UP);
 		break;
@@ -71,13 +65,12 @@ void CSampleKeyHandler::KeyState(BYTE* states)
 	{
 		mario->KeyboardHandle(DIK_RIGHT, EKeyType::KEY_STATE);
 	}
-	else if (game->IsKeyDown(DIK_LEFT))
+	if (game->IsKeyDown(DIK_LEFT))
 	{
 		mario->KeyboardHandle(DIK_LEFT, EKeyType::KEY_STATE);
 	}
-	else if (game->IsKeyDown(DIK_S))
+	if (game->IsKeyDown(DIK_S))
 	{
 		mario->KeyboardHandle(DIK_S, EKeyType::KEY_STATE);
 	}
-	
 }

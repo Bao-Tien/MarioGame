@@ -10,16 +10,12 @@ CEnemy::CEnemy(float x, float y) :CGameObject(x, y)
 	this->ay = 0;
 	this->g = ENEMY_GRAVITY;
 	die_start = -1;
+	nx = -1;
 }
-
-void CEnemy::OnNoCollision(DWORD dt)
-{
-	x += vx * dt;
-	y += vy * dt;
-};
 
 void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	CGameObject::OnCollisionWith(e);
 	if (!e->obj->IsBlocking()) return;
 	
 	if (dynamic_cast<CEnemy*>(e->obj)) return;
@@ -75,20 +71,7 @@ void CEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += (ay + g) * dt;
 	vx += ax * dt;
 
-	if (isAutoChangeDirectionWhenMoveOverRangeX == true) {
-		if (moveRangeX.x != 0 && moveRangeX.y != 0) {
-			if (x < moveRangeX.x) {
-				x = moveRangeX.x;
-				nx *= -1;
-				vx *= -1;
-			}
-			if (x > moveRangeX.y) {
-				x = moveRangeX.y;
-				nx *= -1;
-				vx *= -1;
-			}
-		}
-	}
+	
 	flipX = nx < 0 ? 1 : -1;
 
 	CGameObject::Update(dt, coObjects);

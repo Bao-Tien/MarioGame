@@ -5,6 +5,12 @@ void CBrickQuestion::Render()
 {
 	CGameObject::Render();
 	RenderBoundingBox();
+
+	if (status == EBox_Status::OPENED && gift == EGift_Type::COIN && isRenderedOpeningCoinEffect == false) {
+		// y: 910, 900, 890, 880, 870, 860, 870, 880, 890, 900, 910, 920, 930
+
+		// 930 isRenderedOpeningCoinEffect = true
+	}
 }
 
 void CBrickQuestion::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -14,11 +20,11 @@ void CBrickQuestion::GetBoundingBox(float& l, float& t, float& r, float& b)
 }
 
 string CBrickQuestion::GetAnimationFromState() {
-	switch (level)
+	switch (status)
 	{
-	case 0:
+	case EBox_Status::OPENED:
 		return ID_ANI_BRICKQUESTION_EMPTY;
-	case 1:
+	case EBox_Status::NOT_OPEN:
 		return ID_ANI_BRICKQUESTION;
 	default:
 		break;
@@ -28,15 +34,13 @@ string CBrickQuestion::GetAnimationFromState() {
 void CBrickQuestion::OnCollisionWith(LPCOLLISIONEVENT e) {
 	if (!e->obj->IsBlocking()) return;
 
-	if (e->ny < 0) {
-		if (dynamic_cast<CMario*>(e->obj)) {
-			y -= 2;
-			level = 0;
+	if (e->ny < 0 && dynamic_cast<CMario*>(e->obj) && status == EBox_Status::NOT_OPEN) {
+		if (gift == EGift_Type::LEFT) {
+			CLeaf* leaf = new CLeaf(x, y - BRICKQUESTION_BBOX_HEIGHT);
+			playScene->PushToDynamicObjectsFrontMap(leaf);
 		}
+
+		status = EBox_Status::OPENED;
 	}
 }
 
-//void CBrickQuestion::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {
-//	CGameObject::Update(dt, coObjects);
-//	CCollision::GetInstance()->Process(this, dt, coObjects);
-//}

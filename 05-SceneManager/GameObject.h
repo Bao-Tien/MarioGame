@@ -10,6 +10,7 @@
 
 using namespace std;
 
+
 #define ID_TEX_BBOX "tex-bbox"//-100		// special texture to draw object bounding box
 #define BBOX_ALPHA 0.25f		// Bounding box transparency
 
@@ -37,6 +38,12 @@ protected:
 	int BoundingBox_Width = 0;
 	int BoundingBox_Height = 0;
 
+	// Behaviours
+	bool isAutoChangeDirectionWhenMoveOverRangeX = false;
+	bool isAutoChangeDirectionWhenHitCollision = true;
+
+	D3DXVECTOR2 moveRangeX = D3DXVECTOR2(0, 0);
+
 
 	D3DXVECTOR2 prevBoundingBoxSize = D3DXVECTOR2(0, 0);
 	
@@ -52,7 +59,6 @@ protected:
 		}
 	}
 
-
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
@@ -61,7 +67,9 @@ public:
 		return D3DXVECTOR2(this->x, this->y);
 	}
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
-
+	D3DXVECTOR2 GetSpeed() {
+		return D3DXVECTOR2(this->vx, this->vy);
+	}
 	int GetState() { return this->state; }
 	virtual void Delete() { isDeleted = true;  }
 	bool IsDeleted() { return isDeleted; }
@@ -89,7 +97,22 @@ public:
 		bottom = this->y + this->BoundingBox_Height / 2;
 	}
 
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {
+		if (isAutoChangeDirectionWhenMoveOverRangeX == true) {
+			if (moveRangeX.x != 0 && moveRangeX.y != 0) {
+				if (x < moveRangeX.x) {
+					x = moveRangeX.x;
+					nx *= -1;
+					vx *= -1;
+				}
+				if (x > moveRangeX.y) {
+					x = moveRangeX.y;
+					nx *= -1;
+					vx *= -1;
+				}
+			}
+		}
+	};
 	virtual void Render();
 	virtual void SetState(int state) { this->state = state; }
 	virtual string GetAnimationFromState() { return ""; };

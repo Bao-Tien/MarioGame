@@ -49,6 +49,7 @@ protected:
 
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
 	void OnCollisionWithDeathPlatform(LPCOLLISIONEVENT e);
+	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
 
 public:
 	CMario(float x, float y) : CGameObject(x, y)
@@ -68,6 +69,7 @@ public:
 		untouchable_start = -1;
 		isOnPlatform = false;
 		coin = 0;
+		nx = 1;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void UpdateState();
@@ -82,7 +84,6 @@ public:
 
 	int IsBlocking() { return (state != EMario_State::DIE && untouchable==0); }
 
-	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	virtual void KeyboardHandle(int KeyCode, EKeyType type);

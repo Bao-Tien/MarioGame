@@ -111,7 +111,7 @@ void CGameMap::Render()
 
 
 
-shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* staticObjects, 
+shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* playScene, vector<LPGAMEOBJECT>* staticObjects,
 	vector<LPGAMEOBJECT>* dynamicObjectsFrontMap, vector<LPGAMEOBJECT>* dynamicObjectsAfterMap)
 {
 	string fullPath = filePath;
@@ -251,10 +251,29 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 					int width = atoi(objNode->Attribute("width"));
 					int height = atoi(objNode->Attribute("height"));
 
-					LPGAMEOBJECT obj = new CBrickQuestion(
-						x + width / 2,
-						y + height / 2
-					);
+					LPGAMEOBJECT obj;
+					TiXmlElement* objProperties = objNode->FirstChildElement("properties");
+					if (objProperties != NULL) {
+						for (TiXmlElement* objPropertiesNode = objProperties->FirstChildElement("property"); objPropertiesNode != nullptr; objPropertiesNode = objPropertiesNode->NextSiblingElement("property")) {
+							string typeProperty = objPropertiesNode->Attribute("name");
+							string valueProperty = objPropertiesNode->Attribute("value");
+							obj = new CBrickQuestion(
+								x + width / 2,
+								y + height / 2,
+								playScene,
+								valueProperty
+								);
+						}
+					}
+					else {
+						obj = new CBrickQuestion(
+							x + width / 2,
+							y + height / 2,
+							playScene
+						);
+					}
+
+					
 					dynamicObjectsFrontMap->push_back(obj);
 				}
 			}

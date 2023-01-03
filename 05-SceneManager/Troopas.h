@@ -22,6 +22,8 @@ public:
 		OnChangeLevel();
 		isAutoChangeDirectionWhenMoveOverRangeX = true;
 		crouch_start = -1;
+		nx = -1;
+		flipX = -1;
 	}
 	void OnChangeLevel() override;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

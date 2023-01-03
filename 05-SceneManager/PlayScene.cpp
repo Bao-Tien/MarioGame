@@ -10,6 +10,7 @@
 #include "Coin.h"
 #include "Platform.h"
 #include "Goomba1.h"
+#include "RaccoonMario.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -54,7 +55,7 @@ void CPlayScene::Load() {
 	TiXmlElement* loadMap = root->FirstChildElement("Map");
 	string loadMapPath = loadMap->Attribute("path");
 	OutputDebugStringW(ToLPCWSTR("MapPath : " + loadMapPath + '\n'));
-	map = CGameMap().LoadFromTMXFile(loadMapPath, &staticObjects, &dynamicObjectsFrontMap, &dynamicObjectsAfterMap);
+	map = CGameMap().LoadFromTMXFile(loadMapPath, this, &staticObjects, &dynamicObjectsFrontMap, &dynamicObjectsAfterMap);
 
 	//load texture
 	TiXmlElement* textures = root->FirstChildElement("Textures");
@@ -86,7 +87,7 @@ void CPlayScene::Load() {
 		DebugOut(L"[ERROR] MARIO object was created before!\n");
 		return;
 	}
-	obj = new CBigMario(1556.0f + 24.0f, 800.0f, 1);
+	obj = new CBigMario(760.0f, 1000.0f, 1);
 	player = obj;
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", sceneFilePath);
@@ -103,6 +104,9 @@ void CPlayScene::UpdatePlayer() {
 	else if (dynamic_cast<CBigMario*>(player)) {
 		currentLevel = EMario_Level::BIG;
 	}
+	else if (dynamic_cast<CRaccoonMario*>(player)) {
+		currentLevel = EMario_Level::RACCOON;
+	}
 	
 	if (actualLevel != currentLevel) {
 		D3DXVECTOR2 position = player->GetPosition();
@@ -115,8 +119,10 @@ void CPlayScene::UpdatePlayer() {
 			delete(player);
 			player = new CBigMario(position.x, position.y, nx);
 		}
-
-
+		else if (actualLevel == EMario_Level::RACCOON) {
+			delete(player);
+			player = new CRaccoonMario(position.x, position.y, nx);
+		}
 
 		if (currentLevel > actualLevel) {
 			player->StartUntouchable();

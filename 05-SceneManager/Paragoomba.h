@@ -35,5 +35,4 @@ public:
 	void OnChangeLevel() override;
 	void ChangeAction();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-	void OnCollisionWith();
 };

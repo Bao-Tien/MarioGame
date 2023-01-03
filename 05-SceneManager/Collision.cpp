@@ -263,6 +263,9 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 	// No collision detected
 	if (coEvents.size() == 0)
 	{
+		D3DXVECTOR2 currentPosition = objSrc->GetPosition();
+		D3DXVECTOR2 currentSpeed = objSrc->GetSpeed();
+		objSrc->SetPosition(currentPosition.x + currentSpeed.x * dt, currentPosition.y + currentSpeed.y * dt);
 		objSrc->OnNoCollision(dt);
 	}
 	else

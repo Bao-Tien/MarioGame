@@ -11,6 +11,7 @@
 #include "Collision.h"
 #include "Enemy.h"
 #include "DeathPlatform.h"
+#include "Leaf.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -46,13 +47,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 	UpdateState();
-	
-}
-
-void CMario::OnNoCollision(DWORD dt)
-{
-	x += vx * dt;
-	y += vy * dt;
 }
 
 // e->ny < 0 : va cham o duoi chan mario
@@ -60,23 +54,42 @@ void CMario::OnNoCollision(DWORD dt)
 // e->nx != 0 : va cham phuong ngang
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<CLeaf*>(e->obj)) {
+		OnCollisionWithLeaf(e);
+	}
+
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
 		if (e->ny < 0) isOnPlatform = true;
 	}
-	else 
-	if (e->nx != 0 && e->obj->IsBlocking())
+	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
 		vx = 0;
 	}
 
-	if (dynamic_cast<CEnemy*>(e->obj))
+	if (dynamic_cast<CEnemy*>(e->obj)) {
 		OnCollisionWithEnemy(e);
-	else if (dynamic_cast<CDeathPlatform*>(e->obj))
+	}
+	else if (dynamic_cast<CDeathPlatform*>(e->obj)) {
 		OnCollisionWithDeathPlatform(e);
+	}
+		
 }
-//DeathPlatform
+
+// Leaf
+void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e) {
+	if (level == EMario_Level::SMALL) {
+		level = EMario_Level::BIG;
+	}
+	else if (level == EMario_Level::BIG) {
+		level = EMario_Level::RACCOON;
+	}
+	else if (level == EMario_Level::RACCOON) {
+	}
+}
+
+// DeathPlatform
 void CMario::OnCollisionWithDeathPlatform(LPCOLLISIONEVENT e) {
 	SetState(EMario_State::DIE);
 	DebugOut(L">>> Mario DIE >>> \n");
@@ -212,13 +225,15 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 		break;
 	case DIK_S:
 		if (isSitting) break;
-		if (isOnPlatform)
+		if (isOnPlatform && state != EMario_State::JUMP && state != EMario_State::JUMP_HIGH)
 		{
 			if (state == EMario_State::RUN) {
 				ay = -MARIO_ACCEL_JUMP_Y * 1.2f;
+				DebugOut(L"JUMP cao: %f\n", ay);
 			}
 			else {
 				ay = -MARIO_ACCEL_JUMP_Y;
+				DebugOut(L"JUMP thap: %f\n", ay);
 			}
 		}
 		if (level == EMario_Level::RACCOON && state == EMario_State::RUN) {
