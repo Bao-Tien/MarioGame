@@ -131,6 +131,8 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 
 string CMario::GetAnimationFromState() {
 	string typeString, stateString;
+	if (state == EMario_State::DIE && level != EMario_Level::SMALL) return "";
+
 	if (level == EMario_Level::SMALL) typeString = ANI_MARIO_LEVEL_SMALL;
 	else if (level == EMario_Level::BIG) typeString = ANI_MARIO_LEVEL_BIG;
 	else if (level == EMario_Level::RACCOON) typeString = ANI_MARIO_LEVEL_RACCOON;
