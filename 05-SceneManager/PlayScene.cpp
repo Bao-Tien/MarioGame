@@ -110,7 +110,7 @@ void CPlayScene::UpdatePlayer() {
 	
 	if (actualLevel != currentLevel) {
 		D3DXVECTOR2 position = player->GetPosition();
-		int nx = player->Getnx();
+		int nx = player->GetNx();
 		if (actualLevel == EMario_Level::SMALL) {
 			delete(player);
 			player = new CSmallMario(position.x, position.y, nx);
@@ -124,7 +124,7 @@ void CPlayScene::UpdatePlayer() {
 			player = new CRaccoonMario(position.x, position.y, nx);
 		}
 
-		if (currentLevel > actualLevel) {
+		if (currentLevel != actualLevel) {
 			player->StartUntouchable();
 		}
 	}
@@ -144,7 +144,15 @@ void CPlayScene::Update(DWORD dt)
 	}
 	for (size_t i = 0; i < staticObjects.size(); i++)
 	{
+		staticObjects[i]->Update(dt, &coObjects);
+	}
+	for (size_t i = 0; i < staticObjects.size(); i++)
+	{
 		coObjects.push_back(staticObjects[i]);
+	}
+	for (size_t i = 0; i < magicObjects.size(); i++)
+	{
+		magicObjects[i]->Update(dt, &coObjects);
 	}
 	for (size_t i = 0; i < dynamicObjectsFrontMap.size(); i++)
 	{
@@ -194,15 +202,20 @@ void CPlayScene::Render()
 		dynamicObjectsAfterMap[i]->Render();
 	// Render Map
 	map->Render();
+	// Render staticObjects
 	for (int i = 0; i < staticObjects.size(); i++)
 	{
 		if (!staticObjects[i]->GetIsHidden())
 			staticObjects[i]->Render();
 	}
 
-	// Render enemyObjectsInfrontOfMap
+	// Render ObjectsInfrontOfMap
 	for (int i = 0; i < dynamicObjectsFrontMap.size(); i++)
 		dynamicObjectsFrontMap[i]->Render();
+
+	// Render magicObjects
+	for (int i = 0; i < magicObjects.size(); i++)
+		magicObjects[i]->Render();
 
 	// Render Mario
 	this->player->Render();

@@ -1,5 +1,6 @@
 #include "Leaf.h"
 #include "debug.h"
+#include "Mario.h"
 
 void CLeaf::Render()
 {
@@ -38,20 +39,20 @@ string CLeaf::GetAnimationFromState() {
 
 void CLeaf::OnCollisionWith(LPCOLLISIONEVENT e) {
 	if (e->obj) {
-		level = 0;
+		if (dynamic_cast<CMario*>(e->obj)) {
+			level = 0;
+		}
 	}
 }
 
 void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	CGameObject::Update(dt, coObjects);
-	// a -> v -> s
 	vy += (ay + LEAF_G) * dt;
 
 	if (LEAF_MAX_VY != 0 && vy > LEAF_MAX_VY) vy = LEAF_MAX_VY;
 
 	CCollision::GetInstance()->Process(this, dt, NULL);
 
-	DebugOut(L" Leaf: x = %f, y = %f, vx = %f, vy = %f \n", x, y, vx, vy );
 	//Reset
 	ay = 0;
 }

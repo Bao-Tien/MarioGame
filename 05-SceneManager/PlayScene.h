@@ -18,10 +18,10 @@ protected:
 	// A play scene has to have player, right? 
 	CMario* player;
 
-	// enemyObjectsBehindMap, enemyObjectsInfrontOfMap
 	vector<LPGAMEOBJECT> dynamicObjectsAfterMap;
 	vector<LPGAMEOBJECT> dynamicObjectsFrontMap;
 	vector<LPGAMEOBJECT> staticObjects;
+	vector<LPGAMEOBJECT> magicObjects;
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
@@ -41,6 +41,9 @@ public:
 	void UpdatePlayer();
 	void PushToDynamicObjectsFrontMap(LPGAMEOBJECT obj) {
 		dynamicObjectsFrontMap.push_back(obj);
+	}
+	void PushToMagicObjects(LPGAMEOBJECT obj) {
+		magicObjects.push_back(obj);
 	}
 };
 

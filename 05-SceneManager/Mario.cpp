@@ -169,6 +169,7 @@ string CMario::GetAnimationFromState() {
 
 void CMario::Render()
 {
+	flipX = nx > 0 ? 1 : -1;
 	ULONGLONG currentTime = GetTickCount64();
 	if (untouchable == 1) {
 		// Bat tu
@@ -264,7 +265,7 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 		}
 	}
 
-	flipX = nx > 0 ? 1 : -1;
+	
 }
 
 

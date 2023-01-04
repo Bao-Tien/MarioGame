@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="DeathPlatform.cpp" />
     <ClCompile Include="Leaf.cpp" />
+    <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="Leaf.h" />
     <ClInclude Include="MapLayer.h" />
     <ClInclude Include="Mario.h" />
+    <ClInclude Include="Mushroom.h" />
     <ClInclude Include="Paragoomba.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />

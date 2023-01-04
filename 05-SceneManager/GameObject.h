@@ -142,7 +142,7 @@ public:
 
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }
 
-	int Getnx() {
+	int GetNx() {
 		return nx;
 	}
 };

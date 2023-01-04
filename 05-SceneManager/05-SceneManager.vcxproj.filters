@@ -112,6 +112,9 @@
     <Filter Include="Framework\Object\BrickQuestion\Leaf">
       <UniqueIdentifier>{f4d5a39a-9716-4dd2-965f-9e81007fc7a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Object\BrickQuestion\Mushroom">
+      <UniqueIdentifier>{ec35c29e-703b-4064-8c66-b47f85757cde}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -233,6 +236,9 @@
     </ClCompile>
     <ClCompile Include="Leaf.cpp">
       <Filter>Framework\Object\BrickQuestion\Leaf</Filter>
+    </ClCompile>
+    <ClCompile Include="Mushroom.cpp">
+      <Filter>Framework\Object\BrickQuestion\Mushroom</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +367,9 @@
     </ClInclude>
     <ClInclude Include="Leaf.h">
       <Filter>Framework\Object\BrickQuestion\Leaf</Filter>
+    </ClInclude>
+    <ClInclude Include="Mushroom.h">
+      <Filter>Framework\Object\BrickQuestion\Mushroom</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

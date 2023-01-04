@@ -241,7 +241,7 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 						x + width / 2,
 						y + height / 2
 					);
-					dynamicObjectsFrontMap->push_back(obj);
+					staticObjects->push_back(obj);
 				}
 			}
 			else if (std::string(objGroupNode->Attribute("name")) == "Brick_Question") {
@@ -274,7 +274,7 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 					}
 
 					
-					dynamicObjectsFrontMap->push_back(obj);
+					staticObjects->push_back(obj);
 				}
 			}
 			else if (std::string(objGroupNode->Attribute("name")) == "Enemy_RedVenus") {
