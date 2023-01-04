@@ -11,7 +11,7 @@
 #include "Collision.h"
 #include "Enemy.h"
 #include "DeathPlatform.h"
-#include "Leaf.h"
+#include "MagicObj.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -54,7 +54,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 // e->nx != 0 : va cham phuong ngang
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<CLeaf*>(e->obj)) {
+	if (dynamic_cast<CMagicObj*>(e->obj)) {
 		OnCollisionWithLeaf(e);
 	}
 

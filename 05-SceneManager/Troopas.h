@@ -20,7 +20,6 @@ public:
 		type = EEnemy_Type::GOOMBA;
 		level = 2;
 		OnChangeLevel();
-		isAutoChangeDirectionWhenMoveOverRangeX = true;
 		crouch_start = -1;
 		nx = -1;
 		flipX = -1;

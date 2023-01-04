@@ -40,7 +40,7 @@ void CBrickQuestion::OnCollisionWith(LPCOLLISIONEVENT e) {
 
 		if (gift == EGift_Type::MUSHROOM) {
 			CMushroom* mushroom = new CMushroom(x, y);
-			playScene->PushToMagicObjects(mushroom);
+			playScene->PushToDynamicObjectsFrontMap(mushroom);
 		}
 		
 		if (gift == EGift_Type::COIN) {

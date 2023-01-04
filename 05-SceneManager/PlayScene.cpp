@@ -150,10 +150,6 @@ void CPlayScene::Update(DWORD dt)
 	{
 		coObjects.push_back(staticObjects[i]);
 	}
-	for (size_t i = 0; i < magicObjects.size(); i++)
-	{
-		magicObjects[i]->Update(dt, &coObjects);
-	}
 	for (size_t i = 0; i < dynamicObjectsFrontMap.size(); i++)
 	{
 		dynamicObjectsFrontMap[i]->Update(dt, &coObjects);
@@ -212,10 +208,6 @@ void CPlayScene::Render()
 	// Render ObjectsInfrontOfMap
 	for (int i = 0; i < dynamicObjectsFrontMap.size(); i++)
 		dynamicObjectsFrontMap[i]->Render();
-
-	// Render magicObjects
-	for (int i = 0; i < magicObjects.size(); i++)
-		magicObjects[i]->Render();
 
 	// Render Mario
 	this->player->Render();

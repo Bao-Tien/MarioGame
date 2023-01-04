@@ -115,6 +115,9 @@
     <Filter Include="Framework\Object\BrickQuestion\Mushroom">
       <UniqueIdentifier>{ec35c29e-703b-4064-8c66-b47f85757cde}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Object\BrickQuestion\MagicObj">
+      <UniqueIdentifier>{adce67db-81c7-49e3-a2fe-652b654e2fd5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -239,6 +242,9 @@
     </ClCompile>
     <ClCompile Include="Mushroom.cpp">
       <Filter>Framework\Object\BrickQuestion\Mushroom</Filter>
+    </ClCompile>
+    <ClCompile Include="MagicObj.cpp">
+      <Filter>Framework\Object\BrickQuestion\MagicObj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -370,6 +376,9 @@
     </ClInclude>
     <ClInclude Include="Mushroom.h">
       <Filter>Framework\Object\BrickQuestion\Mushroom</Filter>
+    </ClInclude>
+    <ClInclude Include="MagicObj.h">
+      <Filter>Framework\Object\BrickQuestion\MagicObj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

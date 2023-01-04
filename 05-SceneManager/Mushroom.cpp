@@ -42,26 +42,30 @@ void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e) {
 		if (dynamic_cast<CMario*>(e->obj)) {
 			level = 0;
 		}
+		else {
+			if (e->nx != 0) {
+				nx *= -1;
+			}
+		}
 	}
 }
 
 void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	CGameObject::Update(dt, coObjects);
 	if (isAppeared) {
-		vx = MUSHROOM_VX;
+		vx = nx * MUSHROOM_VX;
 		vy += (ay + MUSHROOM_G) * dt;
 
 		if (vy > MUSHROOM_MAX_VY) vy = MUSHROOM_MAX_VY;
 
-		CCollision::GetInstance()->Process(this, dt, NULL);
+		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
 	else {
-		if (yStart - y < 48) {
-			y -= 3;
+		if (yStart - y < MUSHROOM_BBOX_WIDTH) {
+			y -= 5;
 		}
 		else isAppeared = true;
 	}
-	
 
 	//Reset
 	ay = 0;

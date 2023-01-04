@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "MagicObj.h"
 
 #define ID_ANI_LEAF "ani-super-leaf-red"
 #define LEAF_BBOX_WIDTH 48
@@ -10,11 +10,11 @@
 #define LEAF_VX 0.08f
 #define RANGE_X_RADIUS 64 // px
 
-class CLeaf : public CGameObject {
+class CLeaf : public CMagicObj {
 	int level;
 	float ay;
 public:
-	CLeaf(float x, float y) : CGameObject(x, y) {
+	CLeaf(float x, float y) : CMagicObj(x, y) {
 		level = 1;
 		vx = LEAF_VX;
 		ay = -0.0045f;
