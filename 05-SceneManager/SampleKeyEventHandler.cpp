@@ -19,6 +19,9 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_1:
 		mario->KeyboardHandle(DIK_1, EKeyType::KEY_DOWN);
 		break;
+	case DIK_S:
+		mario->KeyboardHandle(DIK_S, EKeyType::KEY_DOWN);
+		break;
 	case DIK_2:
 		mario->KeyboardHandle(DIK_2, EKeyType::KEY_DOWN);
 		break;

@@ -37,6 +37,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable = 0;
 	}
 
+	UpdateState();
+
 	isOnPlatform = false;
 	// reset nha nut A
 	accelerated = 1;
@@ -46,7 +48,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
-	UpdateState();
+	
 }
 
 // e->ny < 0 : va cham o duoi chan mario
@@ -55,7 +57,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CMagicObj*>(e->obj)) {
-		OnCollisionWithLeaf(e);
+		OnCollisionWithMagicObj(e);
 	}
 
 	if (e->ny != 0 && e->obj->IsBlocking())
@@ -77,13 +79,17 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		
 }
 
-// Leaf
-void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e) {
+// MagicObj
+void CMario::OnCollisionWithMagicObj(LPCOLLISIONEVENT e) {
 	if (level == EMario_Level::SMALL) {
 		level = EMario_Level::BIG;
+		SetLevel(level);
+		return;
 	}
 	else if (level == EMario_Level::BIG) {
 		level = EMario_Level::RACCOON;
+		SetLevel(level);
+		return;
 	}
 	else if (level == EMario_Level::RACCOON) {
 	}
@@ -113,17 +119,17 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 				if (level == EMario_Level::FIRE)
 				{
 					level = EMario_Level::RACCOON;
-					StartUntouchable();
+					//StartUntouchable();
 				}
 				else if (level == EMario_Level::RACCOON)
 				{
 					level = EMario_Level::BIG;
-					StartUntouchable();
+					//StartUntouchable();
 				}
 				else if (level == EMario_Level::BIG)
 				{
 					level = EMario_Level::SMALL;
-					StartUntouchable();
+					//StartUntouchable();
 				}
 				else
 				{
@@ -131,6 +137,8 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 					ay = -MARIO_JUMP_DEFLECT_SPEED;
 					ax = 0;
 					vx = 0;
+					/*level = EMario_Level::DIE;
+					SetLevel(level);*/
 					SetState(EMario_State::DIE);
 				}
 			}
@@ -226,22 +234,24 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 		break;
 	case DIK_S:
 		if (isSitting) break;
-		if (isOnPlatform && state != EMario_State::JUMP && state != EMario_State::JUMP_HIGH)
-		{
-			if (state == EMario_State::RUN) {
-				ay = -MARIO_ACCEL_JUMP_Y * 1.2f;
-				DebugOut(L"JUMP cao: %f\n", ay);
-			}
-			else {
-				ay = -MARIO_ACCEL_JUMP_Y;
-				DebugOut(L"JUMP thap: %f\n", ay);
+		if (type == EKeyType::KEY_STATE) {
+			if (isOnPlatform && state != EMario_State::JUMP && state != EMario_State::JUMP_HIGH)
+			{
+				if (state == EMario_State::RUN) {
+					ay = -MARIO_ACCEL_JUMP_Y * 1.2f;
+				}
+				else {
+					ay = -MARIO_ACCEL_JUMP_Y;
+				}
 			}
 		}
-		if (level == EMario_Level::RACCOON && state == EMario_State::RUN) {
-			isFly = 1;
-		}
-		if (level == EMario_Level::RACCOON && isFly == 1) {
-			ay = -MARIO_ACCEL_JUMP_Y / 2.0f;
+		if (type == EKeyType::KEY_DOWN) {
+			if (level == EMario_Level::RACCOON && state == EMario_State::RUN) {
+				isFly = 1;
+			}
+			if (level == EMario_Level::RACCOON && isFly == 1) {
+				ay = -MARIO_ACCEL_JUMP_Y / 2.0f;
+			}
 		}
 		break;
 	case DIK_DOWN:
@@ -258,8 +268,8 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 			if (isSitting)
 			{
 				isSitting = false;
-				state = EMario_State::IDLE;
-				y = y - MARIO_SIT_HEIGHT_ADJUST - 1.0f;
+				SetState(EMario_State::IDLE);
+				y = y - MARIO_SIT_HEIGHT_ADJUST - 2.0f;
 			}
 			break;
 		}
@@ -330,6 +340,9 @@ void CMario::SetLevel(EMario_Level l)
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 	if (state == EMario_State::DIE) {
 		SetBoundingBoxSize(0, 0);
+	}
+	if (state == EMario_State::SIT) {
+		SetBoundingBoxSize(MARIO_BIG_SITTING_BBOX_WIDTH, MARIO_BIG_SITTING_BBOX_HEIGHT);
 	}
 	CGameObject::GetBoundingBox(left, top, right, bottom);
 }

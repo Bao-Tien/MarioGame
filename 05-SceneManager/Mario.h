@@ -49,7 +49,7 @@ protected:
 
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
 	void OnCollisionWithDeathPlatform(LPCOLLISIONEVENT e);
-	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
+	void OnCollisionWithMagicObj(LPCOLLISIONEVENT e);
 
 public:
 	CMario(float x, float y) : CGameObject(x, y)

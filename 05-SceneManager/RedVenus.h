@@ -17,7 +17,6 @@ protected:
 public:
 	CRedVenus(float x, float y, CPlayScene* playScene) : CEnemy(x, y) {
 		type = EEnemy_Type::RED_VENUS;
-		level = 1;
 		OnChangeLevel();
 		yStart = y;
 		isMoveUp = 1;
@@ -25,6 +24,5 @@ public:
 		attackFromTop = true;
 		this->playScene = playScene;
 	}
-	void OnChangeLevel() override;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 };

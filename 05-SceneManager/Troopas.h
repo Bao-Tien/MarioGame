@@ -17,12 +17,13 @@ protected:
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 public:
 	CTroopas(float x, float y) : CEnemy(x, y) {
-		type = EEnemy_Type::GOOMBA;
+		type = EEnemy_Type::TROOPAS;
 		level = 2;
 		OnChangeLevel();
 		crouch_start = -1;
 		nx = -1;
 		flipX = -1;
+		isAutoChangeDirectionWhenMoveOverRangeX = true;
 	}
 	void OnChangeLevel() override;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

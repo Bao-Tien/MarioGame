@@ -25,9 +25,14 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 		vy = 0;
 	}
 
-	if (e->nx != 0 && this->isAutoChangeDirectionWhenHitCollision == true)
-	{
-		vx = -vx;
+	if (dynamic_cast<CMario*>(e->obj)) {
+
+	}
+	else {
+		if (e->nx != 0 && this->isAutoChangeDirectionWhenHitCollision == true)
+		{
+			vx = -vx;
+		}
 	}
 
 	if (isAutoChangeDirectionWhenMoveOverRangeX == true) {
@@ -40,12 +45,12 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 
 	if (dynamic_cast<CMario*>(e->obj) && level > 0) {
-		bool condition1 = e->nx < 0 && this->attackFromLeft == true;
-		bool condition2 = e->ny < 0 && this->attackFromTop == true;
-		bool condition3 = e->nx > 0 && this->attackFromRight == true;
-		bool condition4 = e->ny > 0 && this->attackFromBottom == true;
+		bool condition1 = e->nx > 0 && this->attackFromLeft == true;
+		bool condition2 = e->ny > 0 && this->attackFromTop == true;
+		bool condition3 = e->nx < 0 && this->attackFromRight == true;
+		bool condition4 = e->ny < 0 && this->attackFromBottom == true;
 
-		if (condition1 && condition2 && condition3 && condition4) {
+		if (condition1 || condition2 || condition3 || condition4) {
 			// Enemy an toan
 		}
 		else {

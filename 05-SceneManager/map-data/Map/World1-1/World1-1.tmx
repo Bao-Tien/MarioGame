@@ -56,8 +56,8 @@
   <object id="47" x="6384" y="1104" width="144" height="144"/>
   <object id="48" x="6480" y="816" width="144" height="432"/>
   <object id="224" x="3892" y="434.667" width="185.333" height="92"/>
-  <object id="225" x="4178.67" y="577.333" width="186.667" height="45.3333"/>
-  <object id="227" x="4418.67" y="530.667" width="665.333" height="41.3333"/>
+  <object id="225" x="4178" y="576" width="186" height="48"/>
+  <object id="227" x="4418" y="530" width="666" height="48"/>
  </objectgroup>
  <objectgroup id="27" name="Brick_Question">
   <object id="218" x="528" y="1056" width="48" height="48"/>

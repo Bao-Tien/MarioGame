@@ -6,7 +6,7 @@
 
 #define MARIO_ACCEL_WALK_X	0.002f
 #define MARIO_ACCEL_RUN_X	0.003f
-#define MARIO_ACCEL_JUMP_Y	0.009f
+#define MARIO_ACCEL_JUMP_Y	0.01f
 #define MARIO_ACCEL_RUN_JUMP_Y	0.05f
 #define MARIO_ACCEL_FLY_X	0.006f
 #define MARIO_ACCEL_FLY_Y	0.006f
@@ -65,7 +65,7 @@
 #define MARIO_SMALL_BBOX_HEIGHT 13*3
 
 
-#define MARIO_UNTOUCHABLE_TIME 5000
+#define MARIO_UNTOUCHABLE_TIME 2000
 
 #define ANI_MARIO_LEVEL_SMALL "ani-small-mario"
 #define ANI_MARIO_LEVEL_BIG "ani-big-mario"

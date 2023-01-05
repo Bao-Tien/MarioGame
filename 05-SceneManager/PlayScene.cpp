@@ -111,6 +111,7 @@ void CPlayScene::UpdatePlayer() {
 	if (actualLevel != currentLevel) {
 		D3DXVECTOR2 position = player->GetPosition();
 		int nx = player->GetNx();
+		D3DXVECTOR2 oldBBox = player->GetBoundingBoxSize();
 		if (actualLevel == EMario_Level::SMALL) {
 			delete(player);
 			player = new CSmallMario(position.x, position.y, nx);
@@ -123,6 +124,7 @@ void CPlayScene::UpdatePlayer() {
 			delete(player);
 			player = new CRaccoonMario(position.x, position.y, nx);
 		}
+		player->SetPrevBoundBoxSize(oldBBox);
 
 		if (currentLevel != actualLevel) {
 			player->StartUntouchable();
