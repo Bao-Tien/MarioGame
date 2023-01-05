@@ -1,5 +1,6 @@
 #include "RedVenus.h"
 #include "Mario.h"
+#include "FireFlower.h"
 
 void CRedVenus::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 	switch (level) {
@@ -36,16 +37,18 @@ void CRedVenus::OnChangeLevel() {
 
 void CRedVenus::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (level == 1) {
-		if (isMoveUp && y > yStart - BoundingBox_Height) {
-			y -= 3;
+		if (isMoveUp && y >= yStart - BoundingBox_Height) {
+			y -= 2;
 			enemyAnimationId = ANI_VENUS_RED_UP;
 			if (y == yStart - BoundingBox_Height) {
 				isMoveUp = false;
+				CFireFlower* fireFlower = new CFireFlower(x, y);
+				playScene->PushToDynamicObjectsFrontMap(fireFlower);
 			}
 		}
 
-		if (!isMoveUp && y <= yStart) {
-			y += 3;
+		if (!isMoveUp && y < yStart) {
+			y += 2;
 			enemyAnimationId = ANI_VENUS_RED_DOWN;
 			if (y == yStart) {
 				isMoveUp = true;

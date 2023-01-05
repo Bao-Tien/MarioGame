@@ -286,7 +286,8 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 
 					LPGAMEOBJECT obj = new CRedVenus(
 						x + width / 2,
-						y + height / 2
+						y + height / 2,
+						playScene
 					);
 					dynamicObjectsAfterMap->push_back(obj);
 				}

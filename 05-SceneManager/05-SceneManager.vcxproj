@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DeathPlatform.cpp" />
+    <ClCompile Include="FireFlower.cpp" />
     <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="MagicObj.cpp" />
     <ClCompile Include="Mushroom.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="debug.h" />
     <ClInclude Include="define-mario.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="FireFlower.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GameObject.h" />

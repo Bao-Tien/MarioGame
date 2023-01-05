@@ -11,6 +11,7 @@ enum class EEnemy_Type {
 	GOOMBA = 0,
 	TROOPAS = 1,
 	RED_VENUS = 2,
+	FIRE_FLOWER = 3,
 };
 
 class CEnemy : public CGameObject

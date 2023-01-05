@@ -118,6 +118,9 @@
     <Filter Include="Framework\Object\BrickQuestion\MagicObj">
       <UniqueIdentifier>{adce67db-81c7-49e3-a2fe-652b654e2fd5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Object\Enemy\RedVenus\FireFlower">
+      <UniqueIdentifier>{7e7daefb-c9cd-4e64-af90-0cca5b4f737b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -245,6 +248,9 @@
     </ClCompile>
     <ClCompile Include="MagicObj.cpp">
       <Filter>Framework\Object\BrickQuestion\MagicObj</Filter>
+    </ClCompile>
+    <ClCompile Include="FireFlower.cpp">
+      <Filter>Framework\Object\Enemy\RedVenus\FireFlower</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -379,6 +385,9 @@
     </ClInclude>
     <ClInclude Include="MagicObj.h">
       <Filter>Framework\Object\BrickQuestion\MagicObj</Filter>
+    </ClInclude>
+    <ClInclude Include="FireFlower.h">
+      <Filter>Framework\Object\Enemy\RedVenus\FireFlower</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
