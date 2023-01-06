@@ -24,12 +24,13 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vy = 0;
 	}
+	int a = vx;
 
 	if (dynamic_cast<CMario*>(e->obj)) {
 
 	}
 	else {
-		if (e->nx != 0 && this->isAutoChangeDirectionWhenHitCollision == true)
+		if (e->nx != 0)
 		{
 			vx = -vx;
 		}

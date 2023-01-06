@@ -12,6 +12,10 @@ void CTroopas::GetBoundingBox(float& left, float& top, float& right, float& bott
 			break;
 		}
 		case 2: {
+			SetBoundingBoxSize(TROOPAS_BBOX_WIDTH, TROOPAS_BBOX_HEIGHT_DIE);
+			break;
+		}
+		case 3: {
 			SetBoundingBoxSize(TROOPAS_BBOX_WIDTH, TROOPAS_BBOX_HEIGHT);
 			break;
 		}
@@ -33,15 +37,29 @@ void CTroopas::OnChangeLevel() {
 		}
 		case 1: {
 			enemyAnimationId = ANI_TROOPAS_CROUCH;
-			crouch_start = GetTickCount64();
-			vx = 0;
+			attackFromLeft = true;
+			attackFromTop = true;
+			attackFromRight = true;
+			attackFromBottom = true;
+			isAutoChangeDirectionWhenMoveOverRangeX = false;
 			break;
 		}
 		case 2: {
-			if (crouch_start) {
-				int a = 0;
-			}
+			enemyAnimationId = ANI_TROOPAS_CROUCH;
+			crouch_start = GetTickCount64();
+			attackFromLeft = false;
+			attackFromTop = false;
+			attackFromRight = false;
+			attackFromBottom = false;
+			vx = 0;
+			break;
+		}
+		case 3: {
 			enemyAnimationId = ANI_TROOPAS_MOVE;
+			attackFromLeft = true;
+			attackFromTop = false;
+			attackFromRight = true;
+			attackFromBottom = true;
 			vx = nx * ENEMY_MOVE_SPEED;
 			break;
 		}
@@ -51,8 +69,20 @@ void CTroopas::OnChangeLevel() {
 	}
 }
 
+void CTroopas::OnCollisionWith(LPCOLLISIONEVENT e) {
+	if (level == 2 && dynamic_cast<CMario*>(e->obj)) {
+		if (e->nx > 0 || e->ny > 0) {
+			vx = ENEMY_MOVE_SPEED * 5;
+		}
+		else if (e->nx < 0) {
+			vx = -ENEMY_MOVE_SPEED * 5;
+		}
+	}
+	CEnemy::OnCollisionWith(e);
+}
+
 void CTroopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	if ((level == 1))
+	if (level == 2)
 	{
 		if ((GetTickCount64() - crouch_start > ENEMY_CROUCH_TIMEOUT)) {
 			level++;

@@ -143,7 +143,7 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 	objSrc->GetBoundingBox(ml, mt, mr, mb);
 	objDest->GetBoundingBox(sl, st, sr, sb);
 
-	if (ml < mr && mt < mb && sl < sr && st < sb) {
+	/*if (ml < mr && mt < mb && sl < sr && st < sb) {
 		SweptAABB(
 			ml, mt, mr, mb,
 			dx, dy,
@@ -156,7 +156,15 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 	else {
 		CCollisionEvent* e = new CCollisionEvent(0, 0, 0, 0, 0, objDest, objSrc);
 		return e;
-	}
+	}*/
+	SweptAABB(
+		ml, mt, mr, mb,
+		dx, dy,
+		sl, st, sr, sb,
+		t, nx, ny
+	);
+	CCollisionEvent* e = new CCollisionEvent(t, nx, ny, dx, dy, objDest, objSrc);
+	return e;
 }
 
 /*
@@ -176,6 +184,8 @@ void CCollision::Scan(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* objDe
 		else
 			delete e;
 	}
+
+	
 
 	//std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
@@ -271,7 +281,7 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 	else
 	{
 		Filter(objSrc, coEvents, colX, colY);
-
+		
 		float x, y, vx, vy, dx, dy;
 		objSrc->GetPosition(x, y);
 		objSrc->GetSpeed(vx, vy);
@@ -280,6 +290,7 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 
 		if (colX != NULL && colY != NULL) 
 		{
+			
 			if (colY->t < colX->t)	// was collision on Y first ?
 			{
 				y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
@@ -381,18 +392,34 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		objSrc->SetPosition(x, y);
 	}
 
+	// Mario (y=50, vy=5, dt=6) -> y=64
+	// Nen (y=65)
+	// Dan (y=55->y=75)
+	// Dan3 (y=85)
+
 	//
 	// Scan all non-blocking collisions for further collision logic
 	//
+	
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT e = coEvents[i];
 		if (e->isDeleted) continue;
 		if (e->obj->IsBlocking()) continue;  // blocking collisions were handled already, skip them
 
-		objSrc->OnCollisionWith(e);	
+		if (coEvents.size() >= 2) {
+			int a = 0;
+		}
+
+		LPCOLLISIONEVENT e2 = SweptAABB(objSrc, dt, coEvents[i]->obj);
+		if (e2->WasCollided() == 1) {
+			
+		}
+
+		objSrc->OnCollisionWith(e);
 		//call OnCollisionWith nguoc lai
 		CallCollisionEventOnDestObject(objSrc, e);
+		
 	}
 
 

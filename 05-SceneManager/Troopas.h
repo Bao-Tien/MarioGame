@@ -18,7 +18,7 @@ protected:
 public:
 	CTroopas(float x, float y) : CEnemy(x, y) {
 		type = EEnemy_Type::TROOPAS;
-		level = 2;
+		level = 3;
 		OnChangeLevel();
 		crouch_start = -1;
 		nx = -1;
@@ -27,5 +27,6 @@ public:
 	}
 	void OnChangeLevel() override;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void OnCollisionWith(LPCOLLISIONEVENT e);
 };
 

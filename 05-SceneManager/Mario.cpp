@@ -13,6 +13,7 @@
 #include "DeathPlatform.h"
 #include "MagicObj.h"
 #include "MushroomGreen.h"
+#include "Troopas.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -29,7 +30,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (vx < 0 && ms < 0) vx = 0;
 
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
-	if (maxVy != 0 && abs(vy) > abs(maxVy)) vy = maxVy;
+	if (maxVy != 0 && abs(vy) > abs(maxVy)) vy = maxVy * (vy > 0 ? 1 : -1);
 
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
@@ -48,8 +49,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	ay = 0;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
-
-	
+	int a = ay;
+	DebugOut(L">>> Mario level %i>>> \n", level);
 }
 
 // e->ny < 0 : va cham o duoi chan mario
@@ -87,14 +88,15 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 // MagicObj
 void CMario::OnCollisionWithMagicObj(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<CMagicObj*>(e->obj)->GetLevel() == 0) {
+		return;
+	}
 	if (level == EMario_Level::SMALL) {
-		level = EMario_Level::BIG;
-		SetLevel(level);
+		SetLevel(EMario_Level::BIG);
 		return;
 	}
 	else if (level == EMario_Level::BIG) {
-		level = EMario_Level::RACCOON;
-		SetLevel(level);
+		SetLevel(EMario_Level::RACCOON);
 		return;
 	}
 	else if (level == EMario_Level::RACCOON) {
@@ -109,9 +111,14 @@ void CMario::OnCollisionWithDeathPlatform(LPCOLLISIONEVENT e) {
 
 // Enemy
 void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<CTroopas*>(e->obj) && dynamic_cast<CTroopas*>(e->obj)->GetLevel() == 3) {
+		//ay = -MARIO_JUMP_DEFLECT_SPEED;
+		return;
+	}
+
 	CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
 
-	if ((enemy->GetLevel() != 0)) {
+	if (enemy != NULL && enemy->GetLevel() != 0) {
 		// Conditions when Mario is attacked
 		bool condition1 = e->nx < 0 && enemy->attackFromLeft == true;
 		bool condition2 = e->ny < 0 && enemy->attackFromTop == true;
@@ -152,6 +159,7 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 		else {
 			// Enemy is attacked (Mario attack enemy)
 			ay = -MARIO_JUMP_DEFLECT_SPEED;
+			vy = 0;
 		}
 	}
 }
@@ -241,22 +249,26 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 	case DIK_S:
 		if (isSitting) break;
 		if (type == EKeyType::KEY_STATE) {
+			
+		}
+		if (type == EKeyType::KEY_DOWN) {
 			if (isOnPlatform && state != EMario_State::JUMP && state != EMario_State::JUMP_HIGH)
 			{
 				if (state == EMario_State::RUN) {
 					ay = -MARIO_ACCEL_JUMP_Y * 1.2f;
+					DebugOut(L" Mario nhay cao >>> \n");
 				}
 				else {
 					ay = -MARIO_ACCEL_JUMP_Y;
+					DebugOut(L" Mario nhay thap >>> \n");
 				}
 			}
-		}
-		if (type == EKeyType::KEY_DOWN) {
 			if (level == EMario_Level::RACCOON && state == EMario_State::RUN) {
 				isFly = 1;
 			}
 			if (level == EMario_Level::RACCOON && isFly == 1) {
 				ay = -MARIO_ACCEL_JUMP_Y;
+				DebugOut(L" Mario bay >>> \n");
 			}
 		}
 		break;

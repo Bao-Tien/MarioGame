@@ -40,7 +40,6 @@ protected:
 
 	// Behaviours
 	bool isAutoChangeDirectionWhenMoveOverRangeX = false;
-	bool isAutoChangeDirectionWhenHitCollision = true;
 
 	D3DXVECTOR2 moveRangeX = D3DXVECTOR2(0, 0);
 

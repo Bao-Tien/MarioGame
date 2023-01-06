@@ -184,8 +184,6 @@ void CPlayScene::Update(DWORD dt)
 	}
 	UpdatePlayer();
 	player->Update(dt, &coObjects);
-
-
 	
 
 	// Update camera to follow mario

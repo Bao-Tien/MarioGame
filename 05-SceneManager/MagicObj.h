@@ -6,5 +6,6 @@ protected:
 	int level;
 public:
 	CMagicObj(float x, float y) : CGameObject(x, y) {}
+	int GetLevel() { return level; }
 };
 

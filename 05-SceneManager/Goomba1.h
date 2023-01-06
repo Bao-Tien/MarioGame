@@ -15,7 +15,7 @@ protected:
 public:
 	CGoomba1(float x, float y) : CEnemy(x, y) {
 		type = EEnemy_Type::GOOMBA;
-		level = 1;
+		level = 0;
 		OnChangeLevel();
 	}
 	void OnChangeLevel() override;
