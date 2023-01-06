@@ -410,16 +410,17 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		if (coEvents.size() >= 2) {
 			int a = 0;
 		}
-
-		LPCOLLISIONEVENT e2 = SweptAABB(objSrc, dt, coEvents[i]->obj);
-		if (e2->WasCollided() == 1) {
-			
-		}
-
-		objSrc->OnCollisionWith(e);
-		//call OnCollisionWith nguoc lai
-		CallCollisionEventOnDestObject(objSrc, e);
+		//dk bo qua
+		bool condition1 = colX && colX->nx < 0 && coEvents[i]->nx < 0;
+		bool condition2 = colX && colX->nx > 0 && coEvents[i]->nx > 0;
+		bool condition3 = colY && colY->ny < 0 && coEvents[i]->ny < 0;
+		bool condition4 = colY && colY->ny > 0 && coEvents[i]->ny > 0;
 		
+		if (!(condition1 || condition2 || condition3 || condition4)) {
+			objSrc->OnCollisionWith(e);
+			//call OnCollisionWith nguoc lai
+			CallCollisionEventOnDestObject(objSrc, e);
+		}
 	}
 
 
