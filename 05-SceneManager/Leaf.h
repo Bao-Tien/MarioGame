@@ -11,7 +11,6 @@
 #define RANGE_X_RADIUS 64 // px
 
 class CLeaf : public CMagicObj {
-	int level;
 	float ay;
 public:
 	CLeaf(float x, float y) : CMagicObj(x, y) {

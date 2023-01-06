@@ -10,7 +10,6 @@
 #define MUSHROOM_VX 0.07f
 
 class CMushroom : public CMagicObj {
-	int level;
 	float ay;
 	bool isAppeared = false;
 	float yStart;

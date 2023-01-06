@@ -4,11 +4,13 @@
 #include "PlayScene.h"
 #include "Leaf.h"
 #include "Mushroom.h"
+#include "MushroomGreen.h"
 
+#define ID_ANI_BRICKNORMAL "ani-brick"
 #define ID_ANI_BRICKQUESTION "ani-question-block"
 #define ID_ANI_BRICKQUESTION_EMPTY "ani-empty-block"
-#define BRICKQUESTION_BBOX_WIDTH 48
-#define BRICKQUESTION_BBOX_HEIGHT 48
+#define BRICK_BBOX_WIDTH 48
+#define BRICK_BBOX_HEIGHT 48
 
 #define ID_ANI_COININBRICK "ani-coin-in-question-block"
 #define RANGE_Y_COIN 150
@@ -19,6 +21,7 @@ enum EGift_Type {
 	COIN = 0,
 	LEAF = 1, 
 	MUSHROOM = 2,
+	MUSHROOM_GREEN = 3,
 };
 
 enum EBox_Status {
@@ -26,9 +29,15 @@ enum EBox_Status {
 	OPENED = 1,
 };
 
-class CBrickQuestion : public CGameObject {
+enum EBrick_Type {
+	QUESTION = 0,
+	NORMAL = 1,
+};
+
+class CBrickMagic : public CGameObject {
 	EBox_Status status = EBox_Status::NOT_OPEN;
-	EGift_Type gift = EGift_Type::COIN;
+	EGift_Type gift;
+	EBrick_Type type;
 	CPlayScene* playScene;
 
 	bool isRenderedOpeningCoinEffect = false;
@@ -37,13 +46,9 @@ class CBrickQuestion : public CGameObject {
 	bool isUpedCoin = false;
 
 public:
-	CBrickQuestion(float x, float y, CPlayScene* playScene, string strGift = "") : CGameObject(x, y) {
-		if (strGift == "Leaf") {
-			gift = EGift_Type::LEAF;
-		}
-		if (strGift == "Mushroom") {
-			gift = EGift_Type::MUSHROOM;
-		}
+	CBrickMagic(float x, float y, CPlayScene* playScene,string strType = "Question", string strGift = "Coin") : CGameObject(x, y) {
+		SetTypeBrick(strType);
+		SetGift(strGift);
 		this->playScene = playScene;
 	}
 	void Render();
@@ -51,4 +56,26 @@ public:
 	string GetAnimationFromState();
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void SetTypeBrick(string strType) {
+		if (strType == "Question") {
+			type = EBrick_Type::QUESTION;
+		}
+		else {
+			type = EBrick_Type::NORMAL;
+		}
+	}
+	void SetGift(string strGift) {
+		if (strGift == "Leaf") {
+			gift = EGift_Type::LEAF;
+		}
+		else if (strGift == "Mushroom") {
+			gift = EGift_Type::MUSHROOM;
+		}
+		else if (strGift == "MushroomGreen") {
+			gift = EGift_Type::MUSHROOM_GREEN;
+		}
+		else {
+			gift = EGift_Type::COIN;
+		}
+	}
 };

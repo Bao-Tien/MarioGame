@@ -7,7 +7,7 @@
 #include "Paragoomba.h"
 #include "RedVenus.h"
 #include "Coin.h"
-#include "BrickQuestion.h"
+#include "BrickMagic.h"
 #include "DeathPlatform.h"
 
 #define CAMERA_MARGIN			150
@@ -244,7 +244,7 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 					staticObjects->push_back(obj);
 				}
 			}
-			else if (std::string(objGroupNode->Attribute("name")) == "Brick_Question") {
+			else if (std::string(objGroupNode->Attribute("name")) == "Brick_Magic") {
 				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
 					int x = atoi(objNode->Attribute("x"));
 					int y = atoi(objNode->Attribute("y"));
@@ -252,27 +252,24 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 					int height = atoi(objNode->Attribute("height"));
 
 					LPGAMEOBJECT obj;
+					string gift;
+					string typeBrick;
 					TiXmlElement* objProperties = objNode->FirstChildElement("properties");
 					if (objProperties != NULL) {
 						for (TiXmlElement* objPropertiesNode = objProperties->FirstChildElement("property"); objPropertiesNode != nullptr; objPropertiesNode = objPropertiesNode->NextSiblingElement("property")) {
 							string typeProperty = objPropertiesNode->Attribute("name");
 							string valueProperty = objPropertiesNode->Attribute("value");
-							obj = new CBrickQuestion(
-								x + width / 2,
-								y + height / 2,
-								playScene,
-								valueProperty
-								);
+							if (typeProperty == "Gift") gift = valueProperty;
+							if (typeProperty == "Type") typeBrick = valueProperty;
 						}
 					}
-					else {
-						obj = new CBrickQuestion(
-							x + width / 2,
-							y + height / 2,
-							playScene
+					obj = new CBrickMagic(
+						x + width / 2,
+						y + height / 2,
+						playScene,
+						typeBrick,
+						gift
 						);
-					}
-
 					
 					staticObjects->push_back(obj);
 				}

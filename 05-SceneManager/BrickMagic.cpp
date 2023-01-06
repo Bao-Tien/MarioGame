@@ -1,8 +1,8 @@
-#include "BrickQuestion.h"
+#include "BrickMagic.h"
 #include "Mario.h"
 #include "Animations.h"
 
-void CBrickQuestion::Render()
+void CBrickMagic::Render()
 {
 	CGameObject::Render();
 	RenderBoundingBox();
@@ -11,36 +11,47 @@ void CBrickQuestion::Render()
 	}
 }
 
-void CBrickQuestion::GetBoundingBox(float& l, float& t, float& r, float& b)
+void CBrickMagic::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	SetBoundingBoxSize(BRICKQUESTION_BBOX_WIDTH, BRICKQUESTION_BBOX_HEIGHT);
+	SetBoundingBoxSize(BRICK_BBOX_WIDTH, BRICK_BBOX_HEIGHT);
 	CGameObject::GetBoundingBox(l, t, r, b);
 }
 
-string CBrickQuestion::GetAnimationFromState() {
+string CBrickMagic::GetAnimationFromState() {
 	switch (status)
 	{
 	case EBox_Status::OPENED:
 		return ID_ANI_BRICKQUESTION_EMPTY;
 	case EBox_Status::NOT_OPEN:
-		return ID_ANI_BRICKQUESTION;
+		if (type == EBrick_Type::QUESTION) {
+			return ID_ANI_BRICKQUESTION;
+		}
+		else {
+			return ID_ANI_BRICKNORMAL;
+		}
+		
 	default:
 		break;
 	}
 }
 
-void CBrickQuestion::OnCollisionWith(LPCOLLISIONEVENT e) {
+void CBrickMagic::OnCollisionWith(LPCOLLISIONEVENT e) {
 	if (!e->obj->IsBlocking()) return;
 
 	if (e->ny < 0 && dynamic_cast<CMario*>(e->obj) && status == EBox_Status::NOT_OPEN) {
 		if (gift == EGift_Type::LEAF) {
-			CLeaf* leaf = new CLeaf(x, y - BRICKQUESTION_BBOX_HEIGHT);
+			CLeaf* leaf = new CLeaf(x, y - BRICK_BBOX_HEIGHT);
 			playScene->PushToDynamicObjectsFrontMap(leaf);
 		}
 
 		if (gift == EGift_Type::MUSHROOM) {
 			CMushroom* mushroom = new CMushroom(x, y);
 			playScene->PushToDynamicObjectsFrontMap(mushroom);
+		}
+
+		if (gift == EGift_Type::MUSHROOM_GREEN) {
+			CMushroomGreen* mushroomGreen = new CMushroomGreen(x, y);
+			playScene->PushToDynamicObjectsFrontMap(mushroomGreen);
 		}
 		
 		if (gift == EGift_Type::COIN) {
@@ -51,7 +62,7 @@ void CBrickQuestion::OnCollisionWith(LPCOLLISIONEVENT e) {
 	}
 }
 
-void CBrickQuestion::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+void CBrickMagic::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (status == EBox_Status::OPENED && gift == EGift_Type::COIN && isRenderedOpeningCoinEffect == false) {
 		if (isUpedCoin && differenceOfCoinWithBrickQuestion < RANGE_Y_COIN) {
 			differenceOfCoinWithBrickQuestion += DIFFERENCE_OFCOIN_EACHCHANGE;

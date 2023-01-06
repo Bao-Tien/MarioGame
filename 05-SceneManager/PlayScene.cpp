@@ -81,13 +81,25 @@ void CPlayScene::Load() {
 	string type_Player = play->Attribute("type");
 	float player_x = stof(play->Attribute("x"));
 	float player_y = stof(play->Attribute("y"));
+	float player_nx = stoi(play->Attribute("nx"));
+
 	CMario* obj = NULL;
 	if (player != NULL)
 	{
 		DebugOut(L"[ERROR] MARIO object was created before!\n");
 		return;
 	}
-	obj = new CBigMario(760.0f, 1000.0f, 1);
+	
+	if (type_Player == "bigMario") {
+		obj = new CBigMario(player_x, player_y, player_nx);
+	}
+	else if (type_Player == "raccoonMario") {
+		obj = new CRaccoonMario(player_x, player_y, player_nx);
+	}
+	else {
+		obj = new CSmallMario(player_x, player_y, player_nx);
+	}
+	
 	player = obj;
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", sceneFilePath);
@@ -227,6 +239,12 @@ void CPlayScene::Clear()
 	}
 	dynamicObjectsFrontMap.clear();
 
+	for (it = dynamicObjectsAfterMap.begin(); it != dynamicObjectsAfterMap.end(); it++)
+	{
+		delete (*it);
+	}
+	dynamicObjectsAfterMap.clear();
+
 	for (it = staticObjects.begin(); it != staticObjects.end(); it++)
 	{
 		delete (*it);
@@ -248,6 +266,11 @@ void CPlayScene::Unload()
 		delete dynamicObjectsFrontMap[i];
 	}
 	dynamicObjectsFrontMap.clear();
+
+	for (int i = 0; i < dynamicObjectsAfterMap.size(); i++) {
+		delete dynamicObjectsAfterMap[i];
+	}
+	dynamicObjectsAfterMap.clear();
 
 	// Unload staticObjects
 	for (int i = 0; i < staticObjects.size(); i++) {
@@ -295,4 +318,19 @@ void CPlayScene::PurgeDeletedObjects()
 	staticObjects.erase(
 		std::remove_if(staticObjects.begin(), staticObjects.end(), CPlayScene::IsGameObjectDeleted),
 		staticObjects.end());
+
+	// Static Object
+	for (it = dynamicObjectsAfterMap.begin(); it != dynamicObjectsAfterMap.end(); it++)
+	{
+		LPGAMEOBJECT o = *it;
+		if (o->IsDeleted())
+		{
+			delete o;
+			*it = NULL;
+		}
+	}
+
+	dynamicObjectsAfterMap.erase(
+		std::remove_if(dynamicObjectsAfterMap.begin(), dynamicObjectsAfterMap.end(), CPlayScene::IsGameObjectDeleted),
+		dynamicObjectsAfterMap.end());
 }

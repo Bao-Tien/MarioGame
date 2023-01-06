@@ -2,9 +2,9 @@
 #pragma once
 #include "Enemy.h"
 
-#define ANI_TROOPAS_DIE "ani-green-koopa-troopa-crouch"
-#define ANI_TROOPAS_CROUCH "ani-green-koopa-troopa-crouch"
-#define ANI_TROOPAS_MOVE "ani-green-koopa-troopa-move"
+#define ANI_TROOPAS_DIE "ani-red-koopa-troopa-crouch"
+#define ANI_TROOPAS_CROUCH "ani-red-koopa-troopa-crouch"
+#define ANI_TROOPAS_MOVE "ani-red-koopa-troopa-move"
 
 #define TROOPAS_BBOX_WIDTH 16*3
 #define TROOPAS_BBOX_HEIGHT 26*3

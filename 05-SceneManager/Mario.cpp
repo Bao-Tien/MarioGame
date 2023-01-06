@@ -12,6 +12,7 @@
 #include "Enemy.h"
 #include "DeathPlatform.h"
 #include "MagicObj.h"
+#include "MushroomGreen.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -57,7 +58,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CMagicObj*>(e->obj)) {
-		OnCollisionWithMagicObj(e);
+		if (dynamic_cast<CMushroomGreen*>(e->obj)) {
+			// ko tang level
+		}
+		else {
+			OnCollisionWithMagicObj(e);
+		}
 	}
 
 	if (e->ny != 0 && e->obj->IsBlocking())
@@ -250,7 +256,7 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 				isFly = 1;
 			}
 			if (level == EMario_Level::RACCOON && isFly == 1) {
-				ay = -MARIO_ACCEL_JUMP_Y / 2.0f;
+				ay = -MARIO_ACCEL_JUMP_Y;
 			}
 		}
 		break;
