@@ -14,11 +14,9 @@ using namespace std;
 #define ID_TEX_BBOX "tex-bbox"//-100		// special texture to draw object bounding box
 #define BBOX_ALPHA 0.25f		// Bounding box transparency
 
-
 class CGameObject
 {
 protected:
-
 	float x; 
 	float y;
 
@@ -66,6 +64,7 @@ public:
 	}
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
+	void SetSpeedX(float vx) { this->vx = vx; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	D3DXVECTOR2 GetPosition() {
 		return D3DXVECTOR2(this->x, this->y);

@@ -79,6 +79,7 @@
 #define ANI_MARIO_STATE_WALK_JUMP "jump"
 #define ANI_MARIO_STATE_SIT "crouch"
 #define ANI_MARIO_STATE_SKID "skid"
+#define ANI_MARIO_STATE_KICK "kick"
 #define ANI_MARIO_STATE_HOLD "hold"
 #define ANI_MARIO_STATE_RUN "run"
 #define ANI_MARIO_STATE_WALK "walk"

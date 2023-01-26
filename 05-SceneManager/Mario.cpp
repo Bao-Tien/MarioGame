@@ -32,6 +32,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 	if (maxVy != 0 && abs(vy) > abs(maxVy)) vy = maxVy * (vy > 0 ? 1 : -1);
 
+	if (energy > 0) {
+		energy -= 1;
+	}
+	if (energy > MAX_ENERGY) energy = MAX_ENERGY;
+	if (energy < 0) energy = 0;
+
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
@@ -42,15 +48,43 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	UpdateState();
 
 	isOnPlatform = false;
-	// reset nha nut A
-	accelerated = 1;
+	
 	// reset nha nut 
 	ax = 0;
 	ay = 0;
-
 	CCollision::GetInstance()->Process(this, dt, coObjects);
-	int a = ay;
-	DebugOut(L">>> Mario level %i>>> \n", level);
+	//update Troopas bi nam
+	// nha rua
+	if (accelerated == 1 && heldObj != NULL) {
+		((CTroopas*)heldObj)->SetIsHeld(false);
+		SetState(EMario_State::KICK);
+		//da rua
+		if (nx > 0) {
+			((CTroopas*)heldObj)->SetSpeedX(ENEMY_MOVE_SPEED * 5);
+		}
+		else {
+			((CTroopas*)heldObj)->SetSpeedX(-ENEMY_MOVE_SPEED * 5);
+		}
+		heldObj = NULL;
+	}
+	//lay vi tri theo Mario
+	if (heldObj != NULL) {
+		float xTroopas, yTroopas;
+		if (nx > 0) {
+			xTroopas = x + BoundingBox_Width / 2 + heldObj->GetBoundingBoxSize().x / 2;
+		}
+		else {
+			xTroopas = x - BoundingBox_Width / 2 - heldObj->GetBoundingBoxSize().x / 2;
+		}
+		yTroopas = y;
+		heldObj->SetPosition(xTroopas, yTroopas);
+	}
+	// reset nha nut A
+	accelerated = 1;
+	if (y < 0) {
+		canFly = false;
+	}
+	//DebugOut(L"state: %i", state);
 }
 
 // e->ny < 0 : va cham o duoi chan mario
@@ -83,7 +117,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CDeathPlatform*>(e->obj)) {
 		OnCollisionWithDeathPlatform(e);
 	}
-		
 }
 
 // MagicObj
@@ -111,10 +144,6 @@ void CMario::OnCollisionWithDeathPlatform(LPCOLLISIONEVENT e) {
 
 // Enemy
 void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
-	if (dynamic_cast<CTroopas*>(e->obj) && dynamic_cast<CTroopas*>(e->obj)->GetLevel() == 3) {
-		//ay = -MARIO_JUMP_DEFLECT_SPEED;
-		return;
-	}
 
 	CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
 
@@ -132,17 +161,14 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 				if (level == EMario_Level::FIRE)
 				{
 					level = EMario_Level::RACCOON;
-					//StartUntouchable();
 				}
 				else if (level == EMario_Level::RACCOON)
 				{
 					level = EMario_Level::BIG;
-					//StartUntouchable();
 				}
 				else if (level == EMario_Level::BIG)
 				{
 					level = EMario_Level::SMALL;
-					//StartUntouchable();
 				}
 				else
 				{
@@ -150,16 +176,30 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 					ay = -MARIO_JUMP_DEFLECT_SPEED;
 					ax = 0;
 					vx = 0;
-					/*level = EMario_Level::DIE;
-					SetLevel(level);*/
 					SetState(EMario_State::DIE);
 				}
 			}
 		}
 		else {
-			// Enemy is attacked (Mario attack enemy)
-			ay = -MARIO_JUMP_DEFLECT_SPEED;
-			vy = 0;
+			//cam rua
+			if (dynamic_cast<CTroopas*>(e->obj) &&
+				dynamic_cast<CTroopas*>(e->obj)->GetLevel() == 2) {
+				if (accelerated != 2.0f) {
+					//da rua
+					SetState(EMario_State::KICK);
+				}
+				else {
+					// cam rua
+					heldObj = dynamic_cast<CTroopas*>(e->obj);
+					SetState(EMario_State::HOLD);
+					dynamic_cast<CTroopas*>(e->obj)->SetIsHeld(true);
+				}
+			}
+			else {
+				// Enemy is attacked (Mario attack enemy)
+				ay = -MARIO_JUMP_DEFLECT_SPEED;
+				vy = 0;
+			}
 		}
 	}
 }
@@ -174,20 +214,21 @@ string CMario::GetAnimationFromState() {
 	else typeString = ANI_MARIO_LEVEL_SMALL;
 
 	if (state == EMario_State::IDLE) stateString = ANI_MARIO_STATE_IDLE;
-	else if (state == EMario_State::WALK) stateString = ANI_MARIO_STATE_WALK;
-	else if (state == EMario_State::RUN) stateString = ANI_MARIO_STATE_RUN;
+	else if (state == EMario_State::WALK || (state == EMario_State::RUN && energy < MAX_ENERGY)) stateString = ANI_MARIO_STATE_WALK;
+	else if (state == EMario_State::RUN && energy == MAX_ENERGY) stateString = ANI_MARIO_STATE_RUN;
 	else if (state == EMario_State::JUMP) stateString = ANI_MARIO_STATE_WALK_JUMP;
 	else if (state == EMario_State::JUMP_HIGH) stateString = ANI_MARIO_STATE_RUN_JUMP;
 	else if (state == EMario_State::SIT) stateString = ANI_MARIO_STATE_SIT;
+	else if (state == EMario_State::HOLD) stateString = ANI_MARIO_STATE_HOLD;
+	else if (state == EMario_State::KICK) stateString = ANI_MARIO_STATE_KICK;
 	else if (state == EMario_State::FALL) stateString = ANI_MARIO_STATE_FALL;
 	else if (state == EMario_State::SKID) stateString = ANI_MARIO_STATE_SKID;
+	else if (state == EMario_State::FLY) stateString = ANI_MARIO_STATE_FLY;
 	else if (state == EMario_State::DIE) stateString = ANI_MARIO_STATE_DIE;
 	else stateString = ANI_MARIO_STATE_IDLE;
 
 	return typeString + "-" + stateString;
 }
-
-
 
 void CMario::Render()
 {
@@ -206,7 +247,7 @@ void CMario::Render()
 	}
 	
 	CGameObject::RenderBoundingBox();
-	DebugOutTitle(L"MarioState: %d", state);
+	//DebugOutTitle(L"MarioState: %d", state);
 }
 
 void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
@@ -231,7 +272,13 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 		if (type == EKeyType::KEY_STATE)
 		{
 			if (isSitting) break;
+			//tang toc
 			accelerated = 2.0f;
+			energy += 3;
+			// nhan A 1 lan
+			if (level == EMario_Level::RACCOON || level == EMario_Level::FIRE) {
+				SetState(EMario_State::ATTACK);
+			}
 		}
 		break;
 	case DIK_RIGHT:
@@ -256,19 +303,21 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 			{
 				if (state == EMario_State::RUN) {
 					ay = -MARIO_ACCEL_JUMP_Y * 1.2f;
-					DebugOut(L" Mario nhay cao >>> \n");
 				}
 				else {
 					ay = -MARIO_ACCEL_JUMP_Y;
-					DebugOut(L" Mario nhay thap >>> \n");
 				}
 			}
-			if (level == EMario_Level::RACCOON && state == EMario_State::RUN) {
-				isFly = 1;
-			}
-			if (level == EMario_Level::RACCOON && isFly == 1) {
-				ay = -MARIO_ACCEL_JUMP_Y;
+
+			if (level == EMario_Level::RACCOON && canFly == true) {
+				ay = -MARIO_GRAVITY;
+				vy = -0.5f;
 				DebugOut(L" Mario bay >>> \n");
+			}
+
+			if (level == EMario_Level::RACCOON && state == EMario_State::FALL) {
+				ay = -MARIO_GRAVITY;
+				vy = 0.05f;
 			}
 		}
 		break;
@@ -278,7 +327,7 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 			{
 				isSitting = true;
 				vx = 0; vy = 0.0f;
-				y += MARIO_SIT_HEIGHT_ADJUST;
+				y -= MARIO_SIT_HEIGHT_ADJUST;
 			}
 			break;
 		}
@@ -287,15 +336,12 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 			{
 				isSitting = false;
 				SetState(EMario_State::IDLE);
-				y = y - MARIO_SIT_HEIGHT_ADJUST - 2.0f;
+				y -= MARIO_SIT_HEIGHT_ADJUST;
 			}
 			break;
 		}
 	}
-
-	
 }
-
 
 
 void CMario::UpdateState() {
@@ -310,34 +356,46 @@ void CMario::UpdateState() {
 			if (vx == 0)
 			{
 				SetState(EMario_State::IDLE);
+				canFly = false;
 			}
 			else
 			{
 				if ((vx > 0 && ax < 0) || (vx < 0 && ax>0)) {
+					energy = -10;
 					SetState(EMario_State::SKID);
 				}
 				else if (abs(vx) > MARIO_WALKING_SPEED) {
 					SetState(EMario_State::RUN);
+					if (energy == MAX_ENERGY && level == EMario_Level::RACCOON) {
+						canFly = true;
+					}
 				}
 				else {
 					SetState(EMario_State::WALK);
 				}
 			}
 		}
-		isFly = 0;
 	}
 	else {
-		if (abs(ay) == MARIO_ACCEL_FLY_X) {
-			SetState(EMario_State::FLY);
+		if (vy < 0) {
+			if (canFly) {
+				SetState(EMario_State::FLY);
+			}
+			else {
+				if (abs(vx) > MARIO_WALKING_SPEED)
+				{
+					SetState(EMario_State::JUMP_HIGH);
+				}
+				else if (abs(maxVx) <= MARIO_WALKING_SPEED) {
+					SetState(EMario_State::JUMP);
+				}
+			}
 		}
-		else if (abs(vx) > MARIO_WALKING_SPEED)
-		{
-			SetState(EMario_State::JUMP_HIGH);
-		}
-		else if (abs(maxVx) <= MARIO_WALKING_SPEED) {
-			SetState(EMario_State::JUMP);
-		}
-		else SetState(EMario_State::FALL);
+		else {
+				if (canFly) {
+					SetState(EMario_State::FALL);
+				}
+			}
 	}
 }
 

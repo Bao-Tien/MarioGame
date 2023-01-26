@@ -17,6 +17,9 @@ enum class EMario_State {
 	SIT = 7,
 	FALL = 8,
 	SKID = 9,
+	HOLD = 10,
+	ATTACK = 11,
+	KICK = 12,
 };
 
 enum class EMario_Level {
@@ -38,6 +41,7 @@ protected:
 	float ms;
 	float g;
 	float accelerated;
+	float energy;
 
 	EMario_State state;
 	EMario_Level level; 
@@ -45,12 +49,13 @@ protected:
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 	int coin; 
-	float isFly;
+	bool canFly;
+	LPGAMEOBJECT heldObj;
 
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
 	void OnCollisionWithDeathPlatform(LPCOLLISIONEVENT e);
 	void OnCollisionWithMagicObj(LPCOLLISIONEVENT e);
-
+	
 public:
 	CMario(float x, float y) : CGameObject(x, y)
 	{
@@ -61,14 +66,16 @@ public:
 		ay = 0.0f; 
 		g = MARIO_GRAVITY;
 		ms = 0;
+		energy = 0;
 		accelerated = 1.0f;
-		isFly = 0;
+		canFly = 0;
 
 		level = EMario_Level::BIG;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;
 		coin = 0;
+		state = EMario_State::IDLE;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void UpdateState();
@@ -90,6 +97,7 @@ public:
 	void SetLevel(EMario_Level l);
 	void SetState(EMario_State s);
 	EMario_Level GetLevel() { return level; }
+	EMario_State GetState() { return state; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };
