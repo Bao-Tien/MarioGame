@@ -24,7 +24,7 @@ public:
 		vy = MUSHROOM_VY;
 		
 	}
-	virtual int IsCollidable() { return 0; };
+	int IsCollidable() { return 0; };
 	void OnChangeLevel() override;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 };

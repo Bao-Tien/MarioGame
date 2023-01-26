@@ -9,7 +9,6 @@
 #include "BigMario.h"
 #include "Goomba.h"
 #include "Animations.h"
-//#include "Koopas.h"
 
 
 class CPlayScene: public CScene

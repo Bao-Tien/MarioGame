@@ -5,7 +5,6 @@
 void CRedVenus::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 	SetBoundingBoxSize(VENUS_RED_BBOX_WIDTH, VENUS_RED_BBOX_HEIGHT);
 	CGameObject::GetBoundingBox(left, top, right, bottom);
-	
 }
 
 void CRedVenus::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {

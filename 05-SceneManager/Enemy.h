@@ -4,7 +4,7 @@
 #define ENEMY_GRAVITY 0.002f
 #define ENEMY_MOVE_SPEED 0.05f
 #define ENEMY_DIE_TIMEOUT 500
-#define ENEMY_CROUCH_TIMEOUT 5000
+#define ENEMY_CROUCH_TIMEOUT 50000
 #define ENEMY_CHANGESTATE_TIMEOUT 360
 
 enum class EEnemy_Type {
@@ -12,6 +12,7 @@ enum class EEnemy_Type {
 	TROOPAS = 1,
 	RED_VENUS = 2,
 	FIRE_FLOWER = 3,
+	PARAGOOMBA = 4,
 };
 
 class CEnemy : public CGameObject

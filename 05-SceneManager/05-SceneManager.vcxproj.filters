@@ -112,16 +112,16 @@
     <Filter Include="Framework\Object\BrickMagic">
       <UniqueIdentifier>{ae9e7252-adab-4dbb-aefe-e7ae4b802bac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Object\BrickMagic\Leaf">
-      <UniqueIdentifier>{f4d5a39a-9716-4dd2-965f-9e81007fc7a0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Object\BrickMagic\Mushroom">
-      <UniqueIdentifier>{ec35c29e-703b-4064-8c66-b47f85757cde}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Object\BrickMagic\MagicObj">
       <UniqueIdentifier>{adce67db-81c7-49e3-a2fe-652b654e2fd5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Object\BrickMagic\Mushroom_Green">
+    <Filter Include="Framework\Object\BrickMagic\MagicObj\Leaf">
+      <UniqueIdentifier>{f4d5a39a-9716-4dd2-965f-9e81007fc7a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Object\BrickMagic\MagicObj\Mushroom">
+      <UniqueIdentifier>{ec35c29e-703b-4064-8c66-b47f85757cde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Object\BrickMagic\MagicObj\Mushroom_Green">
       <UniqueIdentifier>{20d8cb2b-88ca-414c-9fcd-40fd777b2ac7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -244,10 +244,10 @@
       <Filter>Framework\Object\DeathPlatform</Filter>
     </ClCompile>
     <ClCompile Include="Leaf.cpp">
-      <Filter>Framework\Object\BrickMagic\Leaf</Filter>
+      <Filter>Framework\Object\BrickMagic\MagicObj\Leaf</Filter>
     </ClCompile>
     <ClCompile Include="Mushroom.cpp">
-      <Filter>Framework\Object\BrickMagic\Mushroom</Filter>
+      <Filter>Framework\Object\BrickMagic\MagicObj\Mushroom</Filter>
     </ClCompile>
     <ClCompile Include="MagicObj.cpp">
       <Filter>Framework\Object\BrickMagic\MagicObj</Filter>
@@ -256,7 +256,7 @@
       <Filter>Framework\Object\Enemy\RedVenus\FireFlower</Filter>
     </ClCompile>
     <ClCompile Include="MushroomGreen.cpp">
-      <Filter>Framework\Object\BrickMagic\Mushroom_Green</Filter>
+      <Filter>Framework\Object\BrickMagic\MagicObj\Mushroom_Green</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -384,10 +384,10 @@
       <Filter>Framework\Object\DeathPlatform</Filter>
     </ClInclude>
     <ClInclude Include="Leaf.h">
-      <Filter>Framework\Object\BrickMagic\Leaf</Filter>
+      <Filter>Framework\Object\BrickMagic\MagicObj\Leaf</Filter>
     </ClInclude>
     <ClInclude Include="Mushroom.h">
-      <Filter>Framework\Object\BrickMagic\Mushroom</Filter>
+      <Filter>Framework\Object\BrickMagic\MagicObj\Mushroom</Filter>
     </ClInclude>
     <ClInclude Include="MagicObj.h">
       <Filter>Framework\Object\BrickMagic\MagicObj</Filter>
@@ -396,7 +396,7 @@
       <Filter>Framework\Object\Enemy\RedVenus\FireFlower</Filter>
     </ClInclude>
     <ClInclude Include="MushroomGreen.h">
-      <Filter>Framework\Object\BrickMagic\Mushroom_Green</Filter>
+      <Filter>Framework\Object\BrickMagic\MagicObj\Mushroom_Green</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

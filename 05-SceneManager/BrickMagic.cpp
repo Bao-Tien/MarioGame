@@ -1,6 +1,7 @@
 #include "BrickMagic.h"
 #include "Mario.h"
 #include "Animations.h"
+#include "Troopas.h"
 
 void CBrickMagic::Render()
 {
@@ -36,9 +37,11 @@ string CBrickMagic::GetAnimationFromState() {
 }
 
 void CBrickMagic::OnCollisionWith(LPCOLLISIONEVENT e) {
-	if (!e->obj->IsBlocking()) return;
+	//if (!e->obj->IsBlocking()) return;
+	float na = e->nx;
+	float nb = e->dy;
 
-	if (e->ny < 0 && dynamic_cast<CMario*>(e->obj) && status == EBox_Status::NOT_OPEN) {
+	if (((e->ny < 0 && dynamic_cast<CMario*>(e->obj)) || (e->nx != 0 && dynamic_cast<CTroopas*>(e->obj))) && status == EBox_Status::NOT_OPEN) {
 		if (gift == EGift_Type::LEAF) {
 			CLeaf* leaf = new CLeaf(x, y - BRICK_BBOX_HEIGHT);
 			playScene->PushToDynamicObjectsFrontMap(leaf);

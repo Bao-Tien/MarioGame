@@ -20,17 +20,17 @@ void CFireFlower::GetBoundingBox(float& left, float& top, float& right, float& b
 void CFireFlower::OnChangeLevel() {
 	switch (level)
 	{
-	case 0: {
-		enemyAnimationId = "";
-		break;
-	}
-	case 1: {
-		enemyAnimationId = ID_ANI_FIREFLOWER;
-		break;
-	}
-	default: {
-		break;
-	}
+		case 0: {
+			enemyAnimationId = "";
+			break;
+		}
+		case 1: {
+			enemyAnimationId = ID_ANI_FIREFLOWER;
+			break;
+		}
+		default: {
+			break;
+		}
 	}
 }
 

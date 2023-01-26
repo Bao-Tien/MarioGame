@@ -7,7 +7,8 @@
 
 #define LEAF_G 0.002f
 #define LEAF_MAX_VY 0.05f
-#define LEAF_VX 0.08f
+#define LEAF_VX 0.09f
+#define LEAF_AX 0.008f
 #define RANGE_X_RADIUS 64 // px
 
 class CLeaf : public CMagicObj {
@@ -16,7 +17,7 @@ public:
 	CLeaf(float x, float y) : CMagicObj(x, y) {
 		level = 1;
 		vx = LEAF_VX;
-		ay = -0.0045f;
+		ay = -LEAF_AX;
 		isAutoChangeDirectionWhenMoveOverRangeX = true;
 		moveRangeX = D3DXVECTOR2(x - RANGE_X_RADIUS, x + RANGE_X_RADIUS);
 	}

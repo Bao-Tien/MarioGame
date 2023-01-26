@@ -24,8 +24,8 @@ protected:
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 public:
 	CParagoomba(float x, float y) : CEnemy(x, y) {
-		type = EEnemy_Type::TROOPAS;
-		level = 2;
+		type = EEnemy_Type::PARAGOOMBA;
+		level = 0;
 		stateInLevel2 = ESTATE_INLEVEL2::MOVE;
 		OnChangeLevel();
 		isAutoChangeDirectionWhenMoveOverRangeX = true;

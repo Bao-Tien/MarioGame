@@ -66,7 +66,4 @@ void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		}
 		else isAppeared = true;
 	}
-
-	//Reset
-	ay = 0;
 }

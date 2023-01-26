@@ -59,6 +59,7 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 			OnChangeLevel();
 		}
 	}
+	
 }
 
 void CEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -71,9 +72,6 @@ void CEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 
-	if (dynamic_cast<CParagoomba*>(this)) {
-		int a = 9;
-	}
 	vy += (ay + g) * dt;
 	vx += ax * dt;
 
