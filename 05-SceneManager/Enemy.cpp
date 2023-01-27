@@ -3,6 +3,8 @@
 #include "RectPlatform.h"
 #include "RectCollision.h"
 #include "Paragoomba.h"
+#include "DeathPlatform.h"
+#include "BrickMagic.h"
 
 CEnemy::CEnemy(float x, float y) :CGameObject(x, y)
 {
@@ -11,20 +13,28 @@ CEnemy::CEnemy(float x, float y) :CGameObject(x, y)
 	this->g = ENEMY_GRAVITY;
 	die_start = -1;
 	nx = -1;
+	isOnPlatform = false;
 }
 
 void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<CBrickMagic*>(e->obj)) {
+		int a = 9;
+	}
 	CGameObject::OnCollisionWith(e);
 	if (!e->obj->IsBlocking()) return;
 	
 	if (dynamic_cast<CEnemy*>(e->obj)) return;
 
-	if (e->ny < 0)
+	if (dynamic_cast<CDeathPlatform*>(e->obj)) {
+		level = 0;
+	}
+
+	if (e->ny < 0) // va cham nen 
 	{
 		vy = 0;
+		isOnPlatform = true;
 	}
-	int a = vx;
 
 	if (dynamic_cast<CMario*>(e->obj)) {
 
@@ -32,7 +42,8 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 	else {
 		if (e->nx != 0)
 		{
-			vx = -vx;
+			nx = nx * -1;
+			DebugOut(L"Quay dau lai: %i\n", nx);
 		}
 	}
 
@@ -79,7 +90,10 @@ void CEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	flipX = nx < 0 ? 1 : -1;
 
 	CGameObject::Update(dt, coObjects);
+	// reset
+	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+	
 }
 
 void CEnemy::Render()

@@ -86,3 +86,25 @@ void CSprite::Draw(float x, float y, float flipX, float flipY)
 	g->GetSpriteHandler()->DrawSpritesImmediate(&sprite, 1, 0, 0);
 }
 
+void CSprite::DrawFixed(float x, float y, float flipX, float flipY) {
+	CGame* g = CGame::GetInstance();
+
+	D3DXMATRIX matTranslation;
+
+	x = (FLOAT)floor(x);
+	y = (FLOAT)floor(y);
+
+	D3DXMATRIX matScaling;
+
+	int spriteWidth = (this->right - this->left + 1);
+	int spriteHeight = (this->bottom - this->top + 1);
+
+	D3DXMatrixScaling(&matScaling, (FLOAT)spriteWidth * flipX, (FLOAT)spriteHeight * flipY, 1.0f);
+
+	D3DXMatrixTranslation(&matTranslation, x, g->GetBackBufferHeight() - y, 0.1f);
+
+	this->sprite.matWorld = (matScaling * matTranslation);
+
+	g->GetSpriteHandler()->DrawSpritesImmediate(&sprite, 1, 0, 0);
+}
+

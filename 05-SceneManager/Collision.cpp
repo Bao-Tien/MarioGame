@@ -143,7 +143,7 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 	objSrc->GetBoundingBox(ml, mt, mr, mb);
 	objDest->GetBoundingBox(sl, st, sr, sb);
 
-	/*if (ml < mr && mt < mb && sl < sr && st < sb) {
+	if (ml < mr && mt < mb && sl < sr && st < sb) {
 		SweptAABB(
 			ml, mt, mr, mb,
 			dx, dy,
@@ -156,15 +156,15 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 	else {
 		CCollisionEvent* e = new CCollisionEvent(0, 0, 0, 0, 0, objDest, objSrc);
 		return e;
-	}*/
-	SweptAABB(
+	}
+	/*SweptAABB(
 		ml, mt, mr, mb,
 		dx, dy,
 		sl, st, sr, sb,
 		t, nx, ny
 	);
 	CCollisionEvent* e = new CCollisionEvent(t, nx, ny, dx, dy, objDest, objSrc);
-	return e;
+	return e;*/
 }
 
 /*

@@ -20,6 +20,7 @@ public:
 	void Add(int spriteId, DWORD time = 0);
 	void Add(string spriteId, DWORD time = 0);
 	void Render(float x, float y, float flipX = 1.0f, float flipY = 1.0f);
+	void RenderFixed(float x, float y, float flipX = 1.0f, float flipY = 1.0f);
 };
 
 typedef CAnimation* LPANIMATION;

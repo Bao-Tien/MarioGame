@@ -50,3 +50,26 @@ void CAnimation::Render(float x, float y, float flipX, float flipY)
 	frames[currentFrame]->GetSprite()->Draw(x, y, flipX, flipY);
 }
 
+void CAnimation::RenderFixed(float x, float y, float flipX, float flipY)
+{
+	ULONGLONG now = GetTickCount64();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size()) currentFrame = 0;
+		}
+
+	}
+
+	frames[currentFrame]->GetSprite()->DrawFixed(x, y, flipX, flipY);
+}
+

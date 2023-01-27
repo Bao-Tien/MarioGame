@@ -1,115 +1,112 @@
 #include "Paragoomba.h"
 #include "Mario.h"
+#include <iostream>
 
 void CParagoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
-	switch (level) {
-	case 0: {
-		SetBoundingBoxSize(PARA_BBOX_WIDTH, PARA_BBOX_HEIGHT);
-		break;
-	}
-	case 1: {
-		SetBoundingBoxSize(PARA_BBOX_WIDTH, PARA_BBOX_HEIGHT);
-		break;
-	}
-	case 2: {
-		SetBoundingBoxSize(PARA_BBOX_WIDTH, PARA_BBOX_FLY_HEIGHT);
-		break;
-	}
-	}
-
+	/*switch (level) {
+		case 0: {
+			SetBoundingBoxSize(GOOMBA_BBOX_WIDTH, GOOMBA_BBOX_HEIGHT_DIE);
+			break;
+		}
+		case 1: {
+			SetBoundingBoxSize(GOOMBA_BBOX_WIDTH, GOOMBA_BBOX_HEIGHT);
+			break;
+		}
+		case 2: {
+			SetBoundingBoxSize(PARA_BBOX_WIDTH, PARA_BBOX_HEIGHT);
+			break;
+		}
+		case 3: {
+			SetBoundingBoxSize(PARA_BBOX_WIDTH, PARA_BBOX_FLY_HEIGHT);
+			break;
+		}
+		case 4: {
+			SetBoundingBoxSize(PARA_BBOX_WIDTH, PARA_BBOX_FLY_HEIGHT);
+			break;
+		}
+	}*/
+	SetBoundingBoxSize(PARA_BBOX_WIDTH, PARA_BBOX_FLY_HEIGHT);
 	CGameObject::GetBoundingBox(left, top, right, bottom);
 }
 
 void CParagoomba::OnChangeLevel() {
 	switch (level)
 	{
-	case 0: {
-		die_start = GetTickCount64();
-		vx = 0;
-		vy = 0;
-		ay = 0;
-		ax = 0;
-		enemyAnimationId = ANI_PARAGOOMBA_DIE;
-		break;
-	}
-	case 1: {
-		enemyAnimationId = ANI_PARAGOOMBA_MOVE;
-		vx = nx * ENEMY_MOVE_SPEED;
-		break;
-	}
-	case 2: {
-		enemyAnimationId = ANI_PARAGOOMBA_FLAP;
-		newActionInLevel2_start = GetTickCount64();
-		if (stateInLevel2 == ESTATE_INLEVEL2::MOVE) {
-			stateInLevel2 = ESTATE_INLEVEL2::JUMP;
-			//DebugOut(L"tg chuyen: %d, statecu: MOVE, statemoi: JUMP \n", GetTickCount64() - newStateInLevel2_start);
+		case 0: { //die
+			die_start = GetTickCount64();
+			vx = 0;
+			vy = 0;
+			ay = 0;
+			ax = 0;
+			enemyAnimationId = ANI_PARAGOOMBA_DIE;
+			break;
 		}
-		else if (stateInLevel2 == ESTATE_INLEVEL2::JUMP) {
-			stateInLevel2 = ESTATE_INLEVEL2::FLAP;
-			//DebugOut(L"tg chuyen: %d, statecu: JUMP, statemoi: FLAP \n", GetTickCount64() - newStateInLevel2_start);
+		case 1: { //bi dap dau roi
+			enemyAnimationId = ANI_PARAGOOMBA_BEINGATTACKED;
+			vx = nx * ENEMY_MOVE_SPEED;
+			break;
 		}
-		else if (stateInLevel2 == ESTATE_INLEVEL2::FLAP) {
-			stateInLevel2 = ESTATE_INLEVEL2::MOVE;
-			//DebugOut(L"tg chuyen: %d, statecu: FLAP, statemoi: MOVE \n", GetTickCount64() - newStateInLevel2_start);
+		case 2: { //di
+			enemyAnimationId = ANI_PARAGOOMBA_MOVE;
+			vx = nx * ENEMY_MOVE_SPEED;
+			break;
 		}
-		break;
-	}
-	default: {
-		break;
-	}
+		case 3: { //nhay thap
+			enemyAnimationId = ANI_PARAGOOMBA_FLAP;
+			vx = nx * ENEMY_MOVE_SPEED;
+			vy = -ENEMY_MOVE_SPEED * 6;
+			break;
+		}
+		case 4: { //nhay cao
+			enemyAnimationId = ANI_PARAGOOMBA_FLAP;
+			vx = nx * ENEMY_MOVE_SPEED;
+			vy = -ENEMY_MOVE_SPEED * 12;
+			break;
+		}
+		default: {
+			break;
+		}
 	}
 }
 
-void CParagoomba::ChangeAction() {
-	replayActionInLevel2_start = GetTickCount64();
-	if (stateInLevel2 == ESTATE_INLEVEL2::MOVE) {
-			vx = nx * ENEMY_MOVE_SPEED;
-			//DebugOut(L"MOVE: %f\n", vy);
+void CParagoomba::OnCollisionWith(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<CMario*>(e->obj) && e->ny > 0) {
+		if (level >= 2) {
+			level = 1;
+			OnChangeLevel();
+			return;
 		}
-		else if (stateInLevel2 == ESTATE_INLEVEL2::JUMP) {
-		//ay = -0.01f;
-		vx = nx * ENEMY_MOVE_SPEED;
-		vy = -ENEMY_MOVE_SPEED * 5;
-		//DebugOut(L"JUMP: %f\n", vy);
 	}
-	else if (stateInLevel2 == ESTATE_INLEVEL2::FLAP) {
-		//ay = -0.05f;
-		vx = nx * ENEMY_MOVE_SPEED;
-		vy = -ENEMY_MOVE_SPEED * 6;
-		//DebugOut(L"FLAP: %f\n", vy);
-	}
+	CEnemy::OnCollisionWith(e);
 }
 
 void CParagoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	if ((level == 2))
-	{
-		if (GetTickCount64() - newActionInLevel2_start > ENEMY_CHANGESTATE_TIMEOUT) {
+	//di 3 nhip(3s), nhay thap 3 nhip(3s), nhay cao 1 nhip(1s)
+	//DebugOut(L"time: %, \n", GetTickCount64());
+	
+	//std::cout<<GetTickCount64()<< std::endl;
+	if (level > 1) {
+		ULONGLONG time = GetTickCount64() / 1000;
+		if (time % T >= 1 && time % T <= (T * 3) / TOTAL_STEPS) {
+			level = 2;
 			OnChangeLevel();
-			ChangeAction();
+			//DebugOut(L"di\n");
 		}
-		else if (vy == 0) {
-			ChangeAction();
-		}
-		/*else {
-			if ()
-			if (stateInLevel2 == ESTATE_INLEVEL2::FLAP) {
-				if (GetTickCount64() - replayActionInLevel2_start >= 100) {
-					ChangeAction();
-					DebugOut(L"state: %d\n", stateInLevel2);
-				}
+		else if (isOnPlatform) {
+			if (time % T >= (T * 4) / TOTAL_STEPS && time % T <= (T * 6) / TOTAL_STEPS) {
+				level = 3;
+				OnChangeLevel();
+				//DebugOut(L"nhay thap\n");
 			}
 			else {
-				if (GetTickCount64() - replayActionInLevel2_start >= 1000) {
-					ChangeAction();
-					DebugOut(L"state: %d\n", stateInLevel2);
-				}
-				else {
-					vy = 0;
-				}
+				level = 4;
+				OnChangeLevel();
+				//DebugOut(L"nhay cao\n");
 			}
-		}*/
-		
+		}
+		//DebugOut(L"vx: %f, ax: %f, nx: %i\n", vx, ax, nx);
+		//DebugOut(L"level: %i \n", level);
 	}
-
+	
 	CEnemy::Update(dt, coObjects);
 }

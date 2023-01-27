@@ -29,7 +29,7 @@ void CGoomba1::OnChangeLevel() {
 		}
 		case 1: {
 			enemyAnimationId = ANI_GOOMBA_MOVE;
-			vx = -ENEMY_MOVE_SPEED;
+			vx = nx * ENEMY_MOVE_SPEED;
 			break;
 		}
 		default: {

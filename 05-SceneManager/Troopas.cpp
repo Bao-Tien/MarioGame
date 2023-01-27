@@ -72,16 +72,6 @@ void CTroopas::OnChangeLevel() {
 }
 
 void CTroopas::OnCollisionWith(LPCOLLISIONEVENT e) {
-	if (level == 2 && dynamic_cast<CMario*>(e->obj)) {
-		if (isHeld == false) {
-			if (e->nx > 0 || e->ny > 0) {
-				vx = ENEMY_MOVE_SPEED * 5;
-			}
-			else if (e->nx < 0) {
-				vx = -ENEMY_MOVE_SPEED * 5;
-			}
-		}
-	}
 	if (isHeld == true) {
 		return;
 	}
@@ -97,5 +87,10 @@ void CTroopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			OnChangeLevel();
 		}
 	}
+	if (nx != 0) {
+		vx = abs(vx) * nx;
+	}
+	
+	DebugOut(L"vx: %f, ax: %f, nx: %i\n", vx, ax, nx);
 	CEnemy::Update(dt, coObjects);
 }

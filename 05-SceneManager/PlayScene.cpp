@@ -206,6 +206,7 @@ void CPlayScene::Update(DWORD dt)
 	
 
 	PurgeDeletedObjects();
+	//DebugOut(L"dt %i\n", dt);
 }
 
 void CPlayScene::Render()

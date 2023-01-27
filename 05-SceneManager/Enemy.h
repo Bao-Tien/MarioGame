@@ -27,6 +27,7 @@ protected:
 	string enemyAnimationId;
 
 	int level;
+	bool isOnPlatform;
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();

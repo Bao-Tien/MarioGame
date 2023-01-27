@@ -20,6 +20,7 @@ public:
 	CSprite(string id, int left, int top, int right, int bottom, LPTEXTURE tex);
 
 	void Draw(float x, float y, float flipX = 1.0f, float flipY = 1.0f);
+	void DrawFixed(float x, float y, float flipX = 1.0f, float flipY = 1.0f);
 };
 
 typedef CSprite* LPSPRITE;

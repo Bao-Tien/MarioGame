@@ -136,7 +136,7 @@
   <object id="195" x="1630.3" y="1009.09" width="51.5152" height="51.5152"/>
  </objectgroup>
  <objectgroup id="23" name="Enemy_Paragoomba">
-  <object id="200" x="2442.42" y="1100" width="60.6061" height="63.6364"/>
+  <object id="200" x="2583.75" y="1109.33" width="60.6061" height="63.6364"/>
  </objectgroup>
  <objectgroup id="24" name="Enemy_RedVenus">
   <object id="209" x="1080" y="1104" width="48" height="96"/>

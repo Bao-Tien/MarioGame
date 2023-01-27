@@ -20,13 +20,15 @@ protected:
 public:	CTroopas(float x, float y) : CEnemy(x, y) {
 		type = EEnemy_Type::TROOPAS;
 		level = 3;
-		OnChangeLevel();
+		
 		crouch_start = -1;
 		nx = -1;
 		flipX = -1;
 		isHeld = false;
 		justIsHeld = false;
 		isAutoChangeDirectionWhenMoveOverRangeX = true;
+		OnChangeLevel();
+		
 	}
 	void OnChangeLevel() override;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

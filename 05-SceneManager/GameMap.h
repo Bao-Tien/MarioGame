@@ -43,6 +43,7 @@ public:
 	virtual void Update(int dt);
 
 	virtual void Render();
+	void RenderHUD();
 
 	virtual void GetMapSize(D3DXVECTOR2& out);
 

@@ -107,6 +107,7 @@ void CGameMap::Render()
 			}
 		}
 	}
+	RenderHUD();
 }
 
 
@@ -294,6 +295,10 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 		return gameMap;
 	}
 	throw "Load map fail!!!!!!!!";
+}
+
+void CGameMap::RenderHUD() {
+	CAnimations::GetInstance()->Get("ani-hud")->RenderFixed(15 +250, 850);
 }
 
 void CGameMap::GetMapSize(D3DXVECTOR2& out) {

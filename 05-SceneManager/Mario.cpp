@@ -85,6 +85,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		canFly = false;
 	}
 	//DebugOut(L"state: %i", state);
+	DebugOutTitle(L"untouchable: %i, state: %i, level: %i, x: %f, y: %f, vx: %f, vy:%f", 
+		untouchable, state, level, x, y, vx, vy);
 }
 
 // e->ny < 0 : va cham o duoi chan mario
@@ -409,6 +411,12 @@ void CMario::SetLevel(EMario_Level l)
 	if (this->level == EMario_Level::SMALL)
 	{
 		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
+		if (nx > 0) {
+			x = x - 2;
+		}
+		else {
+			x = x + 2;
+		}
 	}
 	level = l;
 }
