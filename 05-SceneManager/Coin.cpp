@@ -38,7 +38,10 @@ string CCoin::GetAnimationFromState() {
 }
 
 void CCoin::OnCollisionWith(LPCOLLISIONEVENT e) {
+	if (level == 0) return;
 	if (e->obj) {
 		level = 0;
 	}
+	//DebugOut(L"level %i\n: ", level);
+	
 }

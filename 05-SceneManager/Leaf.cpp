@@ -37,14 +37,6 @@ string CLeaf::GetAnimationFromState() {
 	}
 }
 
-void CLeaf::OnCollisionWith(LPCOLLISIONEVENT e) {
-	if (e->obj) {
-		if (dynamic_cast<CMario*>(e->obj)) {
-			level = 0;
-		}
-	}
-}
-
 void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	CGameObject::Update(dt, coObjects);
 	vy += (ay + LEAF_G) * dt;

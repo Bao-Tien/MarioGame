@@ -16,4 +16,5 @@ public:
 	int IsBlocking() { return 0; }
 	string GetAnimationFromState();
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+	int GetLevel() { return level; }
 };

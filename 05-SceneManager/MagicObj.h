@@ -7,5 +7,6 @@ protected:
 public:
 	CMagicObj(float x, float y) : CGameObject(x, y) {}
 	int GetLevel() { return level; }
+	void OnCollisionWith(LPCOLLISIONEVENT e);
 };
 

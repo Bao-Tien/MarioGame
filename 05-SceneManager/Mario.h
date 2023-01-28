@@ -48,7 +48,8 @@ protected:
 	int untouchable; 
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
-	int coin; 
+	int coin;
+	int point;
 	bool canFly;
 	LPGAMEOBJECT heldObj;
 
@@ -57,13 +58,13 @@ protected:
 	void OnCollisionWithMagicObj(LPCOLLISIONEVENT e);
 	
 public:
-	CMario(float x, float y) : CGameObject(x, y)
+	CMario(float x, float y, int coin = 0, int point = 0) : CGameObject(x, y)
 	{
 		isSitting = false;
 		maxVx = 0.0f;
 		maxVy = 0.0f;
 		ax = 0.0f;
-		ay = 0.0f; 
+		ay = 0.0f;
 		g = MARIO_GRAVITY;
 		ms = 0;
 		energy = 0;
@@ -74,7 +75,8 @@ public:
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;
-		coin = 0;
+		this->coin = coin;
+		this->point = point;
 		state = EMario_State::IDLE;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -97,9 +99,11 @@ public:
 	void SetLevel(EMario_Level l);
 	void SetState(EMario_State s);
 	void AddCoin() { this->coin += 1; }
+	void AddPoint(int p) { this->point += p; }
 	EMario_Level GetLevel() { return level; }
 	EMario_State GetState() { return state; }
 	int GetCoin() { return coin; }
+	int GetPoint() { return point; }
 	float GetEnergy() { return energy; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

@@ -119,10 +119,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CDeathPlatform*>(e->obj)) {
 		OnCollisionWithDeathPlatform(e);
 	}
-	/*else if (dynamic_cast<CCoin*>(e->obj)) {
+	else if (dynamic_cast<CCoin*>(e->obj) && dynamic_cast<CCoin*>(e->obj)->GetLevel() != 0) {
 		AddCoin();
-		DebugOut(L"mario + : ");
-	}*/
+		//DebugOut(L"coin %i\n : ", coin);
+	}
 }
 
 // MagicObj
@@ -130,6 +130,7 @@ void CMario::OnCollisionWithMagicObj(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<CMagicObj*>(e->obj)->GetLevel() == 0) {
 		return;
 	}
+	AddPoint(1000);
 	if (level == EMario_Level::SMALL) {
 		SetLevel(EMario_Level::BIG);
 		return;
@@ -140,6 +141,7 @@ void CMario::OnCollisionWithMagicObj(LPCOLLISIONEVENT e) {
 	}
 	else if (level == EMario_Level::RACCOON) {
 	}
+	
 }
 
 // DeathPlatform
@@ -193,6 +195,12 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 				if (accelerated != 2.0f) {
 					//da rua
 					SetState(EMario_State::KICK);
+					if (nx > 0) {
+						dynamic_cast<CTroopas*>(e->obj)->SetSpeedX(ENEMY_MOVE_SPEED * 5);
+					}
+					else {
+						dynamic_cast<CTroopas*>(e->obj)->SetSpeedX(-ENEMY_MOVE_SPEED * 5);
+					}
 				}
 				else {
 					// cam rua
@@ -205,6 +213,7 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 				// Enemy is attacked (Mario attack enemy)
 				ay = -MARIO_JUMP_DEFLECT_SPEED;
 				vy = 0;
+				AddPoint(100);
 			}
 		}
 	}

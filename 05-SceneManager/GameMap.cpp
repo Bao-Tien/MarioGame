@@ -16,6 +16,7 @@
 #define HUD_Y 850
 #define EMPTY_CARD_START 600
 #define EMPTY_CARD_D 74
+#define POINT_START 218
 #define ARROW_START 220
 #define ARROW_Y 840
 #define ARROW_D 23
@@ -317,8 +318,6 @@ void CGameMap::RenderHUD() {
 	//hud
 	CAnimations::GetInstance()->Get("ani-hud")->RenderFixed(HUD_X, HUD_Y);
 
-
-
 	// nang luong - 6 tam giac + 1P
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
 	float energy = mario->GetEnergy();
@@ -355,7 +354,6 @@ void CGameMap::RenderHUD() {
 		}
 	}
 	
-	
 	// so dong tien
 	int intCoin = mario->GetCoin();
 	string coin = std::to_string(intCoin);
@@ -371,6 +369,31 @@ void CGameMap::RenderHUD() {
 		}
 	}
 	// diem
+	int intPoint = mario->GetPoint();
+	string point = std::to_string(intPoint);
+	//point = "0000000";
+	if (intPoint == 0) {
+		point = "0000000";
+		for (int i = 0; i < point.length(); i++) {
+			string spriteId = "spr-font-0";
+			CSprites::GetInstance()->Get(spriteId)->DrawFixed(POINT_START + ARROW_D * i, TIME_Y);
+		}
+	}
+	else {
+		for (int i = 0; i < 7 - point.length(); i++) {
+			string spriteId = "spr-font-0";
+			CSprites::GetInstance()->Get(spriteId)->DrawFixed(POINT_START + ARROW_D * i, TIME_Y);
+		}
+		int x = 0;
+		int index = 7 - point.length();
+		for (int i = index; i < 7; i++) {
+			string a = "spr-font-";
+			char b = point[x];
+			string spriteId = a + b;
+			CSprites::GetInstance()->Get(spriteId)->DrawFixed(POINT_START + ARROW_D * i, TIME_Y);
+			x++;
+		}
+	}
 	// thoi gian
 	string time = std::to_string(sceneTime/1000);
 	for (int i = 0; i < time.length(); i++) {

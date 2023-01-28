@@ -87,9 +87,9 @@ void CTroopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			OnChangeLevel();
 		}
 	}
-	if (nx != 0) {
+	/*if (nx != 0) {
 		vx = abs(vx) * nx;
-	}
+	}*/
 	
 	//DebugOut(L"vx: %f, ax: %f, nx: %i\n", vx, ax, nx);
 	CEnemy::Update(dt, coObjects);

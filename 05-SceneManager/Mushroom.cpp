@@ -38,9 +38,10 @@ string CMushroom::GetAnimationFromState() {
 }
 
 void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e) {
+	CMagicObj::OnCollisionWith(e);
 	if (e->obj) {
 		if (dynamic_cast<CMario*>(e->obj)) {
-			level = 0;
+			//level = 0;
 		}
 		else {
 			if (e->nx != 0) {

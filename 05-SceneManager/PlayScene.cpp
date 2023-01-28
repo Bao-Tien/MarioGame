@@ -81,7 +81,7 @@ void CPlayScene::Load() {
 	string type_Player = play->Attribute("type");
 	float player_x = stof(play->Attribute("x"));
 	float player_y = stof(play->Attribute("y"));
-	float player_nx = stoi(play->Attribute("nx"));
+	int player_nx = stoi(play->Attribute("nx"));
 
 	CMario* obj = NULL;
 	if (player != NULL)
@@ -124,17 +124,19 @@ void CPlayScene::UpdatePlayer() {
 		D3DXVECTOR2 position = player->GetPosition();
 		int nx = player->GetNx();
 		D3DXVECTOR2 oldBBox = player->GetBoundingBoxSize();
+		int coin = player->GetCoin();
+		int point = player->GetPoint();
 		if (actualLevel == EMario_Level::SMALL) {
 			delete(player);
-			player = new CSmallMario(position.x, position.y, nx);
+			player = new CSmallMario(position.x, position.y, nx, coin, point);
 		}
 		else if (actualLevel == EMario_Level::BIG) {
 			delete(player);
-			player = new CBigMario(position.x, position.y, nx);
+			player = new CBigMario(position.x, position.y, nx, coin, point);
 		}
 		else if (actualLevel == EMario_Level::RACCOON) {
 			delete(player);
-			player = new CRaccoonMario(position.x, position.y, nx);
+			player = new CRaccoonMario(position.x, position.y, nx, coin, point);
 		}
 		player->SetPrevBoundBoxSize(oldBBox);
 
