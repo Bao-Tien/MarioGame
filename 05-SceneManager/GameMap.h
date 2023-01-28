@@ -22,6 +22,8 @@ class CGameMap
 	int tileHeight;
 	D3DXVECTOR2 camPosition;
 
+	int sceneTime = 900000;
+
 	TilesetRender tRender;
 
 	vector<CTileSet*> tilesets;

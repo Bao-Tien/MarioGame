@@ -10,12 +10,15 @@
 #include "Goomba.h"
 #include "Animations.h"
 
+#define SCENE_TIME 900000
+
 
 class CPlayScene: public CScene
 {
 protected: 
 	// A play scene has to have player, right? 
 	CMario* player;
+	int sceneTime = SCENE_TIME;
 
 	vector<LPGAMEOBJECT> dynamicObjectsAfterMap;
 	vector<LPGAMEOBJECT> dynamicObjectsFrontMap;
@@ -40,6 +43,7 @@ public:
 	void PushToDynamicObjectsFrontMap(LPGAMEOBJECT obj) {
 		dynamicObjectsFrontMap.push_back(obj);
 	}
+	int GetSceneTime() { return sceneTime; }
 };
 
 typedef CPlayScene* LPPLAYSCENE;

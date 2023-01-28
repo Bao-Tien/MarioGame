@@ -59,6 +59,7 @@ void CBrickMagic::OnCollisionWith(LPCOLLISIONEVENT e) {
 		
 		if (gift == EGift_Type::COIN) {
 			isUpedCoin = true;
+			dynamic_cast<CMario*>(e->obj)->AddCoin();
 		}
 
 		status = EBox_Status::OPENED;

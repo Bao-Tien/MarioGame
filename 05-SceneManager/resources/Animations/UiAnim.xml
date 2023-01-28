@@ -71,6 +71,20 @@
     <Sprite id="spr-p-icon-black" left="100" top="162"  width="15" height="7"/>
   </Animation>
 
+  <Animation aniId="ani-arrow-icon-black" frameTime="100"  name = "P-ICON">
+    <Sprite id="spr-arrow-icon-black" left="91" top="162"  width="9" height="7"/>
+  </Animation>
+  <Animation aniId="ani-arrow-icon-white" frameTime="100"  name = "P-ICON">
+    <Sprite id="spr-arrow-icon-white" left="64" top="162"  width="8" height="7"/>
+  </Animation>
+  <Animation aniId="ani-p-icon-black" frameTime="100"  name = "P-ICON">
+    <Sprite id="spr-p-icon-black" left="100" top="162"  width="15" height="7"/>
+  </Animation>
+  <Animation aniId="ani-p-icon-white" frameTime="100"  name = "P-ICON">
+    <Sprite id="spr-p-icon-white" left="73" top="162"  width="15" height="7"/>
+  </Animation>
+  
+
 	<!-- CARD -->
 	<Animation aniId="ani-empty-card" frameTime="100"  name = "EMPTY-CARD">
 		<Sprite id="spr-empty-card-0" left="139" top="158"  width="25" height="29"/>

@@ -91,6 +91,6 @@ void CTroopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		vx = abs(vx) * nx;
 	}
 	
-	DebugOut(L"vx: %f, ax: %f, nx: %i\n", vx, ax, nx);
+	//DebugOut(L"vx: %f, ax: %f, nx: %i\n", vx, ax, nx);
 	CEnemy::Update(dt, coObjects);
 }

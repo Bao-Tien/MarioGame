@@ -150,6 +150,7 @@ void CPlayScene::Update(DWORD dt)
 	// TO-DO: This is a "dirty" way, need a more organized way 
 	
 	vector<LPGAMEOBJECT> coObjects;
+	map->Update(dt);
 
 	// Xet va cham voi Enemy
 	for (size_t i = 0; i < dynamicObjectsAfterMap.size(); i++)

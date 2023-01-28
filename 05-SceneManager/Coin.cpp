@@ -1,5 +1,6 @@
 #include "Coin.h"
 #include "Animations.h"
+#include "Mario.h"
 
 void CCoin::Render()
 {

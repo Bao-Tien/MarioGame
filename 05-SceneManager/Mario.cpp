@@ -119,6 +119,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CDeathPlatform*>(e->obj)) {
 		OnCollisionWithDeathPlatform(e);
 	}
+	/*else if (dynamic_cast<CCoin*>(e->obj)) {
+		AddCoin();
+		DebugOut(L"mario + : ");
+	}*/
 }
 
 // MagicObj

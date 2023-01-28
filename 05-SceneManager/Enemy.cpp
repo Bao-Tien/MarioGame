@@ -43,7 +43,7 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 		if (e->nx != 0)
 		{
 			nx = nx * -1;
-			DebugOut(L"Quay dau lai: %i\n", nx);
+			//DebugOut(L"Quay dau lai: %i\n", nx);
 		}
 	}
 

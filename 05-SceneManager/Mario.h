@@ -96,8 +96,11 @@ public:
 
 	void SetLevel(EMario_Level l);
 	void SetState(EMario_State s);
+	void AddCoin() { this->coin += 1; }
 	EMario_Level GetLevel() { return level; }
 	EMario_State GetState() { return state; }
+	int GetCoin() { return coin; }
+	float GetEnergy() { return energy; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

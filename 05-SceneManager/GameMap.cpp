@@ -10,7 +10,22 @@
 #include "BrickMagic.h"
 #include "DeathPlatform.h"
 
+#define MAX_ENERGY 40
 #define CAMERA_MARGIN			150
+#define HUD_X 15+250
+#define HUD_Y 850
+#define EMPTY_CARD_START 600
+#define EMPTY_CARD_D 74
+#define ARROW_START 220
+#define ARROW_Y 840
+#define ARROW_D 23
+#define P_START 230
+#define TIME_START 423
+#define TIME_D 24
+#define TIME_Y 865
+#define COIN_START 469
+#define COIN_D 24
+#define COIN_Y 841
 
 CGameMap::CGameMap()
 {
@@ -60,6 +75,7 @@ void CGameMap::AddLayer(shared_ptr<CMapLayer> layer)
 void CGameMap::Update(int dt)
 {
 	//camPosition = CGame::GetInstance()->camera->GetCamPosition();
+	sceneTime -= dt;
 }
 
 void CGameMap::Render()
@@ -298,7 +314,76 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 }
 
 void CGameMap::RenderHUD() {
-	CAnimations::GetInstance()->Get("ani-hud")->RenderFixed(15 +250, 850);
+	//hud
+	CAnimations::GetInstance()->Get("ani-hud")->RenderFixed(HUD_X, HUD_Y);
+
+
+
+	// nang luong - 6 tam giac + 1P
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
+	float energy = mario->GetEnergy();
+	if (energy == 0) {
+		for (int i = 0; i < 7; i++) {
+			if (i == 6) {
+				CAnimations::GetInstance()->Get("ani-p-icon-black")->RenderFixed(P_START + i * ARROW_D, ARROW_Y);
+			}
+			else {
+				CAnimations::GetInstance()->Get("ani-arrow-icon-black")->RenderFixed(ARROW_START + i * ARROW_D, ARROW_Y);
+
+			}
+		}
+	}
+	else {
+		int energy_index = energy / MAX_ENERGY * 7;
+		for (int i = 0; i < energy_index; i++) {
+			if (i == 6) {
+				CAnimations::GetInstance()->Get("ani-p-icon-white")->RenderFixed(P_START + i * ARROW_D, ARROW_Y);
+			}
+			else {
+				CAnimations::GetInstance()->Get("ani-arrow-icon-white")->RenderFixed(ARROW_START + i * ARROW_D, ARROW_Y);
+			}
+		}
+		if (energy_index < 7) {
+			for (int i = energy_index; i < 7; i++) {
+				if (i == 6) {
+					CAnimations::GetInstance()->Get("ani-p-icon-black")->RenderFixed(P_START + i * ARROW_D, ARROW_Y);
+				}
+				else {
+					CAnimations::GetInstance()->Get("ani-arrow-icon-black")->RenderFixed(ARROW_START + i * ARROW_D, ARROW_Y);
+				}
+			}
+		}
+	}
+	
+	
+	// so dong tien
+	int intCoin = mario->GetCoin();
+	string coin = std::to_string(intCoin);
+	for (int i = 0; i < coin.length(); i++) {
+		string a = "spr-font-";
+		char b = coin[i];
+		string spriteId = a + b;
+		if (intCoin < 10) {
+			CSprites::GetInstance()->Get(spriteId)->DrawFixed(COIN_START + COIN_D * i, COIN_Y);
+		}
+		else {
+			CSprites::GetInstance()->Get(spriteId)->DrawFixed(COIN_START - COIN_D + COIN_D * i, COIN_Y);
+		}
+	}
+	// diem
+	// thoi gian
+	string time = std::to_string(sceneTime/1000);
+	for (int i = 0; i < time.length(); i++) {
+		string a = "spr-font-";
+		char b = time[i];
+		string spriteId = a + b;
+		CSprites::GetInstance()->Get(spriteId)->DrawFixed(TIME_START + TIME_D * i, TIME_Y);
+	}
+	
+	// 3 card empty
+	for (int i = 0; i < 3; i++) {
+		CAnimations::GetInstance()->Get("ani-empty-card")->RenderFixed(EMPTY_CARD_START + i * EMPTY_CARD_D, HUD_Y);
+	}
 }
 
 void CGameMap::GetMapSize(D3DXVECTOR2& out) {
