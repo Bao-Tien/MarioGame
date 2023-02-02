@@ -72,6 +72,7 @@
 #define ANI_MARIO_LEVEL_SMALL "ani-small-mario"
 #define ANI_MARIO_LEVEL_BIG "ani-big-mario"
 #define ANI_MARIO_LEVEL_RACCOON "ani-raccoon-mario"
+#define ANI_MARIO_LEVEL_FIRE "ani-fire-mario"
 
 
 #define ANI_MARIO_STATE_IDLE "idle"
@@ -81,8 +82,13 @@
 #define ANI_MARIO_STATE_SKID "skid"
 #define ANI_MARIO_STATE_KICK "kick"
 #define ANI_MARIO_STATE_HOLD "hold"
+#define ANI_MARIO_STATE_ATTACK "attack"
 #define ANI_MARIO_STATE_RUN "run"
 #define ANI_MARIO_STATE_WALK "walk"
 #define ANI_MARIO_STATE_FLY "fly"
 #define ANI_MARIO_STATE_FALL "fall"
 #define ANI_MARIO_STATE_DIE "die"
+
+#define ANI_RACCOON_ATTACK "ani-raccoon-mario-attack"
+#define ANI_FIRE_ATTACK "ani-fire-mario-attack"
+

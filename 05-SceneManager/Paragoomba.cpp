@@ -3,7 +3,7 @@
 #include <iostream>
 
 void CParagoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
-	/*switch (level) {
+	switch (level) {
 		case 0: {
 			SetBoundingBoxSize(GOOMBA_BBOX_WIDTH, GOOMBA_BBOX_HEIGHT_DIE);
 			break;
@@ -24,8 +24,8 @@ void CParagoomba::GetBoundingBox(float& left, float& top, float& right, float& b
 			SetBoundingBoxSize(PARA_BBOX_WIDTH, PARA_BBOX_FLY_HEIGHT);
 			break;
 		}
-	}*/
-	SetBoundingBoxSize(PARA_BBOX_WIDTH, PARA_BBOX_FLY_HEIGHT);
+	}
+	//SetBoundingBoxSize(PARA_BBOX_WIDTH, PARA_BBOX_FLY_HEIGHT);
 	CGameObject::GetBoundingBox(left, top, right, bottom);
 }
 
@@ -82,18 +82,26 @@ void CParagoomba::OnCollisionWith(LPCOLLISIONEVENT e) {
 
 void CParagoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	//di 3 nhip(3s), nhay thap 3 nhip(3s), nhay cao 1 nhip(1s)
+	// level 2 -> 3 -> 4 -> 2 -> 3
 	//DebugOut(L"time: %, \n", GetTickCount64());
 	
 	//std::cout<<GetTickCount64()<< std::endl;
+
 	if (level > 1) {
 		ULONGLONG time = GetTickCount64() / 1000;
 		if (time % T >= 1 && time % T <= (T * 3) / TOTAL_STEPS) {
+			if (level == 4) {
+				y = y + 6;// 4->2
+			}
 			level = 2;
 			OnChangeLevel();
 			//DebugOut(L"di\n");
 		}
 		else if (isOnPlatform) {
 			if (time % T >= (T * 4) / TOTAL_STEPS && time % T <= (T * 6) / TOTAL_STEPS) {
+				if (level == 2) {
+					y = y - 6;//2->3
+				}
 				level = 3;
 				OnChangeLevel();
 				//DebugOut(L"nhay thap\n");

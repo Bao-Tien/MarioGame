@@ -81,12 +81,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 	// reset nha nut A
 	accelerated = 1;
-	if (y < 0) {
-		canFly = false;
-	}
+	//canFly = false;
 	//DebugOut(L"state: %i", state);
 	DebugOutTitle(L"untouchable: %i, state: %i, level: %i, x: %f, y: %f, vx: %f, vy:%f", 
 		untouchable, state, level, x, y, vx, vy);
+	//DebugOut(L"canFly: %i \n", canFly);
 }
 
 // e->ny < 0 : va cham o duoi chan mario
@@ -242,6 +241,17 @@ string CMario::GetAnimationFromState() {
 	else if (state == EMario_State::DIE) stateString = ANI_MARIO_STATE_DIE;
 	else stateString = ANI_MARIO_STATE_IDLE;
 
+	if (state == EMario_State::ATTACK) {
+		if (level == EMario_Level::RACCOON) {
+			DebugOut(L"123");
+			return ANI_RACCOON_ATTACK;
+		}
+		else if (level == EMario_Level::FIRE) {
+			return ANI_FIRE_ATTACK;
+		}
+		else stateString = ANI_MARIO_STATE_IDLE;
+	}
+
 	return typeString + "-" + stateString;
 }
 
@@ -293,6 +303,7 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 			// nhan A 1 lan
 			if (level == EMario_Level::RACCOON || level == EMario_Level::FIRE) {
 				SetState(EMario_State::ATTACK);
+				DebugOut(L"attack: %i \n", state);
 			}
 		}
 		break;
@@ -333,6 +344,7 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 			if (level == EMario_Level::RACCOON && state == EMario_State::FALL) {
 				ay = -MARIO_GRAVITY;
 				vy = 0.05f;
+				DebugOut(L" Mario bay cham xuong >>> \n");
 			}
 		}
 		break;
@@ -414,8 +426,114 @@ void CMario::UpdateState() {
 	}
 }
 
-void CMario::SetState(EMario_State s) {
-	state = s;
+bool CMario::CheckState(EMario_State newState) {
+	if (state == EMario_State::DIE) {
+		return false;
+	}
+	if (newState == EMario_State::DIE) {
+		return true;
+	}
+	if (state == EMario_State::IDLE) {
+		if (newState == EMario_State::WALK || newState == EMario_State::RUN
+			|| newState == EMario_State::JUMP || newState == EMario_State::JUMP_HIGH
+			|| newState == EMario_State::SIT || newState == EMario_State::KICK
+			|| newState == EMario_State::IDLE || newState == EMario_State::ATTACK)
+		{
+			return true;
+		}
+	}
+	if (state == EMario_State::WALK) {
+		if (newState == EMario_State::IDLE || newState == EMario_State::RUN
+			|| newState == EMario_State::SKID || newState == EMario_State::JUMP
+			|| newState == EMario_State::JUMP_HIGH || newState == EMario_State::KICK
+			|| newState == EMario_State::SIT || newState == EMario_State::WALK
+			|| newState == EMario_State::ATTACK)
+		{
+			return true;
+		}
+	}
+	if (state == EMario_State::RUN) {
+		if (newState == EMario_State::WALK || newState == EMario_State::HOLD
+			|| newState == EMario_State::SKID || newState == EMario_State::JUMP
+			|| newState == EMario_State::JUMP_HIGH || newState == EMario_State::KICK
+			|| newState == EMario_State::SIT || newState == EMario_State::FLY
+			|| newState == EMario_State::RUN || newState == EMario_State::ATTACK);
+		{
+			return true;
+		}
+	}
+	if (state == EMario_State::JUMP) {
+		if (newState == EMario_State::IDLE || newState == EMario_State::ATTACK)
+		{
+			return true;
+		}
+	}
+	if (state == EMario_State::JUMP_HIGH) {
+		if (newState == EMario_State::IDLE || newState == EMario_State::ATTACK)
+		{
+			return true;
+		}
+	}
+	if (state == EMario_State::FLY) {
+		if (newState == EMario_State::FALL || newState == EMario_State::FLY)
+		{
+			return true;
+		}
+	}
+	if (state == EMario_State::FALL) {
+		if (newState == EMario_State::IDLE || newState == EMario_State::FALL
+			|| newState == EMario_State::ATTACK)
+		{
+			return true;
+		}
+	}
+	if (state == EMario_State::SIT) {
+		if (newState == EMario_State::IDLE)
+		{
+			return true;
+		}
+	}
+	if (state == EMario_State::SKID) {
+		if (newState == EMario_State::IDLE || newState == EMario_State::WALK
+			|| newState == EMario_State::RUN || newState == EMario_State::SKID
+			|| newState == EMario_State::JUMP_HIGH || newState == EMario_State::JUMP
+			|| newState == EMario_State::ATTACK)
+		{
+			return true;
+		}
+	}
+	if (state == EMario_State::HOLD) {
+		if (newState == EMario_State::HOLD || newState == EMario_State::WALK
+			|| newState == EMario_State::RUN || newState == EMario_State::SKID
+			|| newState == EMario_State::JUMP_HIGH || newState == EMario_State::JUMP
+			|| newState == EMario_State::IDLE)
+		{
+			return true;
+		}
+	}
+	if (state == EMario_State::KICK) {
+		if (newState == EMario_State::IDLE || newState == EMario_State::WALK
+			|| newState == EMario_State::RUN || newState == EMario_State::SIT
+			|| newState == EMario_State::JUMP_HIGH || newState == EMario_State::JUMP
+			|| newState == EMario_State::ATTACK)
+		{
+			return true;
+		}
+	}
+	if (state == EMario_State::ATTACK) {
+		if (newState == EMario_State::RUN || newState == EMario_State::WALK
+			|| newState == EMario_State::IDLE || newState == EMario_State::SIT
+			|| newState == EMario_State::JUMP_HIGH || newState == EMario_State::JUMP)
+		{
+			return true;
+		}
+	}
+}
+
+void CMario::SetState(EMario_State newState) {
+	if (CheckState(newState)) {
+		state = newState;
+	}
 }
 
 void CMario::SetLevel(EMario_Level l)

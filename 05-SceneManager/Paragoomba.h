@@ -27,7 +27,7 @@ protected:
 public:
 	CParagoomba(float x, float y) : CEnemy(x, y) {
 		type = EEnemy_Type::PARAGOOMBA;
-		level = 2;
+		level = 0;
 		OnChangeLevel();
 		indexAction = 0;
 	}

@@ -97,7 +97,8 @@ public:
 	virtual void KeyboardHandle(int KeyCode, EKeyType type);
 
 	void SetLevel(EMario_Level l);
-	void SetState(EMario_State s);
+	bool CheckState(EMario_State newState);
+	void SetState(EMario_State newState);
 	void AddCoin() { this->coin += 1; }
 	void AddPoint(int p) { this->point += p; }
 	EMario_Level GetLevel() { return level; }
