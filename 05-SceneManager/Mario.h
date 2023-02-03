@@ -51,6 +51,7 @@ protected:
 	int coin;
 	int point;
 	bool canFly;
+	ULONGLONG attack_start;
 	LPGAMEOBJECT heldObj;
 
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
@@ -70,6 +71,7 @@ public:
 		energy = 0;
 		accelerated = 1.0f;
 		canFly = 0;
+		attack_start = -1;
 
 		level = EMario_Level::BIG;
 		untouchable = 0;
@@ -97,7 +99,7 @@ public:
 	virtual void KeyboardHandle(int KeyCode, EKeyType type);
 
 	void SetLevel(EMario_Level l);
-	bool CheckState(EMario_State newState);
+	bool CheckChangeState(EMario_State newState);
 	void SetState(EMario_State newState);
 	void AddCoin() { this->coin += 1; }
 	void AddPoint(int p) { this->point += p; }

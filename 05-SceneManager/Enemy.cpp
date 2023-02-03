@@ -14,12 +14,22 @@ CEnemy::CEnemy(float x, float y) :CGameObject(x, y)
 	die_start = -1;
 	nx = -1;
 	isOnPlatform = false;
+	isAttacked = false;
+}
+
+void CEnemy::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
+	if (isAttacked == true) {
+		SetBoundingBoxSize(0, 0);
+	}
+
+	CGameObject::GetBoundingBox(left, top, right, bottom);
 }
 
 void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<CBrickMagic*>(e->obj)) {
-		int a = 9;
+
+	if (isAttacked == true) {
+		return;
 	}
 	CGameObject::OnCollisionWith(e);
 	if (!e->obj->IsBlocking()) return;
@@ -27,7 +37,7 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CEnemy*>(e->obj)) return;
 
 	if (dynamic_cast<CDeathPlatform*>(e->obj)) {
-		level = 0;
+		isDeleted = true;
 	}
 
 	if (e->ny < 0) // va cham nen 
@@ -37,7 +47,16 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 
 	if (dynamic_cast<CMario*>(e->obj)) {
-
+		CMario* mario = dynamic_cast<CMario*>(e->obj);
+		if (mario->GetState() == EMario_State::ATTACK) {
+			// enemy die
+			flipY = -1;
+			ay = -0.009;
+			vx = 0;
+			isAttacked = true;
+			isAttacked_start = GetTickCount64();
+			return;
+		}
 	}
 	else {
 		if (e->nx != 0)
@@ -83,6 +102,11 @@ void CEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		return;
 	}
+	if (isAttacked) {
+		if ((GetTickCount64() - isAttacked_start > 5000)) {
+			isDeleted = true;
+		}
+	}
 
 	vy += (ay + g) * dt;
 	vx += ax * dt;
@@ -93,6 +117,7 @@ void CEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt, coObjects);
 	// reset
 	isOnPlatform = false;
+	ay = 0;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 	
 }

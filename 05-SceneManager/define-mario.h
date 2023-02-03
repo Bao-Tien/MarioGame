@@ -48,6 +48,7 @@
 
 #define GROUND_Y 160.0f
 #define MAX_ENERGY 40
+#define TIME_ATTACK_RACCON_MARIO 420
 
 
 

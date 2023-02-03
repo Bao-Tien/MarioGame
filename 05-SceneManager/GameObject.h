@@ -26,7 +26,7 @@ protected:
 	float vx;
 	float vy;
 
-	int nx;	 
+	int nx;
 
 	int state;
 
@@ -94,6 +94,11 @@ public:
 	}
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
+		if (GetBoundingBoxSize() == D3DXVECTOR2(0, 0)) {
+			left = right;
+			top = bottom;
+			return;
+		}
 		left = this->x - this->BoundingBox_Width / 2;
 		top = this->y - this->BoundingBox_Height / 2;
 		right = this->x + this->BoundingBox_Width / 2;

@@ -23,11 +23,13 @@ protected:
 	float g = ENEMY_GRAVITY;
 
 	ULONGLONG die_start;
+	ULONGLONG isAttacked_start;
 	EEnemy_Type type;
 	string enemyAnimationId;
 
 	int level;
 	bool isOnPlatform;
+	bool isAttacked;
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
@@ -37,6 +39,7 @@ protected:
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void OnChangeLevel() {};
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
 
 public:

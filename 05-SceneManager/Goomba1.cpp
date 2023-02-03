@@ -13,7 +13,7 @@ void CGoomba1::GetBoundingBox(float& left, float& top, float& right, float& bott
 		}
 	}
 
-	CGameObject::GetBoundingBox(left, top, right, bottom);
+	CEnemy::GetBoundingBox(left, top, right, bottom);
 }
 
 void CGoomba1::OnChangeLevel() {

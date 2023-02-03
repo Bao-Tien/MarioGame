@@ -26,7 +26,7 @@ void CParagoomba::GetBoundingBox(float& left, float& top, float& right, float& b
 		}
 	}
 	//SetBoundingBoxSize(PARA_BBOX_WIDTH, PARA_BBOX_FLY_HEIGHT);
-	CGameObject::GetBoundingBox(left, top, right, bottom);
+	CEnemy::GetBoundingBox(left, top, right, bottom);
 }
 
 void CParagoomba::OnChangeLevel() {

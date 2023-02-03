@@ -112,7 +112,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		vx = 0;
 	}
 
-	if (dynamic_cast<CEnemy*>(e->obj)) {
+	if (dynamic_cast<CEnemy*>(e->obj) && state != EMario_State::ATTACK) {
 		OnCollisionWithEnemy(e);
 	}
 	else if (dynamic_cast<CDeathPlatform*>(e->obj)) {
@@ -225,6 +225,7 @@ string CMario::GetAnimationFromState() {
 	if (level == EMario_Level::SMALL) typeString = ANI_MARIO_LEVEL_SMALL;
 	else if (level == EMario_Level::BIG) typeString = ANI_MARIO_LEVEL_BIG;
 	else if (level == EMario_Level::RACCOON) typeString = ANI_MARIO_LEVEL_RACCOON;
+	else if (level == EMario_Level::FIRE) typeString = ANI_MARIO_LEVEL_FIRE;
 	else typeString = ANI_MARIO_LEVEL_SMALL;
 
 	if (state == EMario_State::IDLE) stateString = ANI_MARIO_STATE_IDLE;
@@ -237,20 +238,12 @@ string CMario::GetAnimationFromState() {
 	else if (state == EMario_State::KICK) stateString = ANI_MARIO_STATE_KICK;
 	else if (state == EMario_State::FALL) stateString = ANI_MARIO_STATE_FALL;
 	else if (state == EMario_State::SKID) stateString = ANI_MARIO_STATE_SKID;
+	else if (state == EMario_State::ATTACK) {
+		stateString = ANI_MARIO_STATE_ATTACK;
+	}
 	else if (state == EMario_State::FLY) stateString = ANI_MARIO_STATE_FLY;
 	else if (state == EMario_State::DIE) stateString = ANI_MARIO_STATE_DIE;
 	else stateString = ANI_MARIO_STATE_IDLE;
-
-	if (state == EMario_State::ATTACK) {
-		if (level == EMario_Level::RACCOON) {
-			DebugOut(L"123");
-			return ANI_RACCOON_ATTACK;
-		}
-		else if (level == EMario_Level::FIRE) {
-			return ANI_FIRE_ATTACK;
-		}
-		else stateString = ANI_MARIO_STATE_IDLE;
-	}
 
 	return typeString + "-" + stateString;
 }
@@ -294,16 +287,22 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 		//Reload();
 		break;
 	case DIK_A:
+		// nhan A => quay duoi
+		if (type == EKeyType::KEY_DOWN) {
+			if (level == EMario_Level::RACCOON || level == EMario_Level::FIRE) {
+				attack_start = GetTickCount64();
+				SetState(EMario_State::ATTACK);
+				DebugOut(L"attack: %i \n", state);
+			}
+		}
+		// de A => chay
 		if (type == EKeyType::KEY_STATE)
 		{
 			if (isSitting) break;
 			//tang toc
 			accelerated = 2.0f;
-			energy += 3;
-			// nhan A 1 lan
-			if (level == EMario_Level::RACCOON || level == EMario_Level::FIRE) {
-				SetState(EMario_State::ATTACK);
-				DebugOut(L"attack: %i \n", state);
+			if (state != EMario_State::ATTACK) {
+				energy += 3;
 			}
 		}
 		break;
@@ -338,13 +337,13 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 			if (level == EMario_Level::RACCOON && canFly == true) {
 				ay = -MARIO_GRAVITY;
 				vy = -0.5f;
-				DebugOut(L" Mario bay >>> \n");
+				//DebugOut(L" Mario bay >>> \n");
 			}
 
 			if (level == EMario_Level::RACCOON && state == EMario_State::FALL) {
 				ay = -MARIO_GRAVITY;
 				vy = 0.05f;
-				DebugOut(L" Mario bay cham xuong >>> \n");
+				//DebugOut(L" Mario bay cham xuong >>> \n");
 			}
 		}
 		break;
@@ -373,6 +372,11 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 
 void CMario::UpdateState() {
 	if (state == EMario_State::DIE) return;
+	if (state == EMario_State::ATTACK) {
+		if (GetTickCount64() - attack_start < TIME_ATTACK_RACCON_MARIO) {
+			return; // con tg attack thi ko chuyen state
+		}
+	}
 	if (isOnPlatform)
 	{
 		if (isSitting)
@@ -426,7 +430,7 @@ void CMario::UpdateState() {
 	}
 }
 
-bool CMario::CheckState(EMario_State newState) {
+bool CMario::CheckChangeState(EMario_State newState) {
 	if (state == EMario_State::DIE) {
 		return false;
 	}
@@ -531,7 +535,7 @@ bool CMario::CheckState(EMario_State newState) {
 }
 
 void CMario::SetState(EMario_State newState) {
-	if (CheckState(newState)) {
+	if (CheckChangeState(newState)) {
 		state = newState;
 	}
 }

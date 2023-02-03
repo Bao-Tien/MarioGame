@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" nextlayerid="29" nextobjectid="253">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" nextlayerid="29" nextobjectid="254">
  <editorsettings>
   <export target="Resources/world-1-1-mapn.xml" format="tmx"/>
  </editorsettings>
@@ -131,12 +131,13 @@
  </objectgroup>
  <objectgroup id="26" name="Enemy_Goomba">
   <object id="216" x="816" y="1190.67" width="46.6667" height="42.6667"/>
+  <object id="253" x="2642.67" y="1128" width="49.3333" height="44"/>
  </objectgroup>
  <objectgroup id="22" name="Enemy_Troopas">
   <object id="195" x="1630.3" y="1009.09" width="51.5152" height="51.5152"/>
  </objectgroup>
  <objectgroup id="23" name="Enemy_Paragoomba">
-  <object id="200" x="2583.75" y="1109.33" width="60.6061" height="63.6364"/>
+  <object id="200" x="3025.08" y="1089.33" width="60.6061" height="63.6364"/>
  </objectgroup>
  <objectgroup id="24" name="Enemy_RedVenus">
   <object id="209" x="1080" y="1104" width="48" height="96"/>

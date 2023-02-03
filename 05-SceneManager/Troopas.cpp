@@ -22,7 +22,7 @@ void CTroopas::GetBoundingBox(float& left, float& top, float& right, float& bott
 	}
 	}
 
-	CGameObject::GetBoundingBox(left, top, right, bottom);
+	CEnemy::GetBoundingBox(left, top, right, bottom);
 }
 
 void CTroopas::OnChangeLevel() {

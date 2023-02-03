@@ -50,7 +50,7 @@ void CSprites::LoadSprites(TiXmlElement* sprNode, string textureID, string& spri
 	OutputDebugStringW(ToLPCWSTR(spriteID + ':' + to_string(left) + ':' + to_string(top) + ':' + to_string(width) + ':' + to_string(height) + '\n'));
 	Add2(spriteID, left * 3, top * 3, (width + left) * 3, (height + top) * 3, tex);
 
-	OutputDebugStringW(ToLPCWSTR("|--" + spriteID + ':' + to_string(detailFrameTime) + '\n'));
+	//OutputDebugStringW(ToLPCWSTR("|--" + spriteID + ':' + to_string(detailFrameTime) + '\n'));
 }
 /*
 	Clear all loaded sprites
