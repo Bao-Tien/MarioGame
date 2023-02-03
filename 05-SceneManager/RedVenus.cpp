@@ -28,3 +28,7 @@ void CRedVenus::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
 	CEnemy::Update(dt, coObjects);
 }
+
+string CRedVenus::GetAnimationFromState() {
+	return enemyAnimationId;
+}

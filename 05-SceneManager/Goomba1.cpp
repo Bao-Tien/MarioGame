@@ -24,13 +24,25 @@ void CGoomba1::OnChangeLevel() {
 			vx = 0;
 			vy = 0;
 			ay = 0;
-			enemyAnimationId = ANI_GOOMBA_DIE;
 			break;
 		}
 		case 1: {
-			enemyAnimationId = ANI_GOOMBA_MOVE;
 			vx = nx * ENEMY_MOVE_SPEED;
 			break;
+		}
+		default: {
+			break;
+		}
+	}
+}
+string CGoomba1::GetAnimationFromState() {
+	switch (level)
+	{
+		case 0: {
+			return ANI_GOOMBA_DIE;
+		}
+		case 1: {
+			return ANI_GOOMBA_MOVE;
 		}
 		default: {
 			break;

@@ -128,6 +128,6 @@ void CEnemy::Render()
 	RenderBoundingBox();
 }
 
-string CEnemy::GetAnimationFromState() {
-	return enemyAnimationId;
-}
+//string CEnemy::GetAnimationFromState() {
+//	return enemyAnimationId;
+//}

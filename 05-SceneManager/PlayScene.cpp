@@ -11,6 +11,7 @@
 #include "Platform.h"
 #include "Goomba1.h"
 #include "RaccoonMario.h"
+#include "FireMario.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -119,6 +120,9 @@ void CPlayScene::UpdatePlayer() {
 	else if (dynamic_cast<CRaccoonMario*>(player)) {
 		currentLevel = EMario_Level::RACCOON;
 	}
+	else if (dynamic_cast<CFireMario*>(player)) {
+		currentLevel = EMario_Level::FIRE;
+	}
 	
 	if (actualLevel != currentLevel) {
 		D3DXVECTOR2 position = player->GetPosition();
@@ -137,6 +141,10 @@ void CPlayScene::UpdatePlayer() {
 		else if (actualLevel == EMario_Level::RACCOON) {
 			delete(player);
 			player = new CRaccoonMario(position.x, position.y, nx, coin, point);
+		}
+		else if (actualLevel == EMario_Level::FIRE) {
+			delete(player);
+			player = new CFireMario(position.x, position.y, nx, coin, point);
 		}
 		player->SetPrevBoundBoxSize(oldBBox);
 

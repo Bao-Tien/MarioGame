@@ -13,6 +13,8 @@ enum class EEnemy_Type {
 	RED_VENUS = 2,
 	FIRE_FLOWER = 3,
 	PARAGOOMBA = 4,
+	TROOPASGREEN = 5,
+	PARATROOPA = 6,
 };
 
 class CEnemy : public CGameObject
@@ -45,7 +47,7 @@ protected:
 public:
 	CEnemy(float x, float y);
 	int GetLevel() { return level; }
-	string GetAnimationFromState();
+	void SetIsAttacked(bool x) { this->isAttacked = x; }
 
 	bool attackFromLeft = true;
 	bool attackFromTop = false;

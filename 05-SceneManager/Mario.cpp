@@ -280,6 +280,9 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 	case DIK_3:
 		SetLevel(EMario_Level::RACCOON);
 		break;
+	case DIK_4:
+		SetLevel(EMario_Level::FIRE);
+		break;
 	case DIK_0:
 		SetState(EMario_State::DIE);
 		break;

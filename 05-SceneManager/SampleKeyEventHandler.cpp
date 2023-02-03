@@ -16,20 +16,23 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_DOWN:
 		mario->KeyboardHandle(DIK_DOWN, EKeyType::KEY_DOWN);
 		break;
-	case DIK_1:
-		mario->KeyboardHandle(DIK_1, EKeyType::KEY_DOWN);
-		break;
 	case DIK_S:
 		mario->KeyboardHandle(DIK_S, EKeyType::KEY_DOWN);
 		break;
 	case DIK_A:
 		mario->KeyboardHandle(DIK_A, EKeyType::KEY_DOWN);
 		break;
+	case DIK_1:
+		mario->KeyboardHandle(DIK_1, EKeyType::KEY_DOWN);
+		break;
 	case DIK_2:
 		mario->KeyboardHandle(DIK_2, EKeyType::KEY_DOWN);
 		break;
 	case DIK_3:
 		mario->KeyboardHandle(DIK_3, EKeyType::KEY_DOWN);
+		break;
+	case DIK_4:
+		mario->KeyboardHandle(DIK_4, EKeyType::KEY_DOWN);
 		break;
 	case DIK_0:
 		mario->KeyboardHandle(DIK_0, EKeyType::KEY_DOWN);

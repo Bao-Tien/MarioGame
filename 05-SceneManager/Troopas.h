@@ -17,7 +17,8 @@ protected:
 	bool justIsHeld;
 	ULONGLONG crouch_start;
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-public:	CTroopas(float x, float y) : CEnemy(x, y) {
+public:	
+	CTroopas(float x, float y) : CEnemy(x, y) {
 		type = EEnemy_Type::TROOPAS;
 		level = 3;
 		
@@ -35,5 +36,6 @@ public:	CTroopas(float x, float y) : CEnemy(x, y) {
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void SetIsHeld(bool isHeld) { this->isHeld = isHeld; }
 	void SetJustIsHeld(bool justIsHeld) { this->justIsHeld = justIsHeld; }
+	string GetAnimationFromState();
 };
 

@@ -34,4 +34,5 @@ public:
 	void OnChangeLevel() override;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+	string GetAnimationFromState();
 };

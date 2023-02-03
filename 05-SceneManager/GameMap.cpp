@@ -9,6 +9,8 @@
 #include "Coin.h"
 #include "BrickMagic.h"
 #include "DeathPlatform.h"
+#include "TroopasGreen.h"
+#include "ParaTroopa.h"
 
 #define MAX_ENERGY 40
 #define CAMERA_MARGIN			150
@@ -234,6 +236,20 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 					dynamicObjectsFrontMap->push_back(obj);
 				}
 			}
+			else if (std::string(objGroupNode->Attribute("name")) == "Enemy_TroopasGreen") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj = new CTroopasGreen(
+						x + width / 2,
+						y + height / 2
+					);
+					dynamicObjectsFrontMap->push_back(obj);
+				}
+			}
 			else if (std::string(objGroupNode->Attribute("name")) == "Enemy_Paragoomba") {
 				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
 					int x = atoi(objNode->Attribute("x"));
@@ -247,6 +263,20 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 					);
 					dynamicObjectsFrontMap->push_back(obj);
 				}
+			}
+			else if (std::string(objGroupNode->Attribute("name")) == "Enemy_ParaTroopa") {
+			for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+				int x = atoi(objNode->Attribute("x"));
+				int y = atoi(objNode->Attribute("y"));
+				int width = atoi(objNode->Attribute("width"));
+				int height = atoi(objNode->Attribute("height"));
+
+				LPGAMEOBJECT obj = new CParaTroopa(
+					x + width / 2,
+					y + height / 2
+				);
+				dynamicObjectsFrontMap->push_back(obj);
+			}
 			}
 			else if (std::string(objGroupNode->Attribute("name")) == "Coin") {
 				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {

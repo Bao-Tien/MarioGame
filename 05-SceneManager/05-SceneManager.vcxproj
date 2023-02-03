@@ -145,10 +145,12 @@
   <ItemGroup>
     <ClCompile Include="DeathPlatform.cpp" />
     <ClCompile Include="FireFlower.cpp" />
+    <ClCompile Include="FireMario.cpp" />
     <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="MagicObj.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="MushroomGreen.cpp" />
+    <ClCompile Include="ParaTroopa.cpp" />
     <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
@@ -185,6 +187,7 @@
     <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="Troopas.cpp" />
+    <ClCompile Include="TroopasGreen.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +205,7 @@
     <ClInclude Include="define-mario.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FireFlower.h" />
+    <ClInclude Include="FireMario.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GameObject.h" />
@@ -215,6 +219,7 @@
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="MushroomGreen.h" />
     <ClInclude Include="Paragoomba.h" />
+    <ClInclude Include="ParaTroopa.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Portal.h" />
@@ -233,6 +238,7 @@
     <ClInclude Include="TinyXML\tinystr.h" />
     <ClInclude Include="TinyXML\tinyxml.h" />
     <ClInclude Include="Troopas.h" />
+    <ClInclude Include="TroopasGreen.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

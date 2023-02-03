@@ -1,6 +1,8 @@
 #include "FireFlower.h"
 #include "Mario.h"
 
+#define FIRE_BULLET_DIE_TIMEOUT 10000
+
 void CFireFlower::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 	switch (level) {
 	case 0: {
@@ -21,11 +23,10 @@ void CFireFlower::OnChangeLevel() {
 	switch (level)
 	{
 		case 0: {
-			enemyAnimationId = "";
 			break;
 		}
 		case 1: {
-			enemyAnimationId = ID_ANI_FIREFLOWER;
+			die_start = GetTickCount64();
 			break;
 		}
 		default: {
@@ -35,6 +36,25 @@ void CFireFlower::OnChangeLevel() {
 }
 
 void CFireFlower::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-
+	if ((GetTickCount64() - die_start > FIRE_BULLET_DIE_TIMEOUT)) {
+		isDeleted = true;
+		return;
+	}
+	
 	CEnemy::Update(dt, coObjects);
+}
+
+string CFireFlower::GetAnimationFromState() {
+	switch (level)
+	{
+	case 0: {
+		return "";
+	}
+	case 1: {
+		return ID_ANI_FIREFLOWER;
+	}
+	default: {
+		break;
+	}
+	}
 }

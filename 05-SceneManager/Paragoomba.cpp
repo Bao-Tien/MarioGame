@@ -91,7 +91,7 @@ void CParagoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		ULONGLONG time = GetTickCount64() / 1000;
 		if (time % T >= 1 && time % T <= (T * 3) / TOTAL_STEPS) {
 			if (level == 4) {
-				y = y + 6;// 4->2
+				y = y + 5;// 4->2
 			}
 			level = 2;
 			OnChangeLevel();
@@ -100,7 +100,7 @@ void CParagoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		else if (isOnPlatform) {
 			if (time % T >= (T * 4) / TOTAL_STEPS && time % T <= (T * 6) / TOTAL_STEPS) {
 				if (level == 2) {
-					y = y - 6;//2->3
+					y = y - 7;//2->3
 				}
 				level = 3;
 				OnChangeLevel();
@@ -117,4 +117,28 @@ void CParagoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	}
 	
 	CEnemy::Update(dt, coObjects);
+}
+
+string CParagoomba::GetAnimationFromState() {
+	switch (level)
+	{
+		case 0: { //die
+			return ANI_PARAGOOMBA_DIE;
+		}
+		case 1: { //bi dap dau roi
+			return ANI_PARAGOOMBA_BEINGATTACKED;
+		}
+		case 2: { //di
+			return ANI_PARAGOOMBA_MOVE;
+		}
+		case 3: { //nhay thap
+			return ANI_PARAGOOMBA_FLAP;
+		}
+		case 4: { //nhay cao
+			return ANI_PARAGOOMBA_FLAP;
+		}
+		default: {
+			break;
+		}
+	}
 }

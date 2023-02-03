@@ -25,4 +25,5 @@ public:
 		this->playScene = playScene;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	string GetAnimationFromState();
 };

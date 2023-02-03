@@ -19,6 +19,6 @@ public:
 		OnChangeLevel();
 	}
 	void OnChangeLevel() override;
-
+	string GetAnimationFromState();
 };
 

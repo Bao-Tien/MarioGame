@@ -27,4 +27,5 @@ public:
 	int IsCollidable() { return 0; };
 	void OnChangeLevel() override;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	string GetAnimationFromState();
 };
