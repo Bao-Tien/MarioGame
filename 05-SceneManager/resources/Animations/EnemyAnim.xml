@@ -102,6 +102,16 @@
     <Sprite id="spr-green-venus-head-up-1" left="268" top="34" width="16" height="32"/>
   </Animation>
 
+  <!--Green Venus Fire Trap Short-->
+  <!-- Animation HEAD DOWN-->
+  <Animation aniId="ani-green-venus-fire-trap-short-headdown" frameTime="300">
+    <Sprite id="spr-green-venus-short-head-down-0" left="6" top="166" width="16" height="24"/>
+  </Animation>
+  <!-- Animation HEAD UP-->
+  <Animation aniId="ani-green-venus-fire-trap-short-headup" frameTime="300">
+    <Sprite id="spr-green-venus-short-head-up-0" left="6" top="196" width="16" height="24"/>
+  </Animation>
+
 
 	<!--		PIRANHA		-->
 	<!--Red Piranha Plant--> 

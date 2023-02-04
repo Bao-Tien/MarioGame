@@ -93,9 +93,6 @@
     <Filter Include="Framework\Object\Enemy\Paragoomba">
       <UniqueIdentifier>{fc31a038-30c2-43dd-8035-4a664a703e3e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Object\Enemy\RedVenus">
-      <UniqueIdentifier>{c9fa79bd-366c-467f-a5bf-09dab760ce39}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -105,9 +102,6 @@
     </Filter>
     <Filter Include="Framework\Object\DeathPlatform">
       <UniqueIdentifier>{e6d49525-f260-4d50-8295-59cee5c137c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Object\Enemy\RedVenus\FireFlower">
-      <UniqueIdentifier>{7e7daefb-c9cd-4e64-af90-0cca5b4f737b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\Object\BrickMagic">
       <UniqueIdentifier>{ae9e7252-adab-4dbb-aefe-e7ae4b802bac}</UniqueIdentifier>
@@ -129,6 +123,12 @@
     </Filter>
     <Filter Include="Framework\Object\Enemy\ParaTroopa">
       <UniqueIdentifier>{6f3a58df-cdbb-4634-8d74-9db6f9c5a5d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Object\Enemy\Venus">
+      <UniqueIdentifier>{c9fa79bd-366c-467f-a5bf-09dab760ce39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Object\Enemy\Venus\FireFlower">
+      <UniqueIdentifier>{7e7daefb-c9cd-4e64-af90-0cca5b4f737b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -238,7 +238,7 @@
       <Filter>Framework\Object\Enemy\Paragoomba</Filter>
     </ClCompile>
     <ClCompile Include="RedVenus.cpp">
-      <Filter>Framework\Object\Enemy\RedVenus</Filter>
+      <Filter>Framework\Object\Enemy\Venus</Filter>
     </ClCompile>
     <ClCompile Include="BrickMagic.cpp">
       <Filter>Framework\Object\BrickMagic</Filter>
@@ -259,7 +259,7 @@
       <Filter>Framework\Object\BrickMagic\MagicObj</Filter>
     </ClCompile>
     <ClCompile Include="FireFlower.cpp">
-      <Filter>Framework\Object\Enemy\RedVenus\FireFlower</Filter>
+      <Filter>Framework\Object\Enemy\Venus\FireFlower</Filter>
     </ClCompile>
     <ClCompile Include="MushroomGreen.cpp">
       <Filter>Framework\Object\BrickMagic\MagicObj\Mushroom_Green</Filter>
@@ -272,6 +272,12 @@
     </ClCompile>
     <ClCompile Include="ParaTroopa.cpp">
       <Filter>Framework\Object\Enemy\ParaTroopa</Filter>
+    </ClCompile>
+    <ClCompile Include="GreenVenus.cpp">
+      <Filter>Framework\Object\Enemy\Venus</Filter>
+    </ClCompile>
+    <ClCompile Include="GreenPiranha.cpp">
+      <Filter>Framework\Object\Enemy\Venus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -387,7 +393,7 @@
       <Filter>Framework\Object\Enemy\Paragoomba</Filter>
     </ClInclude>
     <ClInclude Include="RedVenus.h">
-      <Filter>Framework\Object\Enemy\RedVenus</Filter>
+      <Filter>Framework\Object\Enemy\Venus</Filter>
     </ClInclude>
     <ClInclude Include="BrickMagic.h">
       <Filter>Framework\Object\BrickMagic</Filter>
@@ -408,7 +414,7 @@
       <Filter>Framework\Object\BrickMagic\MagicObj</Filter>
     </ClInclude>
     <ClInclude Include="FireFlower.h">
-      <Filter>Framework\Object\Enemy\RedVenus\FireFlower</Filter>
+      <Filter>Framework\Object\Enemy\Venus\FireFlower</Filter>
     </ClInclude>
     <ClInclude Include="MushroomGreen.h">
       <Filter>Framework\Object\BrickMagic\MagicObj\Mushroom_Green</Filter>
@@ -421,6 +427,12 @@
     </ClInclude>
     <ClInclude Include="ParaTroopa.h">
       <Filter>Framework\Object\Enemy\ParaTroopa</Filter>
+    </ClInclude>
+    <ClInclude Include="GreenVenus.h">
+      <Filter>Framework\Object\Enemy\Venus</Filter>
+    </ClInclude>
+    <ClInclude Include="GreenPiranha.h">
+      <Filter>Framework\Object\Enemy\Venus</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

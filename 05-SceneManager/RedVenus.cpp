@@ -10,7 +10,6 @@ void CRedVenus::GetBoundingBox(float& left, float& top, float& right, float& bot
 void CRedVenus::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (isMoveUp && y >= yStart - BoundingBox_Height) {
 		y -= 2;
-		enemyAnimationId = ANI_VENUS_RED_UP;
 		if (y == yStart - BoundingBox_Height) {
 			isMoveUp = false;
 			CFireFlower* fireFlower = new CFireFlower(x, y);
@@ -20,7 +19,6 @@ void CRedVenus::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
 	if (!isMoveUp && y < yStart) {
 		y += 2;
-		enemyAnimationId = ANI_VENUS_RED_DOWN;
 		if (y == yStart) {
 			isMoveUp = true;
 		}
@@ -30,5 +28,8 @@ void CRedVenus::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 }
 
 string CRedVenus::GetAnimationFromState() {
-	return enemyAnimationId;
+	if (isMoveUp) {
+		return ANI_VENUS_RED_UP;
+	}
+	return ANI_VENUS_RED_DOWN;
 }

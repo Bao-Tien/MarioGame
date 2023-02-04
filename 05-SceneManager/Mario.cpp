@@ -139,6 +139,8 @@ void CMario::OnCollisionWithMagicObj(LPCOLLISIONEVENT e) {
 		return;
 	}
 	else if (level == EMario_Level::RACCOON) {
+		SetLevel(EMario_Level::FIRE);
+		return;
 	}
 	
 }
@@ -426,7 +428,7 @@ void CMario::UpdateState() {
 			}
 		}
 		else {
-				if (canFly) {
+				if (canFly || level == EMario_Level::RACCOON) {
 					SetState(EMario_State::FALL);
 				}
 			}
@@ -470,13 +472,15 @@ bool CMario::CheckChangeState(EMario_State newState) {
 		}
 	}
 	if (state == EMario_State::JUMP) {
-		if (newState == EMario_State::IDLE || newState == EMario_State::ATTACK)
+		if (newState == EMario_State::IDLE || newState == EMario_State::ATTACK
+			|| (newState == EMario_State::FALL && level == EMario_Level::RACCOON))
 		{
 			return true;
 		}
 	}
 	if (state == EMario_State::JUMP_HIGH) {
-		if (newState == EMario_State::IDLE || newState == EMario_State::ATTACK)
+		if (newState == EMario_State::IDLE || newState == EMario_State::ATTACK
+			|| (newState == EMario_State::FALL && level == EMario_Level::RACCOON))
 		{
 			return true;
 		}

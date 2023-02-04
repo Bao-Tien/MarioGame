@@ -20,6 +20,6 @@
   </Animations>
   
 
-  <Player name="Player" type="smallMario" x="3800" y="850" nx="1">
+  <Player name="Player" type="smallMario" x="5500" y="850" nx="1">
   </Player>
 </Scence1>
