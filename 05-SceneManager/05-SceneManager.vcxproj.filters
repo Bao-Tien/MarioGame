@@ -130,6 +130,12 @@
     <Filter Include="Framework\Object\Enemy\Venus\FireFlower">
       <UniqueIdentifier>{7e7daefb-c9cd-4e64-af90-0cca5b4f737b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Object\BrickGolden">
+      <UniqueIdentifier>{a610e3a8-4521-439e-9df1-782af93c4f64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Object\Mario\RaccoonMario\TailMario">
+      <UniqueIdentifier>{edd3b16c-5445-47c7-a6a7-4f44ffdebfe1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -278,6 +284,12 @@
     </ClCompile>
     <ClCompile Include="GreenPiranha.cpp">
       <Filter>Framework\Object\Enemy\Venus</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickGolden.cpp">
+      <Filter>Framework\Object\BrickGolden</Filter>
+    </ClCompile>
+    <ClCompile Include="TailMario.cpp">
+      <Filter>Framework\Object\Mario\RaccoonMario\TailMario</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -433,6 +445,12 @@
     </ClInclude>
     <ClInclude Include="GreenPiranha.h">
       <Filter>Framework\Object\Enemy\Venus</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickGolden.h">
+      <Filter>Framework\Object\BrickGolden</Filter>
+    </ClInclude>
+    <ClInclude Include="TailMario.h">
+      <Filter>Framework\Object\Mario\RaccoonMario\TailMario</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

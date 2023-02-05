@@ -5,6 +5,7 @@
 #include "Paragoomba.h"
 #include "DeathPlatform.h"
 #include "BrickMagic.h"
+#include "BrickGolden.h"
 
 CEnemy::CEnemy(float x, float y) :CGameObject(x, y)
 {
@@ -72,6 +73,12 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 			if (moveRangeX.x == 0 && moveRangeX.y == 0) {
 				moveRangeX.x = e->obj->GetPosition().x - e->obj->GetBoundingBoxSize().x / 2 + this->BoundingBox_Width / 2;
 				moveRangeX.y = e->obj->GetPosition().x + e->obj->GetBoundingBoxSize().x / 2 - this->BoundingBox_Width / 2;
+			}
+		}
+		else if (dynamic_cast<CBrickGolden*>(e->obj)) {
+			if (moveRangeX.x == 0 && moveRangeX.y == 0) {
+				moveRangeX.x = e->obj->GetPosition().x - e->obj->GetBoundingBoxSize().x / 2;
+				moveRangeX.y = e->obj->GetPosition().x + e->obj->GetBoundingBoxSize().x / 2;
 			}
 		}
 	}

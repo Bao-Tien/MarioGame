@@ -13,6 +13,7 @@
 #include "ParaTroopa.h"
 #include "GreenVenus.h"
 #include "GreenPiranha.h"
+#include "BrickGolden.h"
 
 #define MAX_ENERGY 40
 #define CAMERA_MARGIN			150
@@ -321,6 +322,20 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 						gift
 						);
 					
+					staticObjects->push_back(obj);
+				}
+			}
+			else if (std::string(objGroupNode->Attribute("name")) == "Brick_Golden") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj = new CBrickGolden(
+						x + width / 2,
+						y + height / 2
+					);
 					staticObjects->push_back(obj);
 				}
 			}

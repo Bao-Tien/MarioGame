@@ -143,6 +143,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BrickGolden.cpp" />
     <ClCompile Include="DeathPlatform.cpp" />
     <ClCompile Include="FireFlower.cpp" />
     <ClCompile Include="FireMario.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="SmallMario.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="TailMario.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="TinyXML\tinystr.cpp" />
@@ -199,6 +201,7 @@
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="BigMario.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="BrickGolden.h" />
     <ClInclude Include="BrickMagic.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collision.h" />
@@ -236,6 +239,7 @@
     <ClInclude Include="SmallMario.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprites.h" />
+    <ClInclude Include="TailMario.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TileSet.h" />

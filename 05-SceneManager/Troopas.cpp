@@ -4,6 +4,7 @@
 #include "DeathPlatform.h"
 #include "RectPlatform.h"
 #include "RectCollision.h"
+#include "BrickGolden.h"
 
 void CTroopas::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 	switch (level) {
@@ -94,7 +95,8 @@ void CTroopas::OnCollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<CDeathPlatform*>(e->obj)) {
 		isDeleted = true;
 	}
-	if (level == 4 && (dynamic_cast<CRectPlatform*>(e->obj) || dynamic_cast<CRectCollision*>(e->obj))) {
+	if (level == 4 && (dynamic_cast<CRectPlatform*>(e->obj) || dynamic_cast<CRectCollision*>(e->obj) 
+		|| dynamic_cast<CBrickGolden*>(e->obj))) {
 		OnChangeLevel();
 		return;
 	}
