@@ -14,7 +14,8 @@ public:
 		level = EMario_Level::RACCOON;
 		this->nx = nx;
 		tailMario = new CTailMario(x, y);
-		playScene->PushToDynamicObjectsFrontMap(tailMario);
+		//playScene->PushToDynamicObjectsFrontMap(tailMario);
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void Render();
 };

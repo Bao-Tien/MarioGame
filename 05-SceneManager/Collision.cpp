@@ -3,6 +3,10 @@
 #include "Mario.h"
 
 #include "debug.h"
+#include "TailMario.h"
+#include "BrickGolden.h"
+#include "Enemy.h"
+#include "FireFlower.h"
 
 #define BLOCK_PUSH_FACTOR 0.4f
 
@@ -115,6 +119,25 @@ void CCollision::SweptAABB(
 
 }
 
+
+// Returns true if two rectangles (l1, r1) and (l2, r2)
+// overlap https://www.geeksforgeeks.org/find-two-rectangles-overlap/ 
+bool doOverlap(D3DXVECTOR2 l1, D3DXVECTOR2 r1, D3DXVECTOR2 l2, D3DXVECTOR2 r2)
+{
+	// if rectangle has area 0, no overlap
+	if (l1.x == r1.x || l1.y == r1.y || r2.x == l2.x || l2.y == r2.y)
+		return false;
+
+	// If one rectangle is on left side of other
+	if (l1.x > r2.x || l2.x > r1.x)
+		return false;
+
+	// If one rectangle is above other
+	if (r1.y < l2.y || r2.y < l1.y)
+		return false; 
+
+	return true;
+}
 /*
 	Extension of original SweptAABB to deal with two moving objects
 */
@@ -143,20 +166,7 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 	objSrc->GetBoundingBox(ml, mt, mr, mb);
 	objDest->GetBoundingBox(sl, st, sr, sb);
 
-	/*if (ml < mr && mt < mb && sl < sr && st < sb) {
-		SweptAABB(
-			ml, mt, mr, mb,
-			dx, dy,
-			sl, st, sr, sb,
-			t, nx, ny
-		);
-		CCollisionEvent* e = new CCollisionEvent(t, nx, ny, dx, dy, objDest, objSrc);
-		return e;
-	}
-	else {
-		CCollisionEvent* e = new CCollisionEvent(0, 0, 0, 0, 0, objDest, objSrc);
-		return e;
-	}*/
+
 	SweptAABB(
 		ml, mt, mr, mb,
 		dx, dy,
@@ -164,6 +174,13 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 		t, nx, ny
 	);
 	CCollisionEvent* e = new CCollisionEvent(t, nx, ny, dx, dy, objDest, objSrc);
+	if (doOverlap(D3DXVECTOR2(ml, mt), D3DXVECTOR2(mr, mb), D3DXVECTOR2(sl, st), D3DXVECTOR2(sr, sb))) {// 2 hcn tu dau ko overlap nhau thi ms sweptAABB
+		CCollisionEvent* e1 = new CCollisionEvent(0, 0, 0, 0, 0, objDest, objSrc);
+		objSrc->OnOverlapWith(e1);
+		CCollisionEvent* e2 = new CCollisionEvent(0, 0, 0, 0, 0, objSrc, objDest);
+		objDest->OnOverlapWith(e2);
+	}
+
 	return e;
 }
 
@@ -236,7 +253,7 @@ void CCollision::Filter( LPGAMEOBJECT objSrc,
 		if (c->t < min_tx && c->nx != 0 && filterX == 1) {
 			min_tx = c->t; min_ix = i;
 		}
-
+		
 		if (c->t < min_ty && c->ny != 0 && filterY == 1) {
 			min_ty = c->t; min_iy = i;
 		}
@@ -365,29 +382,31 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 				}
 			}
 		}
-		else
-		if (colX != NULL)
-		{
-			x += colX->t * dx + colX->nx * BLOCK_PUSH_FACTOR;
-			y += dy;
-			objSrc->OnCollisionWith(colX);
-			//call OnCollisionWith nguoc lai
-			CallCollisionEventOnDestObject(objSrc, colX);
-		}
-		else 
-			if (colY != NULL)
+		else {
+			if (colX != NULL)
 			{
-				x += dx;
-				y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
-				objSrc->OnCollisionWith(colY);
-				//call OnCollisionWith nguoc lai
-				CallCollisionEventOnDestObject(objSrc, colY);
-			}
-			else // both colX & colY are NULL 
-			{
-				x += dx;
+				x += colX->t * dx + colX->nx * BLOCK_PUSH_FACTOR;
 				y += dy;
+				objSrc->OnCollisionWith(colX);
+				//call OnCollisionWith nguoc lai
+				CallCollisionEventOnDestObject(objSrc, colX);
 			}
+			else {
+				if (colY != NULL)
+				{
+					x += dx;
+					y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
+					objSrc->OnCollisionWith(colY);
+					//call OnCollisionWith nguoc lai
+					CallCollisionEventOnDestObject(objSrc, colY);
+				}
+				else // both colX & colY are NULL 
+				{
+					x += dx;
+					y += dy;
+				}
+			}
+		}
 
 		objSrc->SetPosition(x, y);
 	}
@@ -403,13 +422,17 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 	
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
+		
 		LPCOLLISIONEVENT e = coEvents[i];
-		if (e->isDeleted) continue;
-		if (e->obj->IsBlocking()) continue;  // blocking collisions were handled already, skip them
-
-		if (coEvents.size() >= 2) {
-			int a = 0;
+		if (e->isDeleted)
+		{
+			continue;
 		}
+		if (e->obj->IsBlocking())
+		{
+			continue;  // blocking collisions were handled already, skip them
+		}
+
 		//dk bo qua
 		bool condition1 = colX && colX->nx < 0 && coEvents[i]->nx < 0;
 		bool condition2 = colX && colX->nx > 0 && coEvents[i]->nx > 0;

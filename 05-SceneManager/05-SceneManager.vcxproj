@@ -147,6 +147,7 @@
     <ClCompile Include="DeathPlatform.cpp" />
     <ClCompile Include="FireFlower.cpp" />
     <ClCompile Include="FireMario.cpp" />
+    <ClCompile Include="Gate.cpp" />
     <ClCompile Include="GreenPiranha.cpp" />
     <ClCompile Include="GreenVenus.cpp" />
     <ClCompile Include="Leaf.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Gate.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Goomba1.h" />
     <ClInclude Include="GreenPiranha.h" />

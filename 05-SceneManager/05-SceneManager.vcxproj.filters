@@ -136,6 +136,9 @@
     <Filter Include="Framework\Object\Mario\RaccoonMario\TailMario">
       <UniqueIdentifier>{edd3b16c-5445-47c7-a6a7-4f44ffdebfe1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Object\Gate">
+      <UniqueIdentifier>{2cba1389-0e84-41d5-b8f7-518c8f774593}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -290,6 +293,9 @@
     </ClCompile>
     <ClCompile Include="TailMario.cpp">
       <Filter>Framework\Object\Mario\RaccoonMario\TailMario</Filter>
+    </ClCompile>
+    <ClCompile Include="Gate.cpp">
+      <Filter>Framework\Object\Gate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -451,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="TailMario.h">
       <Filter>Framework\Object\Mario\RaccoonMario\TailMario</Filter>
+    </ClInclude>
+    <ClInclude Include="Gate.h">
+      <Filter>Framework\Object\Gate</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

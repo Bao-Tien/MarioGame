@@ -20,9 +20,9 @@ protected:
 	CMario* player;
 	int sceneTime = SCENE_TIME;
 
-	vector<LPGAMEOBJECT> dynamicObjectsAfterMap;
-	vector<LPGAMEOBJECT> dynamicObjectsFrontMap;
 	vector<LPGAMEOBJECT> staticObjects;
+	vector<LPGAMEOBJECT> dynamicObjectsAfterMap; //venus
+	vector<LPGAMEOBJECT> dynamicObjectsFrontMap; //quai
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
@@ -44,6 +44,8 @@ public:
 		dynamicObjectsFrontMap.push_back(obj);
 	}
 	int GetSceneTime() { return sceneTime; }
+
+	vector<LPGAMEOBJECT> GetStaticObjects() { return staticObjects; }
 };
 
 typedef CPlayScene* LPPLAYSCENE;

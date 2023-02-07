@@ -39,6 +39,9 @@ public:
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0; 
+	D3DXVECTOR2 GetMapSize() {
+		return this->map->GetMapSize();
+	}
 };
 typedef CScene * LPSCENE;
 

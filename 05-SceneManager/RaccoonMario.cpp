@@ -5,10 +5,19 @@ void CRaccoonMario::GetBoundingBox(float& left, float& top, float& right, float&
 	CMario::GetBoundingBox(left, top, right, bottom);
 }
 void CRaccoonMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	tailMario->SetPosition(x, y + 10);
-	if (this->state == EMario_State::ATTACK) {
-		tailMario->SetBeingAttack(true);
-	}
-	else tailMario->SetBeingAttack(false);
 	CMario::Update(dt, coObjects);
+	
+	if (this->state == EMario_State::ATTACK) {
+		tailMario->SetLevel(1);
+	}
+	else {
+		tailMario->SetLevel(0);
+	}
+	tailMario->SetPosition(x, y + 10); // dich chuyen tuc thoi
+	tailMario->Update(dt, coObjects);
+}
+
+void CRaccoonMario::Render() {
+	CMario::Render();
+	tailMario->Render();
 }

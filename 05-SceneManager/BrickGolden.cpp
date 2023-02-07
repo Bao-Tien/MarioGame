@@ -39,15 +39,9 @@ string CBrickGolden::GetAnimationFromState() {
 	}
 }
 
-void CBrickGolden::OnCollisionWith(LPCOLLISIONEVENT e) {
+void CBrickGolden::OnOverlapWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<CTailMario*>(e->obj)) {
 		level = 0;
-		/*if (dynamic_cast<CTailMario*>(e->obj)->GetBeingAttack() == true) {
-			int a = 0;
-		}*/
-		/*if (dynamic_cast<CTailMario*>(e->obj)->GetBeingAttack() == true) {
-			
-		}*/
 	}
 }
 

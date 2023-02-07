@@ -19,12 +19,16 @@ public:
 		level = 1;
 		OnChangeLevel();
 		attackFromTop = true;
+		attackFromLeft = true;
+		attackFromRight = true;
+		attackFromBottom = true;
 		g = 0;
 		vx = -MUSHROOM_VX;
 		vy = MUSHROOM_VY;
 		
 	}
-	int IsCollidable() { return 0; };
+	int IsCollidable() { return 1; };
+	int IsBlocking() { return 1; }
 	void OnChangeLevel() override;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	string GetAnimationFromState();

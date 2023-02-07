@@ -14,6 +14,8 @@
 #include "MagicObj.h"
 #include "MushroomGreen.h"
 #include "Troopas.h"
+#include "Gate.h"
+#include "PlayScene.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -120,7 +122,29 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (dynamic_cast<CCoin*>(e->obj) && dynamic_cast<CCoin*>(e->obj)->GetLevel() != 0) {
 		AddCoin();
+		AddPoint(100);
 		//DebugOut(L"coin %i\n : ", coin);
+	}
+}
+
+void CMario::OnOverlapWith(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<CGate*>(e->obj) 
+		&& dynamic_cast<CGate*>(e->obj)->GetGateType() == "IN"
+		) {
+		//SetPosition()
+		CGate* gate = dynamic_cast<CGate*>(e->obj);
+		CScene* currentScene = CGame::GetInstance()->GetCurrentScene2();
+		if (dynamic_cast<CPlayScene*>(currentScene)) {
+			vector<LPGAMEOBJECT> staticObjects = ((CPlayScene*)currentScene)->GetStaticObjects();
+			for (int i = 0; i < staticObjects.size(); i++) {
+				if (dynamic_cast<CGate*>(staticObjects[i]) && 
+					dynamic_cast<CGate*>(staticObjects[i])->GetGateType() == "OUT" &&
+					dynamic_cast<CGate*>(staticObjects[i])->GetGateId() == gate->GetGateId()) {
+					this->SetPosition(staticObjects[i]->GetPosition().x, staticObjects[i]->GetPosition().y);
+				}
+			}
+		}
+		
 	}
 }
 
@@ -297,7 +321,7 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 			if (level == EMario_Level::RACCOON || level == EMario_Level::FIRE) {
 				attack_start = GetTickCount64();
 				SetState(EMario_State::ATTACK);
-				DebugOut(L"attack: %i \n", state);
+				//DebugOut(L"attack: %i \n", state);
 			}
 		}
 		// de A => chay

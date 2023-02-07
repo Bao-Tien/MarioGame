@@ -14,6 +14,7 @@
 #include "GreenVenus.h"
 #include "GreenPiranha.h"
 #include "BrickGolden.h"
+#include "Gate.h"
 
 #define MAX_ENERGY 40
 #define CAMERA_MARGIN			150
@@ -208,6 +209,43 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 						width,
 						height
 					);
+					staticObjects->push_back(obj);
+				}
+			}
+			else if (std::string(objGroupNode->Attribute("name")) == "Gate") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj;
+					int gateId;
+					string gateType;
+					TiXmlElement* objProperties = objNode->FirstChildElement("properties");
+					if (objProperties != NULL) {
+						for (TiXmlElement* objPropertiesNode = objProperties->FirstChildElement("property"); objPropertiesNode != nullptr; objPropertiesNode = objPropertiesNode->NextSiblingElement("property")) {
+							string nameProperty = objPropertiesNode->Attribute("name");
+							if (nameProperty == "GateId") {
+								int valueProperty = atoi(objPropertiesNode->Attribute("value"));
+								gateId = valueProperty;
+							}
+							
+							if (nameProperty == "GateType") {
+								string valueProperty = objPropertiesNode->Attribute("value");
+								gateType = valueProperty;
+							}
+						}
+					}
+					obj = new CGate(
+						x + width / 2,
+						y + height / 2,
+						width,
+						height,
+						gateId,
+						gateType
+					);
+
 					staticObjects->push_back(obj);
 				}
 			}

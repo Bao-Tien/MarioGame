@@ -95,6 +95,7 @@ public:
 	int IsBlocking() { return (state != EMario_State::DIE && untouchable==0); }
 
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnOverlapWith(LPCOLLISIONEVENT e) override;
 
 	virtual void KeyboardHandle(int KeyCode, EKeyType type);
 

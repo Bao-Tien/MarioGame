@@ -206,13 +206,19 @@ void CPlayScene::Update(DWORD dt)
 	cy -= game->GetBackBufferHeight() / 2;
 
 	if (cx < 0) cx = 0;
+	if (cx + game->GetBackBufferWidth() > game->GetCurrentScene2()->GetMapSize().x) {
+		cx = game->GetCurrentScene2()->GetMapSize().x - game->GetBackBufferWidth();
+	}
 	if (cy < 0) cy = 0;
 
 	if (player->GetPosition().y < 900.0f) {
 		CGame::GetInstance()->SetCamPos(cx, cy);
 	}
-	else {
+	else if(player->GetPosition().y >= 900.0f && player->GetPosition().y < 1300.0f) {
 		CGame::GetInstance()->SetCamPos(cx, 500.0f);
+	}
+	else {
+		CGame::GetInstance()->SetCamPos(cx, 1390.0f);
 	}
 	
 
