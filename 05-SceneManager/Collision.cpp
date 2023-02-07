@@ -165,7 +165,10 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 
 	objSrc->GetBoundingBox(ml, mt, mr, mb);
 	objDest->GetBoundingBox(sl, st, sr, sb);
-
+	
+	if (dynamic_cast<CFireFlower*>(objDest) && dynamic_cast<CMario*>(objSrc)) {
+		int a = 0;
+	}
 
 	SweptAABB(
 		ml, mt, mr, mb,
@@ -179,6 +182,10 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 		objSrc->OnOverlapWith(e1);
 		CCollisionEvent* e2 = new CCollisionEvent(0, 0, 0, 0, 0, objSrc, objDest);
 		objDest->OnOverlapWith(e2);
+		/*if (e->WasCollided() == 0) {
+			objSrc->OnCollisionWith(e1);
+			objDest->OnCollisionWith(e2);
+		}*/
 	}
 
 	return e;
@@ -229,10 +236,10 @@ void CCollision::Filter( LPGAMEOBJECT objSrc,
 		if (c->obj->IsDeleted()) continue; 
 
 		// ignore collision event with object having IsBlocking = 0 (like coin, mushroom, etc)
-		if (filterBlock == 1 && c->obj->IsBlocking() == 0) 
+		/*if (filterBlock == 1 && c->obj->IsBlocking() == 0) 
 		{
 			continue;
-		}
+		}*/
 
 		if (c->obj->IsBlockingLeft() == 0 && c->nx < 0) {
 			continue;
@@ -310,7 +317,13 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 			
 			if (colY->t < colX->t)	// was collision on Y first ?
 			{
-				y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
+				if (colY->obj->IsBlocking()) {
+					y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
+				}
+				else {
+					y += dy;
+				}
+				
 				objSrc->SetPosition(x, y);
 
 				objSrc->OnCollisionWith(colY);
@@ -334,7 +347,13 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 
 				if (colX_other != NULL)
 				{
-					x += colX_other->t * dx +colX_other->nx * BLOCK_PUSH_FACTOR;
+					if (colX_other->obj->IsBlocking()) {
+						x += colX_other->t * dx + colX_other->nx * BLOCK_PUSH_FACTOR;
+					}
+					else {
+						x += dx;
+					}
+					
 					objSrc->OnCollisionWith(colX_other);
 					//call OnCollisionWith nguoc lai
 					CallCollisionEventOnDestObject(objSrc, colX_other);
@@ -346,7 +365,13 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 			}
 			else // collision on X first
 			{
-				x += colX->t * dx + colX->nx * BLOCK_PUSH_FACTOR;
+				if (colX->obj->IsBlocking()) {
+					x += colX->t * dx + colX->nx * BLOCK_PUSH_FACTOR;
+				}
+				else {
+					x += dx;
+				}
+				
 				objSrc->SetPosition(x, y);
 
 				objSrc->OnCollisionWith(colX);
@@ -371,7 +396,13 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 
 				if (colY_other != NULL)
 				{
-					y += colY_other->t * dy + colY_other->ny * BLOCK_PUSH_FACTOR;
+					if (colY_other->obj->IsBlocking()) {
+						y += colY_other->t * dy + colY_other->ny * BLOCK_PUSH_FACTOR;
+					}
+					else {
+						y += dy;
+					}
+					
 					objSrc->OnCollisionWith(colY_other);
 					//call OnCollisionWith nguoc lai
 					CallCollisionEventOnDestObject(objSrc, colY_other);
@@ -385,7 +416,13 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		else {
 			if (colX != NULL)
 			{
-				x += colX->t * dx + colX->nx * BLOCK_PUSH_FACTOR;
+				if (colX->obj->IsBlocking()) {
+					x += colX->t * dx + colX->nx * BLOCK_PUSH_FACTOR;
+				}
+				else {
+					x += dx;
+				}
+				
 				y += dy;
 				objSrc->OnCollisionWith(colX);
 				//call OnCollisionWith nguoc lai
@@ -395,7 +432,13 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 				if (colY != NULL)
 				{
 					x += dx;
-					y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
+					if (colY->obj->IsBlocking()) {
+						y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
+					}
+					else {
+						y += dy;
+					}
+					
 					objSrc->OnCollisionWith(colY);
 					//call OnCollisionWith nguoc lai
 					CallCollisionEventOnDestObject(objSrc, colY);

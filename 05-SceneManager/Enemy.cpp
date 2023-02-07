@@ -6,6 +6,7 @@
 #include "DeathPlatform.h"
 #include "BrickMagic.h"
 #include "BrickGolden.h"
+#include "TailMario.h"
 
 CEnemy::CEnemy(float x, float y) :CGameObject(x, y)
 {
@@ -48,16 +49,7 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 
 	if (dynamic_cast<CMario*>(e->obj)) {
-		CMario* mario = dynamic_cast<CMario*>(e->obj);
-		if (mario->GetState() == EMario_State::ATTACK) {
-			// enemy die
-			flipY = -1;
-			ay = -0.009;
-			vx = 0;
-			isAttacked = true;
-			isAttacked_start = GetTickCount64();
-			return;
-		}
+		
 	}
 	else {
 		if (e->nx != 0)
@@ -98,6 +90,18 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 		}
 	}
 	
+}
+
+void CEnemy::OnOverlapWith(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<CTailMario*>(e->obj)) {
+		// enemy die
+		flipY = -1;
+		ay = -0.009;
+		vx = 0;
+		isAttacked = true;
+		isAttacked_start = GetTickCount64();
+		return;
+	}
 }
 
 void CEnemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

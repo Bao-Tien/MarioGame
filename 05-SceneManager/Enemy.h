@@ -41,6 +41,7 @@ protected:
 	virtual int IsBlocking() { return 0; }
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	virtual void OnOverlapWith(LPCOLLISIONEVENT e) override;
 	virtual void OnChangeLevel() {};
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
