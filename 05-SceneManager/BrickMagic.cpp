@@ -57,7 +57,7 @@ void CBrickMagic::OnCollisionWith(LPCOLLISIONEVENT e) {
 			playScene->PushToDynamicObjectsFrontMap(mushroomGreen);
 		}
 		
-		if (gift == EGift_Type::COIN) {
+		if (gift == EGift_Type::COIN && dynamic_cast<CMario*>(e->obj)) {
 			isUpedCoin = true;
 			dynamic_cast<CMario*>(e->obj)->AddCoin();
 			dynamic_cast<CMario*>(e->obj)->AddPoint(100);

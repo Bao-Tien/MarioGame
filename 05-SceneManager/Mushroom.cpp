@@ -52,7 +52,7 @@ void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e) {
 }
 
 void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	CGameObject::Update(dt, coObjects);
+	CMagicObj::Update(dt, coObjects);
 	if (isAppeared) {
 		vx = nx * MUSHROOM_VX;
 		vy += (ay + MUSHROOM_G) * dt;

@@ -138,7 +138,3 @@ void CEnemy::Render()
 	CGameObject::Render();
 	RenderBoundingBox();
 }
-
-//string CEnemy::GetAnimationFromState() {
-//	return enemyAnimationId;
-//}

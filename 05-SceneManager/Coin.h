@@ -7,9 +7,11 @@
 
 class CCoin : public CGameObject {
 	int level;
+	ULONGLONG die_start;
 public:
 	CCoin(float x, float y) : CGameObject(x, y) {
 		level = 1;
+		die_start = -1;
 	}
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
@@ -17,4 +19,5 @@ public:
 	string GetAnimationFromState();
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	int GetLevel() { return level; }
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 };

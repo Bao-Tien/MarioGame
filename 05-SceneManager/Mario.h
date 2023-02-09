@@ -92,7 +92,7 @@ public:
 		return (state != EMario_State::DIE); 
 	}
 
-	int IsBlocking() { return (state != EMario_State::DIE && untouchable==0); }
+	int IsBlocking() { return (state != EMario_State::DIE); }
 
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void OnOverlapWith(LPCOLLISIONEVENT e) override;

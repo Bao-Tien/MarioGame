@@ -219,9 +219,6 @@
     <ClCompile Include="BigMario.cpp">
       <Filter>Framework\Object\Mario\BigMario</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Framework\Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Goomba1.cpp">
       <Filter>Framework\Object\Enemy\Goomba</Filter>
     </ClCompile>
@@ -296,6 +293,9 @@
     </ClCompile>
     <ClCompile Include="Gate.cpp">
       <Filter>Framework\Object\Gate</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Framework\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

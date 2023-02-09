@@ -38,7 +38,7 @@ string CLeaf::GetAnimationFromState() {
 }
 
 void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	CGameObject::Update(dt, coObjects);
+	CMagicObj::Update(dt, coObjects);
 	vy += (ay + LEAF_G) * dt;
 
 	if (LEAF_MAX_VY != 0 && vy > LEAF_MAX_VY) vy = LEAF_MAX_VY;

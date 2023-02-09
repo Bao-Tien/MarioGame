@@ -41,7 +41,18 @@ void CCoin::OnCollisionWith(LPCOLLISIONEVENT e) {
 	if (level == 0) return;
 	if (e->obj) {
 		level = 0;
+		die_start = GetTickCount64();
 	}
 	//DebugOut(L"level %i\n: ", level);
 	
+}
+
+void CCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+	if ((level == 0))
+	{
+		if ((GetTickCount64() - die_start > OBJECT_DIE_TIMEOUT)) {
+			isDeleted = true;
+		}
+		return;
+	}
 }
