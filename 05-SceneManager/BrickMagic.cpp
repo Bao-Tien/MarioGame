@@ -2,6 +2,7 @@
 #include "Mario.h"
 #include "Animations.h"
 #include "Troopas.h"
+#include "TailMario.h"
 
 void CBrickMagic::Render()
 {
@@ -37,11 +38,10 @@ string CBrickMagic::GetAnimationFromState() {
 }
 
 void CBrickMagic::OnCollisionWith(LPCOLLISIONEVENT e) {
-	//if (!e->obj->IsBlocking()) return;
-	float na = e->nx;
-	float nb = e->dy;
-
-	if (((e->ny < 0 && dynamic_cast<CMario*>(e->obj)) || (e->nx != 0 && dynamic_cast<CTroopas*>(e->obj))) && status == EBox_Status::NOT_OPEN) {
+	if (((e->ny < 0 && dynamic_cast<CMario*>(e->obj))
+		|| (e->nx != 0 && dynamic_cast<CTroopas*>(e->obj))
+		|| (e->nx<0 && dynamic_cast<CTailMario*>(e->obj))
+		) && status == EBox_Status::NOT_OPEN) {
 		if (gift == EGift_Type::LEAF) {
 			CLeaf* leaf = new CLeaf(x, y - BRICK_BBOX_HEIGHT);
 			playScene->PushToDynamicObjectsFrontMap(leaf);
@@ -61,6 +61,17 @@ void CBrickMagic::OnCollisionWith(LPCOLLISIONEVENT e) {
 			isUpedCoin = true;
 			dynamic_cast<CMario*>(e->obj)->AddCoin();
 			dynamic_cast<CMario*>(e->obj)->AddPoint(100);
+		}
+
+		status = EBox_Status::OPENED;
+	}
+}
+
+void CBrickMagic::OnOverlapWith(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<CTailMario*>(e->obj) && status == EBox_Status::NOT_OPEN) {
+		if (gift == EGift_Type::SWITCH_BLOCK) {
+			CSwitchBlock* brickBlock = new CSwitchBlock(x, y);
+			playScene->PushToDynamicObjectsFrontMap(brickBlock);
 		}
 
 		status = EBox_Status::OPENED;

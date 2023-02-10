@@ -432,7 +432,7 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 void CGameMap::RenderHUD() {
 	//hud
 	CAnimations::GetInstance()->Get("ani-hud")->RenderFixed(HUD_X, HUD_Y);
-
+	ULONGLONG currentTime = GetTickCount64();
 	// nang luong - 6 tam giac + 1P
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
 	float energy = mario->GetEnergy();
@@ -451,7 +451,13 @@ void CGameMap::RenderHUD() {
 		int energy_index = energy / MAX_ENERGY * 7;
 		for (int i = 0; i < energy_index; i++) {
 			if (i == 6) {
-				CAnimations::GetInstance()->Get("ani-p-icon-white")->RenderFixed(P_START + i * ARROW_D, ARROW_Y);
+				if (currentTime % 2 == 0) {
+					CAnimations::GetInstance()->Get("ani-p-icon-white")->RenderFixed(P_START + i * ARROW_D, ARROW_Y);
+				}
+				else {
+					CAnimations::GetInstance()->Get("ani-p-icon-black")->RenderFixed(P_START + i * ARROW_D, ARROW_Y);
+				}
+				
 			}
 			else {
 				CAnimations::GetInstance()->Get("ani-arrow-icon-white")->RenderFixed(ARROW_START + i * ARROW_D, ARROW_Y);

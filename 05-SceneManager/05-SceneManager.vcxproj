@@ -184,6 +184,7 @@
     <ClCompile Include="SmallMario.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="SwitchBlock.cpp" />
     <ClCompile Include="TailMario.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TileSet.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="BrickMagic.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="SwitchBlock.h" />
     <ClInclude Include="DeathPlatform.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="define-mario.h" />

@@ -67,7 +67,7 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 				moveRangeX.y = e->obj->GetPosition().x + e->obj->GetBoundingBoxSize().x / 2 - this->BoundingBox_Width / 2;
 			}
 		}
-		else if (dynamic_cast<CBrickGolden*>(e->obj)) {
+		else if (dynamic_cast<CBrickGolden*>(e->obj) && dynamic_cast<CBrickGolden*>(e->obj)->GetLevel() == 1) {
 			if (moveRangeX.x == 0 && moveRangeX.y == 0) {
 				moveRangeX.x = e->obj->GetPosition().x - e->obj->GetBoundingBoxSize().x / 2;
 				moveRangeX.y = e->obj->GetPosition().x + e->obj->GetBoundingBoxSize().x / 2;

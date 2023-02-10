@@ -10,6 +10,7 @@
 #define MUSHROOM_VX 0.07f
 
 class CMushroom : public CMagicObj {
+protected:
 	float ay = 0;
 	bool isAppeared = false;
 	float yStart;

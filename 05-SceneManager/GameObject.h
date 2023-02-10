@@ -37,6 +37,9 @@ protected:
 	int BoundingBox_Width = 0;
 	int BoundingBox_Height = 0;
 
+	int isCollidable;
+	int isBlocking;
+
 	// Behaviours
 	bool isAutoChangeDirectionWhenMoveOverRangeX = false;
 
@@ -82,7 +85,12 @@ public:
 	void RenderBoundingBox();
 
 	CGameObject();
-	CGameObject(float x, float y) :CGameObject() { this->x = x; this->y = y; }
+	CGameObject(float x, float y) :CGameObject() { 
+		this->x = x; 
+		this->y = y;
+		isCollidable = 0;
+		isBlocking = 1;
+	}
 
 	void SetBoundingBoxSize(int width, int height) {
 		this->BeforeSetBoundBox();
@@ -129,7 +137,7 @@ public:
 	//
 	// Collision ON or OFF ? This can change depending on object's state. For example: die
 	//
-	virtual int IsCollidable() { return 0; };
+	virtual int IsCollidable() { return this->isCollidable; };
 
 	// When no collision has been detected (triggered by CCollision::Process)
 	virtual void OnNoCollision(DWORD dt) {};
@@ -140,7 +148,7 @@ public:
 	virtual void OnOverlapWith(LPCOLLISIONEVENT e) {};
 	
 	// Is this object blocking other object? If YES, collision framework will automatically push the other object
-	virtual int IsBlocking() { return 1; }
+	virtual int IsBlocking() { return isBlocking; }
 
 
 	virtual int IsBlockingLeft() { return 1; }

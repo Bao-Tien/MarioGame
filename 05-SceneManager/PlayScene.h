@@ -46,6 +46,7 @@ public:
 	int GetSceneTime() { return sceneTime; }
 
 	vector<LPGAMEOBJECT> GetStaticObjects() { return staticObjects; }
+	vector<LPGAMEOBJECT> GetDynamicObjectsFrontMap() { return dynamicObjectsFrontMap; }
 };
 
 typedef CPlayScene* LPPLAYSCENE;

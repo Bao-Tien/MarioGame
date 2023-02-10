@@ -5,6 +5,7 @@
 #include "Leaf.h"
 #include "Mushroom.h"
 #include "MushroomGreen.h"
+#include "SwitchBlock.h"
 
 #define ID_ANI_BRICKNORMAL "ani-brick"
 #define ID_ANI_BRICKQUESTION "ani-question-block"
@@ -22,6 +23,7 @@ enum EGift_Type {
 	LEAF = 1, 
 	MUSHROOM = 2,
 	MUSHROOM_GREEN = 3,
+	SWITCH_BLOCK = 4,
 };
 
 enum EBox_Status {
@@ -55,6 +57,7 @@ public:
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	string GetAnimationFromState();
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnOverlapWith(LPCOLLISIONEVENT e);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void SetTypeBrick(string strType) {
 		if (strType == "Question") {
@@ -73,6 +76,9 @@ public:
 		}
 		else if (strGift == "MushroomGreen") {
 			gift = EGift_Type::MUSHROOM_GREEN;
+		}
+		else if (strGift == "SwitchBlock") {
+			gift = EGift_Type::SWITCH_BLOCK;
 		}
 		else {
 			gift = EGift_Type::COIN;

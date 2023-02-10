@@ -16,6 +16,7 @@
 #include "Troopas.h"
 #include "Gate.h"
 #include "PlayScene.h"
+#include "SwitchBlock.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -96,7 +97,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (dynamic_cast<CMagicObj*>(e->obj)) {
-		if (dynamic_cast<CMushroomGreen*>(e->obj)) {
+		if (dynamic_cast<CMushroomGreen*>(e->obj) || dynamic_cast<CSwitchBlock*>(e->obj)) {
 			// ko tang level
 		}
 		else {
