@@ -20,6 +20,7 @@ void CFireFlower::GetBoundingBox(float& left, float& top, float& right, float& b
 }
 
 void CFireFlower::OnChangeLevel() {
+	CEnemy::OnChangeLevel();
 	switch (level)
 	{
 		case 0: {
@@ -47,14 +48,14 @@ void CFireFlower::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 string CFireFlower::GetAnimationFromState() {
 	switch (level)
 	{
-	case 0: {
-		return "";
-	}
-	case 1: {
-		return ID_ANI_FIREFLOWER;
-	}
-	default: {
-		break;
-	}
+		case 0: {
+			return "";
+		}
+		case 1: {
+			return ID_ANI_FIREFLOWER;
+		}
+		default: {
+			break;
+		}
 	}
 }

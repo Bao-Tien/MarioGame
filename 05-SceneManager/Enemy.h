@@ -37,12 +37,22 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return 1; };
-	virtual int IsBlocking() { return 0; }
+	/*virtual int IsCollidable() { return 1; }
+	virtual int IsBlocking() { return 0; }*/
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void OnOverlapWith(LPCOLLISIONEVENT e) override;
-	virtual void OnChangeLevel() {};
+	virtual void OnChangeLevel() {
+		switch (level)
+		{
+		case 0:
+			isCollidable = 0;
+			isBlocking = 1;
+			break;
+		default:
+			break;
+		}
+	};
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
 

@@ -34,6 +34,7 @@ void CTroopas::GetBoundingBox(float& left, float& top, float& right, float& bott
 }
 
 void CTroopas::OnChangeLevel() {
+	CEnemy::OnChangeLevel();
 	switch (level)
 	{
 		case 0: {

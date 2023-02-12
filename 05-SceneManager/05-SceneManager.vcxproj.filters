@@ -142,6 +142,9 @@
     <Filter Include="Framework\Object\BrickMagic\MagicObj\SwitchBlock">
       <UniqueIdentifier>{031e1cbe-96d9-4935-b5a8-c5b409de169b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Object\Mario\FireMario\FireBullet">
+      <UniqueIdentifier>{3daa6777-5f56-4e30-9aa6-d2c5b5429a40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -302,6 +305,9 @@
     </ClCompile>
     <ClCompile Include="SwitchBlock.cpp">
       <Filter>Framework\Object\BrickMagic\MagicObj\SwitchBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBullet.cpp">
+      <Filter>Framework\Object\Mario\FireMario\FireBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -469,6 +475,9 @@
     </ClInclude>
     <ClInclude Include="SwitchBlock.h">
       <Filter>Framework\Object\BrickMagic\MagicObj\SwitchBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBullet.h">
+      <Filter>Framework\Object\Mario\FireMario\FireBullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

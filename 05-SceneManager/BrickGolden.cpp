@@ -67,6 +67,7 @@ void CBrickGolden::OnOverlapWith(LPCOLLISIONEVENT e) {
 			vy = -0.18f;
 		}
 		level = 0;
+		OnChangeLevel();
 		die_start = GetTickCount64();
 	}
 	if (level == 2 && dynamic_cast<CMario*>(e->obj)) {
@@ -79,12 +80,9 @@ void CBrickGolden::OnCollisionWith(LPCOLLISIONEVENT e) {
 	if (e->obj) {
 		if (dynamic_cast<CTroopas*>(e->obj) && dynamic_cast<CTroopas*>(e->obj)->GetLevel() == 1 && level == 1) {
 			level = 0;
+			OnChangeLevel();
 			die_start = GetTickCount64();
 		}
-		/*if (dynamic_cast<CMario*>(e->obj) && level == 2) {
-			level = 0;
-			die_start = GetTickCount64();
-		}*/
 	}
 }
 

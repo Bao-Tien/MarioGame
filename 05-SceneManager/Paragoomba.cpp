@@ -30,6 +30,7 @@ void CParagoomba::GetBoundingBox(float& left, float& top, float& right, float& b
 }
 
 void CParagoomba::OnChangeLevel() {
+	CEnemy::OnChangeLevel();
 	switch (level)
 	{
 		case 0: { //die

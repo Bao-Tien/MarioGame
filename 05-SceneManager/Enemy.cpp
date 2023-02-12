@@ -7,6 +7,7 @@
 #include "BrickMagic.h"
 #include "BrickGolden.h"
 #include "TailMario.h"
+#include "FireBullet.h"
 
 CEnemy::CEnemy(float x, float y) :CGameObject(x, y)
 {
@@ -17,6 +18,8 @@ CEnemy::CEnemy(float x, float y) :CGameObject(x, y)
 	nx = -1;
 	isOnPlatform = false;
 	isAttacked = false;
+	isCollidable = 1;
+	isBlocking = 0;
 }
 
 void CEnemy::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
@@ -34,7 +37,19 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 		return;
 	}
 	CGameObject::OnCollisionWith(e);
-	if (!e->obj->IsBlocking()) return;
+
+	if (dynamic_cast<CFireBullet*>(e->obj)) {
+		// enemy die
+		flipY = -1;
+		ay = -0.009;
+		vx = 0;
+		isAttacked = true;
+		isAttacked_start = GetTickCount64();
+	}
+	if (!e->obj->IsBlocking())
+	{
+		return;
+	}
 	
 	if (dynamic_cast<CEnemy*>(e->obj)) return;
 
@@ -48,8 +63,8 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 		isOnPlatform = true;
 	}
 
-	if (dynamic_cast<CMario*>(e->obj)) {
-		
+	if (dynamic_cast<CMario*>(e->obj) || dynamic_cast<CFireBullet*>(e->obj)) {
+		int a = 0;
 	}
 	else {
 		if (e->nx != 0)

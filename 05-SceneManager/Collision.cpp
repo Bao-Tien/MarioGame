@@ -182,10 +182,6 @@ LPCOLLISIONEVENT CCollision::SweptAABB(LPGAMEOBJECT objSrc, DWORD dt, LPGAMEOBJE
 		objSrc->OnOverlapWith(e1);
 		CCollisionEvent* e2 = new CCollisionEvent(0, 0, 0, 0, 0, objSrc, objDest);
 		objDest->OnOverlapWith(e2);
-		/*if (e->WasCollided() == 0) {
-			objSrc->OnCollisionWith(e1);
-			objDest->OnCollisionWith(e2);
-		}*/
 	}
 
 	return e;

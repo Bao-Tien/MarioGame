@@ -17,6 +17,7 @@ void CGoomba1::GetBoundingBox(float& left, float& top, float& right, float& bott
 }
 
 void CGoomba1::OnChangeLevel() {
+	CEnemy::OnChangeLevel();
 	switch (level)
 	{
 		case 0: {

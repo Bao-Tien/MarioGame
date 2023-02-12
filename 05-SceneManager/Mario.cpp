@@ -17,6 +17,7 @@
 #include "Gate.h"
 #include "PlayScene.h"
 #include "SwitchBlock.h"
+#include "BrickGolden.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -121,7 +122,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CDeathPlatform*>(e->obj)) {
 		OnCollisionWithDeathPlatform(e);
 	}
-	else if (dynamic_cast<CCoin*>(e->obj) && dynamic_cast<CCoin*>(e->obj)->GetLevel() != 0) {
+	else if (dynamic_cast<CCoin*>(e->obj) && dynamic_cast<CCoin*>(e->obj)->GetLevel() != 0
+		|| dynamic_cast<CBrickGolden*>(e->obj) && dynamic_cast<CBrickGolden*>(e->obj)->GetLevel() == 2) {
 		AddCoin();
 		AddPoint(100);
 		//DebugOut(L"coin %i\n : ", coin);
@@ -317,7 +319,7 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 		//Reload();
 		break;
 	case DIK_A:
-		// nhan A => quay duoi
+		// nhan A => quay duoi || nem dan
 		if (type == EKeyType::KEY_DOWN) {
 			if (level == EMario_Level::RACCOON || level == EMario_Level::FIRE) {
 				attack_start = GetTickCount64();

@@ -5,8 +5,8 @@
 #define FIREFLOWER_BBOX_WIDTH 30
 #define FIREFLOWER_BBOX_HEIGHT 30
 
-#define MUSHROOM_VY 0.02f
-#define MUSHROOM_VX 0.04f
+#define FIREFLOWER_VY 0.02f
+#define FIREFLOWER_VX 0.04f
 
 class CFireFlower : public CEnemy
 {
@@ -23,12 +23,12 @@ public:
 		attackFromRight = true;
 		attackFromBottom = true;
 		g = 0;
-		vx = -MUSHROOM_VX;
-		vy = MUSHROOM_VY;
+		vx = -FIREFLOWER_VX;
+		vy = FIREFLOWER_VY;
 		
 	}
 	int IsCollidable() { return 1; };
-	int IsBlocking() { return 1; }
+	int IsBlocking() { return 0; }
 	void OnChangeLevel() override;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	string GetAnimationFromState();
