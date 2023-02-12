@@ -30,6 +30,15 @@ void CEnemy::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	CGameObject::GetBoundingBox(left, top, right, bottom);
 }
 
+void CEnemy::ActionIsAttacked() {
+	// enemy die
+	this->flipY = -1;
+	this->ay = -0.009;
+	this->vx = 0;
+	this->isAttacked = true;
+	this->isAttacked_start = GetTickCount64();
+}
+
 void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 
@@ -39,19 +48,21 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 	CGameObject::OnCollisionWith(e);
 
 	if (dynamic_cast<CFireBullet*>(e->obj)) {
-		// enemy die
-		flipY = -1;
-		ay = -0.009;
-		vx = 0;
-		isAttacked = true;
-		isAttacked_start = GetTickCount64();
+		if (type == EEnemy_Type::FIRE_FLOWER) {
+
+		}
+		else {
+			// enemy die
+			ActionIsAttacked();
+		}
+		
 	}
 	if (!e->obj->IsBlocking())
 	{
 		return;
 	}
 	
-	if (dynamic_cast<CEnemy*>(e->obj)) return;
+	//if (dynamic_cast<CEnemy*>(e->obj)) return;
 
 	if (dynamic_cast<CDeathPlatform*>(e->obj)) {
 		isDeleted = true;
@@ -110,11 +121,7 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 void CEnemy::OnOverlapWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<CTailMario*>(e->obj)) {
 		// enemy die
-		flipY = -1;
-		ay = -0.009;
-		vx = 0;
-		isAttacked = true;
-		isAttacked_start = GetTickCount64();
+		ActionIsAttacked();
 		return;
 	}
 }

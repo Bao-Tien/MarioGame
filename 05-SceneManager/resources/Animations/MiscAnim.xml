@@ -2,13 +2,11 @@
 <!--	Texture Misc  	-->
 <Textures gameObjectId="0" textureId="tex-misc">
 
-
 	<Animation aniId="ani-end-scene-world1-1" frameTime="100" name = "MUSHROOM">
     <Sprite id="spr-misc-card-0" left="156" top="121"  width="16" height="16"/>
     <Sprite id="spr-misc-card-1" left="370" top="120"  width="16" height="16"/>
     <Sprite id="spr-misc-card-2" left="201" top="121"  width="16" height="16"/>
   </Animation>
-        
 
 
 	<!-- COIN -->

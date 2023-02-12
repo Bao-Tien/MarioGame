@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="BrickGolden.cpp" />
     <ClCompile Include="DeathPlatform.cpp" />
+    <ClCompile Include="EndSceneItem.cpp" />
     <ClCompile Include="FireBullet.cpp" />
     <ClCompile Include="FireFlower.cpp" />
     <ClCompile Include="FireMario.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="BrickMagic.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="EndSceneItem.h" />
     <ClInclude Include="FireBullet.h" />
     <ClInclude Include="SwitchBlock.h" />
     <ClInclude Include="DeathPlatform.h" />

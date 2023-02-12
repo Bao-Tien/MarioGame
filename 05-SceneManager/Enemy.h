@@ -60,6 +60,7 @@ public:
 	CEnemy(float x, float y);
 	int GetLevel() { return level; }
 	void SetIsAttacked(bool x) { this->isAttacked = x; }
+	void ActionIsAttacked();
 
 	bool attackFromLeft = true;
 	bool attackFromTop = false;

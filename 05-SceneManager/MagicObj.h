@@ -8,6 +8,8 @@ protected:
 public:
 	CMagicObj(float x, float y) : CGameObject(x, y) {
 		die_start = -1;
+		isCollidable = 1;
+		isBlocking = 0;
 	}
 	int GetLevel() { return level; }
 	void OnCollisionWith(LPCOLLISIONEVENT e);

@@ -7,8 +7,9 @@
 class CSwitchBlock : public CMushroom {
 public:
 	CSwitchBlock(float x, float y) : CMushroom(x, y) {
+		isBlocking = 1;
 	}
-	int IsBlocking() { return 1; }
+	//int IsBlocking() { return 1; }
 	string GetAnimationFromState();
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);

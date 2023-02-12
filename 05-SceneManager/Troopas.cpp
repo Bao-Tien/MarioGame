@@ -90,7 +90,7 @@ void CTroopas::OnCollisionWith(LPCOLLISIONEVENT e) {
 		return;
 	}
 	if (dynamic_cast<CEnemy*>(e->obj) && level == 1) {
-		dynamic_cast<CEnemy*>(e->obj)->SetIsAttacked(true);
+		dynamic_cast<CEnemy*>(e->obj)->ActionIsAttacked();
 		return;
 	}
 	if (dynamic_cast<CDeathPlatform*>(e->obj)) {

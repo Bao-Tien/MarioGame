@@ -20,10 +20,11 @@ public:
 		ay = -LEAF_AX;
 		isAutoChangeDirectionWhenMoveOverRangeX = true;
 		moveRangeX = D3DXVECTOR2(x - RANGE_X_RADIUS, x + RANGE_X_RADIUS);
+		isCollidable = 0;
+		isBlocking = 1;
 	}
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
-	int IsBlocking() { return 0; }
 	string GetAnimationFromState();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 };

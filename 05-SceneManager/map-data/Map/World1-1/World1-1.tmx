@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" nextlayerid="35" nextobjectid="301">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" nextlayerid="36" nextobjectid="304">
  <editorsettings>
   <export target="Resources/world-1-1-mapn.xml" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" name="world-1-1" tilewidth="48" tileheight="48" tilecount="870" columns="29">
   <image source="World1-1.png" width="1392" height="1440"/>
  </tileset>
+ <objectgroup id="35" name="EndSceneItem">
+  <object id="301" x="8032" y="1024" width="64" height="64"/>
+ </objectgroup>
  <objectgroup id="34" name="Gate">
   <object id="293" x="6752" y="462.667" width="32" height="42.6667">
    <properties>
@@ -92,8 +95,7 @@
   </object>
   <object id="219" x="576" y="1056" width="48" height="48">
    <properties>
-    <property name="Gift" value="MushroomGreen"/>
-    <property name="Type" value="Normal"/>
+    <property name="Type" value="Question"/>
    </properties>
   </object>
   <object id="220" x="672" y="912" width="48" height="48">
@@ -117,12 +119,6 @@
    <properties>
     <property name="Gift" value="MushroomGreen"/>
     <property name="Type" value="Nomal"/>
-   </properties>
-  </object>
-  <object id="249" x="768" y="912" width="48" height="48">
-   <properties>
-    <property name="Gift" value="Leaf"/>
-    <property name="Type" value="Question"/>
    </properties>
   </object>
   <object id="250" x="2064" y="1056" width="48" height="48">

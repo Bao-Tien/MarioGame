@@ -56,7 +56,7 @@ void CPlayScene::Load() {
 	TiXmlElement* loadMap = root->FirstChildElement("Map");
 	string loadMapPath = loadMap->Attribute("path");
 	OutputDebugStringW(ToLPCWSTR("MapPath : " + loadMapPath + '\n'));
-	map = CGameMap().LoadFromTMXFile(loadMapPath, this, &staticObjects, &dynamicObjectsFrontMap, &dynamicObjectsAfterMap);
+	map = CGameMap().LoadFromTMXFile(loadMapPath, this, &staticObjects, &dynamicObjectsFrontMap, &dynamicObjectsAfterMap , &dynamicTroopasFrontMap);
 
 	//load texture
 	TiXmlElement* textures = root->FirstChildElement("Textures");
@@ -189,6 +189,14 @@ void CPlayScene::Update(DWORD dt)
 	{
 		coObjects.push_back(dynamicObjectsFrontMap[i]);
 	}
+	for (size_t i = 0; i < dynamicTroopasFrontMap.size(); i++)
+	{
+		dynamicTroopasFrontMap[i]->Update(dt, &coObjects);
+	}
+	for (size_t i = 0; i < dynamicTroopasFrontMap.size(); i++)
+	{
+		coObjects.push_back(dynamicTroopasFrontMap[i]);
+	}
 	for (size_t i = 0; i < dynamicObjectsAfterMap.size(); i++)
 	{
 		coObjects.push_back(dynamicObjectsAfterMap[i]);
@@ -246,6 +254,10 @@ void CPlayScene::Render()
 	for (int i = 0; i < dynamicObjectsFrontMap.size(); i++)
 		dynamicObjectsFrontMap[i]->Render();
 
+	// Render TroopasInFrontMap
+	for (int i = 0; i < dynamicTroopasFrontMap.size(); i++)
+		dynamicTroopasFrontMap[i]->Render();
+
 	// Render Mario
 	this->player->Render();
 }
@@ -267,6 +279,11 @@ void CPlayScene::Clear()
 		delete (*it);
 	}
 	dynamicObjectsAfterMap.clear();
+	for (it = dynamicTroopasFrontMap.begin(); it != dynamicTroopasFrontMap.end(); it++)
+	{
+		delete (*it);
+	}
+	dynamicTroopasFrontMap.clear();
 
 	for (it = staticObjects.begin(); it != staticObjects.end(); it++)
 	{

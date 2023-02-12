@@ -14,6 +14,8 @@ void CMagicObj::OnCollisionWith(LPCOLLISIONEVENT e) {
 void CMagicObj::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if ((level == 0))
 	{
+		isCollidable = 0;
+		isBlocking = 1;
 		if ((GetTickCount64() - die_start > OBJECT_DIE_TIMEOUT)) {
 			isDeleted = true;
 		}

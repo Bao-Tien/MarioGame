@@ -51,7 +51,7 @@ public:
 	D3DXVECTOR2 GetMapSize() { return D3DXVECTOR2(this->width * tileWidth, this->height * tileHeight); }
 
 	static shared_ptr<CGameMap> LoadFromTMXFile(string filePath, CPlayScene* playScene, vector<LPGAMEOBJECT>* staticObjects, 
-		vector<LPGAMEOBJECT>* dynamicObjectsFrontMap, vector<LPGAMEOBJECT>* dynamicObjectsAfterMap);
+		vector<LPGAMEOBJECT>* dynamicObjectsFrontMap, vector<LPGAMEOBJECT>* dynamicObjectsAfterMap, vector<LPGAMEOBJECT>* dynamicTroopasFrontMap);
 	~CGameMap();
 };
 

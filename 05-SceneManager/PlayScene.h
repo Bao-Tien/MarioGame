@@ -23,6 +23,7 @@ protected:
 	vector<LPGAMEOBJECT> staticObjects;
 	vector<LPGAMEOBJECT> dynamicObjectsAfterMap; //venus
 	vector<LPGAMEOBJECT> dynamicObjectsFrontMap; //quai
+	vector<LPGAMEOBJECT> dynamicTroopasFrontMap; //Troopas
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);

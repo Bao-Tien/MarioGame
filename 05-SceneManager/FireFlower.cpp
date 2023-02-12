@@ -41,7 +41,7 @@ void CFireFlower::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		isDeleted = true;
 		return;
 	}
-	
+	//DebugOut(L"isBlocking: %i\n", isBlocking);
 	CEnemy::Update(dt, coObjects);
 }
 

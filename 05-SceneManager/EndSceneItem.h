@@ -1,15 +1,15 @@
 #pragma once
 #include "GameObject.h"
 
-#define ID_ANI_COIN "ani-coin"
-#define COIN_BBOX_WIDTH 48
-#define COIN_BBOX_HEIGHT 48
+#define ID_ANI_ENDSCENEITEM "ani-end-scene-world1-1"
+#define ENDSCENEITEM_BBOX_WIDTH 48
+#define ENDSCENEITEM_BBOX_HEIGHT 48
 
-class CCoin : public CGameObject {
+class CEndSceneItem : public CGameObject {
 	int level;
 	ULONGLONG die_start;
 public:
-	CCoin(float x, float y) : CGameObject(x, y) {
+	CEndSceneItem(float x, float y) : CGameObject(x, y) {
 		level = 1;
 		die_start = -1;
 		isBlocking = 0;

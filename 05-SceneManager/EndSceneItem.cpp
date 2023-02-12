@@ -1,14 +1,14 @@
-#include "Coin.h"
+#include "EndSceneItem.h"
 #include "Animations.h"
 #include "Mario.h"
 
-void CCoin::Render()
+void CEndSceneItem::Render()
 {
 	CGameObject::Render();
 	RenderBoundingBox();
 }
 
-void CCoin::GetBoundingBox(float& l, float& t, float& r, float& b)
+void CEndSceneItem::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	switch (level)
 	{
@@ -16,28 +16,28 @@ void CCoin::GetBoundingBox(float& l, float& t, float& r, float& b)
 		SetBoundingBoxSize(0, 0);
 		break;
 	case 1:
-		SetBoundingBoxSize(COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT);
+		SetBoundingBoxSize(ENDSCENEITEM_BBOX_WIDTH, ENDSCENEITEM_BBOX_HEIGHT);
 		break;
 	default:
 		break;
 	}
-	
+
 	CGameObject::GetBoundingBox(l, t, r, b);
 }
 
-string CCoin::GetAnimationFromState() {
+string CEndSceneItem::GetAnimationFromState() {
 	switch (level)
 	{
-	case 0:
-		return "";
-	case 1:
-		return ID_ANI_COIN;
-	default:
-		break;
+		case 0:
+			return "";
+		case 1:
+			return ID_ANI_ENDSCENEITEM;
+		default:
+			break;
 	}
 }
 
-void CCoin::OnCollisionWith(LPCOLLISIONEVENT e) {
+void CEndSceneItem::OnCollisionWith(LPCOLLISIONEVENT e) {
 	if (level == 0) return;
 	if (e->obj) {
 		level = 0;
@@ -45,9 +45,10 @@ void CCoin::OnCollisionWith(LPCOLLISIONEVENT e) {
 		die_start = GetTickCount64();
 	}
 	//DebugOut(L"level %i\n: ", level);
+
 }
 
-void CCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+void CEndSceneItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if ((level == 0))
 	{
 		if ((GetTickCount64() - die_start > OBJECT_DIE_TIMEOUT)) {

@@ -66,7 +66,7 @@ void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		vy = 0;
 		ny = 1;
 	}*/
-	DebugOut(L"vy: %f, ay: %f \n", vy, ay);
+	//DebugOut(L"vy: %f, ay: %f \n", vy, ay);
 	//reset 
 	ay = 0;
 

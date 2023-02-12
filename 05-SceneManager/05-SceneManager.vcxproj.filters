@@ -145,6 +145,9 @@
     <Filter Include="Framework\Object\Mario\FireMario\FireBullet">
       <UniqueIdentifier>{3daa6777-5f56-4e30-9aa6-d2c5b5429a40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Object\EndSceneItem">
+      <UniqueIdentifier>{94d3fc82-616d-46ba-83a6-a64e673b15c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -308,6 +311,9 @@
     </ClCompile>
     <ClCompile Include="FireBullet.cpp">
       <Filter>Framework\Object\Mario\FireMario\FireBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="EndSceneItem.cpp">
+      <Filter>Framework\Object\EndSceneItem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -478,6 +484,9 @@
     </ClInclude>
     <ClInclude Include="FireBullet.h">
       <Filter>Framework\Object\Mario\FireMario\FireBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="EndSceneItem.h">
+      <Filter>Framework\Object\EndSceneItem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
