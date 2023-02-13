@@ -9,6 +9,8 @@ public:
 		this->y = y;
 		this->BoundingBox_Width = width;
 		this->BoundingBox_Height = height;
+		isCollidable = 1;
+		isBlocking = 0;
 	}
 	void Render() {
 		CGameObject::RenderBoundingBox();

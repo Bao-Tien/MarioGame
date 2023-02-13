@@ -22,7 +22,7 @@ CTileSet::CTileSet(TiXmlElement* data, string xmlPath)
 	TiXmlElement* imgDom = data->FirstChildElement("image");
 	string imgPath = imgDom->Attribute("source");
 	string nameTileSet = "tileset_" + this->name;
-	LPCWSTR pathTileSet = ToLPCWSTR("map-data/Map/World1-1/" + imgPath);
+	LPCWSTR pathTileSet = ToLPCWSTR("resources/Textures/" + imgPath);
 	CTextures::GetInstance()->Add(nameTileSet, pathTileSet);
 	this->texture = CTextures::GetInstance()->Get("tileset_" + this->name);
 }

@@ -183,6 +183,7 @@
     <ClCompile Include="RectPlatform.cpp" />
     <ClCompile Include="RedVenus.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
+    <ClCompile Include="SelectionScene.cpp" />
     <ClCompile Include="SmallMario.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="EndSceneItem.h" />
     <ClInclude Include="FireBullet.h" />
+    <ClInclude Include="SelectionScene.h" />
     <ClInclude Include="SwitchBlock.h" />
     <ClInclude Include="DeathPlatform.h" />
     <ClInclude Include="debug.h" />

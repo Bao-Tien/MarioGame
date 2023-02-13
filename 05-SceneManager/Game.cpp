@@ -7,6 +7,7 @@
 #include "Texture.h"
 #include "Animation.h"
 #include "PlayScene.h"
+#include "SelectionScene.h"
 
 CGame * CGame::__instance = NULL;
 
@@ -479,6 +480,10 @@ void CGame::Load(string gameFile) {
 
 		if (type == "play-scene") {
 			LPSCENE scene = new CPlayScene(sceneId, scenePath);
+			scenes2[sceneId] = scene;
+		}
+		if (type == "selection-scene") {
+			LPSCENE scene = new CSelectionScene(sceneId, scenePath);
 			scenes2[sceneId] = scene;
 		}
 	}

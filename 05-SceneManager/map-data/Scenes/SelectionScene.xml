@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scence1>
+  <Map path="map-data/Map/SelectionScene/SelectionScene.tmx">
+  </Map>
+
+  <Textures>
+    <Texture name="Texture" path="Resources/Textures/MapSelection.png" id="tex-selectionScene"/>
+    <Texture name="Texture" path="Resources/Textures/mario-new.png" id="tex-mario"/>
+    <Texture name="Texture" path="Resources/Textures/UI.png" id="tex-ui"/>
+  </Textures>
+  
+  <Animations>
+    <Animation name="Animation" path="Resources/Animations/SelectionSceneAnim.xml"/>
+    <Animation name="Animation" path="Resources/Animations/MarioAnim.xml"/>
+    <Animation name="Animation" path="Resources/Animations/UiAnim.xml"/>
+  </Animations>
+
+  <Player name="Player" type="bigMario" x="150" y="150" nx="1">
+  </Player>
+</Scence1>

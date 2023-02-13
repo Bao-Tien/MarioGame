@@ -80,6 +80,8 @@ public:
 		this->coin = coin;
 		this->point = point;
 		state = EMario_State::IDLE;
+		isCollidable = 1;
+		isBlocking = 1;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void UpdateState();

@@ -50,6 +50,8 @@ void CTroopas::OnChangeLevel() {
 			attackFromRight = true;
 			attackFromBottom = true;
 			isAutoChangeDirectionWhenMoveOverRangeX = false;
+			isCollidable = 1;
+			isBlocking = 1;
 			break;
 		}
 		case 2: { //mai rua dung im
@@ -60,6 +62,8 @@ void CTroopas::OnChangeLevel() {
 			attackFromBottom = false;
 			vx = 0;
 			isAutoChangeDirectionWhenMoveOverRangeX = false;
+			isCollidable = 1;
+			isBlocking = 1;
 			break;
 		}
 		case 3: { //di bo
@@ -76,7 +80,7 @@ void CTroopas::OnChangeLevel() {
 			attackFromRight = true;
 			attackFromBottom = true;
 			vx = nx * ENEMY_MOVE_SPEED * 3;
-			vy = -ENEMY_MOVE_SPEED * 12;
+			vy = -ENEMY_MOVE_SPEED * 16;
 			break;
 		}
 		default: {
@@ -98,6 +102,11 @@ void CTroopas::OnCollisionWith(LPCOLLISIONEVENT e) {
 	}
 	if (level == 4 && (dynamic_cast<CRectPlatform*>(e->obj) || dynamic_cast<CRectCollision*>(e->obj) 
 		|| dynamic_cast<CBrickGolden*>(e->obj))) {
+		OnChangeLevel();
+		return;
+	}
+	else if (level == 4 && dynamic_cast<CMario*>(e->obj)) {
+		nx = nx * -1;
 		OnChangeLevel();
 		return;
 	}

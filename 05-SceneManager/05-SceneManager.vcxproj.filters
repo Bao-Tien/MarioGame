@@ -63,9 +63,6 @@
     <Filter Include="Framework\Object\Portal">
       <UniqueIdentifier>{f5a16122-0623-43ff-9a98-c80147aaba13}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\PlayScene">
-      <UniqueIdentifier>{977b749c-63df-463a-a6b1-a7749392788b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Map">
       <UniqueIdentifier>{aa983bab-4e86-4d87-a6c9-a061198224c7}</UniqueIdentifier>
     </Filter>
@@ -148,6 +145,12 @@
     <Filter Include="Framework\Object\EndSceneItem">
       <UniqueIdentifier>{94d3fc82-616d-46ba-83a6-a64e673b15c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Scenes\PlayScene">
+      <UniqueIdentifier>{977b749c-63df-463a-a6b1-a7749392788b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Scenes\SelectionScene">
+      <UniqueIdentifier>{7493d827-52f8-47c6-9634-f79153e32a2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -187,7 +190,7 @@
       <Filter>Framework\Object\Platform</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
-      <Filter>Framework\PlayScene</Filter>
+      <Filter>Framework\Scenes\PlayScene</Filter>
     </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Framework\Object\Portal</Filter>
@@ -315,6 +318,9 @@
     <ClCompile Include="EndSceneItem.cpp">
       <Filter>Framework\Object\EndSceneItem</Filter>
     </ClCompile>
+    <ClCompile Include="SelectionScene.cpp">
+      <Filter>Framework\Scenes\SelectionScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -378,7 +384,7 @@
       <Filter>Framework\Object\Portal</Filter>
     </ClInclude>
     <ClInclude Include="PlayScene.h">
-      <Filter>Framework\PlayScene</Filter>
+      <Filter>Framework\Scenes\PlayScene</Filter>
     </ClInclude>
     <ClInclude Include="define-mario.h">
       <Filter>Framework\Object\Mario</Filter>
@@ -487,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="EndSceneItem.h">
       <Filter>Framework\Object\EndSceneItem</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectionScene.h">
+      <Filter>Framework\Scenes\SelectionScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

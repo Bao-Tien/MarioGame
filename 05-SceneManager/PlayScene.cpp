@@ -228,7 +228,6 @@ void CPlayScene::Update(DWORD dt)
 	else {
 		CGame::GetInstance()->SetCamPos(cx, 1390.0f);
 	}
-	
 
 	PurgeDeletedObjects();
 	//DebugOut(L"dt %i\n", dt);
@@ -311,6 +310,11 @@ void CPlayScene::Unload()
 		delete dynamicObjectsAfterMap[i];
 	}
 	dynamicObjectsAfterMap.clear();
+
+	for (int i = 0; i < dynamicTroopasFrontMap.size(); i++) {
+		delete dynamicTroopasFrontMap[i];
+	}
+	dynamicTroopasFrontMap.clear();
 
 	// Unload staticObjects
 	for (int i = 0; i < staticObjects.size(); i++) {

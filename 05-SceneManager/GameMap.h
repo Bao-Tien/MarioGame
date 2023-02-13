@@ -52,6 +52,8 @@ public:
 
 	static shared_ptr<CGameMap> LoadFromTMXFile(string filePath, CPlayScene* playScene, vector<LPGAMEOBJECT>* staticObjects, 
 		vector<LPGAMEOBJECT>* dynamicObjectsFrontMap, vector<LPGAMEOBJECT>* dynamicObjectsAfterMap, vector<LPGAMEOBJECT>* dynamicTroopasFrontMap);
+
+	static shared_ptr<CGameMap> LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* staticObjects);
 	~CGameMap();
 };
 

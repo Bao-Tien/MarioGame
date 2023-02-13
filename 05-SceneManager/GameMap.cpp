@@ -444,6 +444,39 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 	throw "Load map fail!!!!!!!!";
 }
 
+shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* staticObjects)
+{
+	string fullPath = filePath;
+	TiXmlDocument doc(fullPath.c_str());
+
+	if (doc.LoadFile()) {
+		TiXmlElement* root = doc.RootElement();
+		shared_ptr<CGameMap> gameMap = shared_ptr<CGameMap>(new CGameMap());
+
+		root->QueryIntAttribute("width", &gameMap->width);
+		root->QueryIntAttribute("height", &gameMap->height);
+		root->QueryIntAttribute("tilewidth", &gameMap->tileWidth);
+		root->QueryIntAttribute("tileheight", &gameMap->tileHeight);
+
+		//Load tileset
+		for (TiXmlElement* node = root->FirstChildElement("tileset"); node != nullptr; node = node->NextSiblingElement("tileset")) {
+			CTileSet* tileSet = new CTileSet(node, filePath);
+			gameMap->tilesets.push_back(tileSet);
+		}
+
+		//Load layer
+		for (TiXmlElement* node = root->FirstChildElement("layer"); node != nullptr; node = node->NextSiblingElement("layer")) {
+			shared_ptr<CMapLayer> layer = shared_ptr<CMapLayer>(new CMapLayer(node));
+			gameMap->AddLayer(layer);
+		}
+
+		// Load collision group objects
+
+		return gameMap;
+	}
+	throw "Load map fail!!!!!!!!";
+}
+
 void CGameMap::RenderHUD() {
 	//hud
 	CAnimations::GetInstance()->Get("ani-hud")->RenderFixed(HUD_X, HUD_Y);
