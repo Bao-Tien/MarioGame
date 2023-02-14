@@ -512,7 +512,10 @@ void CGame::SwitchScene()
 
 void CGame::SwitchScene2()
 {
-	if (next_scene2.empty() || next_scene2.compare(current_scene2) == 0) return;
+	if (next_scene2.empty() || next_scene2.compare(current_scene2) == 0)
+	{
+		return;
+	}
 
 	DebugOut(L"[INFO] Switching to scene %d\n", ToLPCWSTR(next_scene2));
 
@@ -530,6 +533,11 @@ void CGame::SwitchScene2()
 void CGame::InitiateSwitchScene(int scene_id)
 {
 	next_scene = scene_id;
+}
+
+void CGame::InitiateSwitchScene(string scene_id)
+{
+	next_scene2 = scene_id;
 }
 
 

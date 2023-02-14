@@ -10,7 +10,7 @@ class CSelectionScene : public CScene
 {
 protected:
 	// A play scene has to have player, right? 
-	CMario* player;
+	CGameObject* player;
 
 	vector<LPGAMEOBJECT> staticObjects;
 

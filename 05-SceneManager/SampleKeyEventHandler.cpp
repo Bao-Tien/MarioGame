@@ -2,84 +2,125 @@
 
 #include "debug.h"
 #include "Game.h"
-
+#include "MarioSelectionScene.h"
 #include "Mario.h"
 #include "PlayScene.h"
 
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
-	if (mario->GetState() == EMario_State::DIE) return;
-	switch (KeyCode)
-	{
-	case DIK_DOWN:
-		mario->KeyboardHandle(DIK_DOWN, EKeyType::KEY_DOWN);
-		break;
-	case DIK_S:
-		mario->KeyboardHandle(DIK_S, EKeyType::KEY_DOWN);
-		break;
-	case DIK_A:
-		mario->KeyboardHandle(DIK_A, EKeyType::KEY_DOWN);
-		break;
-	case DIK_1:
-		mario->KeyboardHandle(DIK_1, EKeyType::KEY_DOWN);
-		break;
-	case DIK_2:
-		mario->KeyboardHandle(DIK_2, EKeyType::KEY_DOWN);
-		break;
-	case DIK_3:
-		mario->KeyboardHandle(DIK_3, EKeyType::KEY_DOWN);
-		break;
-	case DIK_4:
-		mario->KeyboardHandle(DIK_4, EKeyType::KEY_DOWN);
-		break;
-	case DIK_0:
-		mario->KeyboardHandle(DIK_0, EKeyType::KEY_DOWN);
-		break;
-	case DIK_R: // reset
-		//Reload();
-		break;
+	CGameObject* player = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
+	if (dynamic_cast<CMario*>(player)) {
+		CMario* mario = (CMario*)(player);
+		if (mario->GetState() == EMario_State::DIE) return;
+		switch (KeyCode)
+		{
+		case DIK_DOWN:
+			mario->KeyboardHandle(DIK_DOWN, EKeyType::KEY_DOWN);
+			break;
+		case DIK_S:
+			mario->KeyboardHandle(DIK_S, EKeyType::KEY_DOWN);
+			break;
+		case DIK_A:
+			mario->KeyboardHandle(DIK_A, EKeyType::KEY_DOWN);
+			break;
+		case DIK_1:
+			mario->KeyboardHandle(DIK_1, EKeyType::KEY_DOWN);
+			break;
+		case DIK_2:
+			mario->KeyboardHandle(DIK_2, EKeyType::KEY_DOWN);
+			break;
+		case DIK_3:
+			mario->KeyboardHandle(DIK_3, EKeyType::KEY_DOWN);
+			break;
+		case DIK_4:
+			mario->KeyboardHandle(DIK_4, EKeyType::KEY_DOWN);
+			break;
+		case DIK_0:
+			mario->KeyboardHandle(DIK_0, EKeyType::KEY_DOWN);
+			break;
+		case DIK_R: // reset
+			//Reload();
+			break;
+		}
+	}
+	if (dynamic_cast<CMarioSelectionScene*>(player)) {
+		switch (KeyCode)
+		{
+			case DIK_X:
+				if (CGame::GetInstance()->GetCurrentScene2()->GetId() == "selectionScene") {
+					CGame::GetInstance()->InitiateSwitchScene("world1-1");
+					CGame::GetInstance()->SwitchScene2();
+				}
+				break;
+			default:
+				break;
+		}
+		
 	}
 }
 
 void CSampleKeyHandler::OnKeyUp(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
-
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
-	if (mario->GetState() == EMario_State::DIE) return;
-	switch (KeyCode)
-	{
-	case DIK_DOWN:
-		mario->KeyboardHandle(DIK_DOWN, EKeyType::KEY_UP);
-		break;
+	CGameObject* player = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
+	if (dynamic_cast<CMario*>(player)) {
+		CMario* mario = (CMario*)(player);
+		if (mario->GetState() == EMario_State::DIE) return;
+		switch (KeyCode)
+		{
+		case DIK_DOWN:
+			mario->KeyboardHandle(DIK_DOWN, EKeyType::KEY_UP);
+			break;
+		}
 	}
+	
 }
 
 void CSampleKeyHandler::KeyState(BYTE* states)
 {
 	LPGAME game = CGame::GetInstance();
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
+	CGameObject* player = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
+	if (dynamic_cast<CMario*>(player)) {
+		CMario* mario = (CMario*)(player);
+		if (mario->GetState() == EMario_State::DIE) return;
+		// Su kien di kem
+		if (game->IsKeyDown(DIK_A))//chay nhanh
+		{
+			mario->KeyboardHandle(DIK_A, EKeyType::KEY_STATE);
+		}
 
-	if (mario->GetState() == EMario_State::DIE) return;
-	// Su kien di kem
-	if (game->IsKeyDown(DIK_A))//chay nhanh
-	{
-		mario->KeyboardHandle(DIK_A, EKeyType::KEY_STATE);
+		// Su kien rieng
+		if (game->IsKeyDown(DIK_RIGHT))
+		{
+			mario->KeyboardHandle(DIK_RIGHT, EKeyType::KEY_STATE);
+		}
+		if (game->IsKeyDown(DIK_LEFT))
+		{
+			mario->KeyboardHandle(DIK_LEFT, EKeyType::KEY_STATE);
+		}
+		if (game->IsKeyDown(DIK_S))
+		{
+			mario->KeyboardHandle(DIK_S, EKeyType::KEY_STATE);
+		}
 	}
-
-	// Su kien rieng
-	if (game->IsKeyDown(DIK_RIGHT))
-	{
-		mario->KeyboardHandle(DIK_RIGHT, EKeyType::KEY_STATE);
-	}
-	if (game->IsKeyDown(DIK_LEFT))
-	{
-		mario->KeyboardHandle(DIK_LEFT, EKeyType::KEY_STATE);
-	}
-	if (game->IsKeyDown(DIK_S))
-	{
-		mario->KeyboardHandle(DIK_S, EKeyType::KEY_STATE);
+	if (dynamic_cast<CMarioSelectionScene*>(player)) {
+		CMarioSelectionScene* mario = (CMarioSelectionScene*)(player);
+		if (game->IsKeyDown(DIK_UP))
+		{
+			mario->KeyboardHandle(DIK_UP, EKeyType::KEY_STATE);
+		}
+		if (game->IsKeyDown(DIK_DOWN))
+		{
+			mario->KeyboardHandle(DIK_DOWN, EKeyType::KEY_STATE);
+		}
+		if (game->IsKeyDown(DIK_RIGHT))
+		{
+			mario->KeyboardHandle(DIK_RIGHT, EKeyType::KEY_STATE);
+		}
+		if (game->IsKeyDown(DIK_LEFT))
+		{
+			mario->KeyboardHandle(DIK_LEFT, EKeyType::KEY_STATE);
+		}
 	}
 }

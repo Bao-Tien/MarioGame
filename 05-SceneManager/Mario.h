@@ -4,7 +4,6 @@
 
 #include "debug.h"
 #include"define-mario.h"
-#include "SampleKeyEventHandler.h"
 
 enum class EMario_State {
 	DIE = 0,
@@ -99,7 +98,7 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void OnOverlapWith(LPCOLLISIONEVENT e) override;
 
-	virtual void KeyboardHandle(int KeyCode, EKeyType type);
+	void KeyboardHandle(int KeyCode, EKeyType type);
 
 	void SetLevel(EMario_Level l);
 	bool CheckChangeState(EMario_State newState);

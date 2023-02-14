@@ -18,4 +18,28 @@
     <Sprite id="spr-slave-0" left="103" top="17"  width="16" height="15"/>
     <Sprite id="spr-slave-1" left="120" top="18"  width="16" height="14"/>
   </Animation>
+  <Animation aniId="ani-gate-1" frameTime="100">
+    <Sprite id="spr-gate-1" left="35" top="33"  width="16" height="15"/>
+  </Animation>
+  <Animation aniId="ani-gate-2" frameTime="100">
+    <Sprite id="spr-gate-2" left="52" top="33"  width="16" height="15"/>
+  </Animation>
+  <Animation aniId="ani-gate-3" frameTime="100">
+    <Sprite id="spr-gate-3" left="69" top="33"  width="16" height="15"/>
+  </Animation>
+  <Animation aniId="ani-gate-4" frameTime="100">
+    <Sprite id="spr-gate-4" left="86" top="33"  width="16" height="15"/>
+  </Animation>
+  <Animation aniId="ani-gate-5" frameTime="100">
+    <Sprite id="spr-gate-5" left="103" top="33"  width="16" height="15"/>
+  </Animation>
+  <Animation aniId="ani-gate-6" frameTime="100">
+    <Sprite id="spr-gate-6" left="120" top="33"  width="16" height="15"/>
+  </Animation>
+  <Animation aniId="ani-gate-start" frameTime="100">
+    <Sprite id="spr-gate-start" left="1" top="33"  width="16" height="16"/>
+  </Animation>
+  <Animation aniId="ani-gate-bich" frameTime="100">
+    <Sprite id="spr-gate-bich" left="120" top="0"  width="16" height="15"/>
+  </Animation>
 </Textures>

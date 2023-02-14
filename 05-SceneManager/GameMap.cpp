@@ -16,6 +16,9 @@
 #include "BrickGolden.h"
 #include "Gate.h"
 #include "EndSceneItem.h"
+#include "Tree.h"
+#include "GateSelectionScene.h" 
+#include "Slave.h"
 
 #define MAX_ENERGY 40
 #define CAMERA_MARGIN			150
@@ -471,7 +474,80 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 		}
 
 		// Load collision group objects
+		for (TiXmlElement* objGroupNode = root->FirstChildElement("objectgroup"); objGroupNode != nullptr; objGroupNode = objGroupNode->NextSiblingElement("objectgroup")) {
+			if (std::string(objGroupNode->Attribute("name")) == "RectCollision") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
 
+					LPGAMEOBJECT obj = new CRectCollision(
+						x + width / 2,
+						y + height / 2,
+						width,
+						height
+					);
+					staticObjects->push_back(obj);
+				}
+			}
+			else if (std::string(objGroupNode->Attribute("name")) == "Tree") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj = new CTree(
+						x + width / 2,
+						y + height / 2
+					);
+					staticObjects->push_back(obj);
+				}
+			}
+			else if (std::string(objGroupNode->Attribute("name")) == "Gate") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj;
+					int gateId;
+					TiXmlElement* objProperties = objNode->FirstChildElement("properties");
+					if (objProperties != NULL) {
+						for (TiXmlElement* objPropertiesNode = objProperties->FirstChildElement("property"); objPropertiesNode != nullptr; objPropertiesNode = objPropertiesNode->NextSiblingElement("property")) {
+							string nameProperty = objPropertiesNode->Attribute("name");
+							if (nameProperty == "Id") {
+								int valueProperty = atoi(objPropertiesNode->Attribute("value"));
+								gateId = valueProperty;
+							}
+						}
+					}
+					obj = new CGateSelectionScene(
+						x + width / 2,
+						y + height / 2,
+						gateId
+					);
+
+					staticObjects->push_back(obj);
+				}
+			}
+			else if (std::string(objGroupNode->Attribute("name")) == "Slave") {
+				for (TiXmlElement* objNode = objGroupNode->FirstChildElement("object"); objNode != nullptr; objNode = objNode->NextSiblingElement("object")) {
+					int x = atoi(objNode->Attribute("x"));
+					int y = atoi(objNode->Attribute("y"));
+					int width = atoi(objNode->Attribute("width"));
+					int height = atoi(objNode->Attribute("height"));
+
+					LPGAMEOBJECT obj = new CSlave(
+						x + width / 2,
+						y + height / 2
+					);
+					staticObjects->push_back(obj);
+				}
+			}
+		}
 		return gameMap;
 	}
 	throw "Load map fail!!!!!!!!";
@@ -483,7 +559,21 @@ void CGameMap::RenderHUD() {
 	ULONGLONG currentTime = GetTickCount64();
 	// nang luong - 6 tam giac + 1P
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
-	float energy = mario->GetEnergy();
+	CGameObject* player = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
+	float energy;
+	int intCoin;
+	int intPoint;
+	if (dynamic_cast<CMario*>(player)) {
+		energy = mario->GetEnergy();
+		intCoin = mario->GetCoin();
+		intPoint = mario->GetPoint();
+	}
+	else {
+		energy = 0;
+		intCoin = 0;
+		intPoint = 0;
+	}
+	 
 	if (energy == 0) {
 		for (int i = 0; i < 7; i++) {
 			if (i == 6) {
@@ -524,23 +614,24 @@ void CGameMap::RenderHUD() {
 	}
 	
 	// so dong tien
-	int intCoin = mario->GetCoin();
+	
 	string coin = std::to_string(intCoin);
-	for (int i = 0; i < coin.length(); i++) {
-		string a = "spr-font-";
-		char b = coin[i];
-		string spriteId = a + b;
-		if (intCoin < 10) {
-			CSprites::GetInstance()->Get(spriteId)->DrawFixed(COIN_START + COIN_D * i, COIN_Y);
-		}
-		else {
-			CSprites::GetInstance()->Get(spriteId)->DrawFixed(COIN_START - COIN_D + COIN_D * i, COIN_Y);
+	if (intCoin != 0) {
+		for (int i = 0; i < coin.length(); i++) {
+			string a = "spr-font-";
+			char b = coin[i];
+			string spriteId = a + b;
+			if (intCoin < 10) {
+				CSprites::GetInstance()->Get(spriteId)->DrawFixed(COIN_START + COIN_D * i, COIN_Y);
+			}
+			else {
+				CSprites::GetInstance()->Get(spriteId)->DrawFixed(COIN_START - COIN_D + COIN_D * i, COIN_Y);
+			}
 		}
 	}
 	// diem
-	int intPoint = mario->GetPoint();
+	
 	string point = std::to_string(intPoint);
-	//point = "0000000";
 	if (intPoint == 0) {
 		point = "0000000";
 		for (int i = 0; i < point.length(); i++) {

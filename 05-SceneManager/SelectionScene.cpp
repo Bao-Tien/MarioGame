@@ -8,6 +8,7 @@
 #include "BigMario.h"
 
 #include "SampleKeyEventHandler.h"
+#include "MarioSelectionScene.h"
 
 using namespace std;
 
@@ -71,16 +72,21 @@ void CSelectionScene::Load() {
 	float player_y = stof(play->Attribute("y"));
 	int player_nx = stoi(play->Attribute("nx"));
 
-	CMario* obj = NULL;
+	CMarioSelectionScene* obj = NULL;
+	//CMario* obj = NULL;
 	if (player != NULL)
 	{
 		DebugOut(L"[ERROR] MARIO object was created before!\n");
 		return;
 	}
 
-	if (type_Player == "bigMario") {
-		obj = new CBigMario(player_x, player_y, player_nx);
+	if (type_Player == "selectionSceneMario") {
+		obj = new CMarioSelectionScene(player_x, player_y);
 	}
+
+	/*if (type_Player == "bigMario") {
+		obj = new CBigMario(player_x, player_y, player_nx);
+	}*/
 
 	player = obj;
 

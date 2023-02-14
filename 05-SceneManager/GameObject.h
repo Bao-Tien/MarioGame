@@ -7,6 +7,7 @@
 #include "Animation.h"
 #include "Sprites.h"
 #include "Collision.h"
+#include "SampleKeyEventHandler.h"
 
 using namespace std;
 
@@ -146,6 +147,8 @@ public:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
 
 	virtual void OnOverlapWith(LPCOLLISIONEVENT e) {};
+
+	virtual void KeyboardHandle(int KeyCode, EKeyType type) {};
 	
 	// Is this object blocking other object? If YES, collision framework will automatically push the other object
 	virtual int IsBlocking() { return isBlocking; }

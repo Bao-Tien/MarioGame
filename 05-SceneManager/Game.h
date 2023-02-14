@@ -118,6 +118,7 @@ public:
 	void SwitchScene();
 	void SwitchScene2();
 	void InitiateSwitchScene(int scene_id);
+	void InitiateSwitchScene(string scene_id);
 
 	void _ParseSection_TEXTURES(string line);
 

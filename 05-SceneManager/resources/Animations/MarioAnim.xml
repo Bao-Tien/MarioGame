@@ -156,7 +156,8 @@
 	<!--Raccoon Mario-->
 	<!-- Animation IDLE FRONT-->
 	<Animation aniId="ani-raccoon-mario-idle-front" frameTime="100" name="IDLE-FRONT">
-		<Sprite id="spr-raccoon-mario-idle-front-0" left="174" top="142"  width="16" height="28" frameTime="100"/>
+    <Sprite id="spr-raccoon-mario-idle-front-0" left="3" top="142"  width="16" height="28" frameTime="100"/>
+    <Sprite id="spr-raccoon-mario-idle-front-1" left="22" top="142"  width="16" height="28" frameTime="100"/>
 	</Animation>
 	<!-- Animation IDLE-->
 	<Animation aniId="ani-raccoon-mario-idle" frameTime="100" name="IDLE">

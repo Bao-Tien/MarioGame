@@ -150,10 +150,12 @@
     <ClCompile Include="FireFlower.cpp" />
     <ClCompile Include="FireMario.cpp" />
     <ClCompile Include="Gate.cpp" />
+    <ClCompile Include="GateSelectionScene.cpp" />
     <ClCompile Include="GreenPiranha.cpp" />
     <ClCompile Include="GreenVenus.cpp" />
     <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="MagicObj.cpp" />
+    <ClCompile Include="MarioSelectionScene.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="MushroomGreen.cpp" />
     <ClCompile Include="ParaTroopa.cpp" />
@@ -184,6 +186,7 @@
     <ClCompile Include="RedVenus.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
     <ClCompile Include="SelectionScene.cpp" />
+    <ClCompile Include="Slave.cpp" />
     <ClCompile Include="SmallMario.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
@@ -195,6 +198,7 @@
     <ClCompile Include="TinyXML\tinyxml.cpp" />
     <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="Tree.cpp" />
     <ClCompile Include="Troopas.cpp" />
     <ClCompile Include="TroopasGreen.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -212,7 +216,10 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="EndSceneItem.h" />
     <ClInclude Include="FireBullet.h" />
+    <ClInclude Include="GateSelectionScene.h" />
+    <ClInclude Include="MarioSelectionScene.h" />
     <ClInclude Include="SelectionScene.h" />
+    <ClInclude Include="Slave.h" />
     <ClInclude Include="SwitchBlock.h" />
     <ClInclude Include="DeathPlatform.h" />
     <ClInclude Include="debug.h" />
@@ -255,6 +262,7 @@
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="TinyXML\tinystr.h" />
     <ClInclude Include="TinyXML\tinyxml.h" />
+    <ClInclude Include="Tree.h" />
     <ClInclude Include="Troopas.h" />
     <ClInclude Include="TroopasGreen.h" />
     <ClInclude Include="Utils.h" />
