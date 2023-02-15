@@ -8,6 +8,7 @@
     <Texture name="Texture" path="Resources/Textures/mario-new.png" id="tex-mario"/>
     <Texture name="Texture" path="Resources/Textures/UI.png" id="tex-ui"/>
     <Texture name="Texture" path="Resources/Textures/bbox.png" id="tex-bbox"/>
+    <Texture name="Texture" path="Resources/Textures/Black.png" id="tex-black"/>
   </Textures>
   
   <Animations>
@@ -16,6 +17,6 @@
     <Animation name="Animation" path="Resources/Animations/UiAnim.xml"/>
   </Animations>
 
-  <Player name="Player" type="selectionSceneMario" x="120" y="168" nx="1">
+  <Player name="Player" type="selectionSceneMario" x="120" y="180" nx="1">
   </Player>
 </Scence1>

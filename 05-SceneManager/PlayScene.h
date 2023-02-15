@@ -11,7 +11,7 @@
 #include "Animations.h"
 
 #define SCENE_TIME 900000
-
+#define DIE_TIME 1500
 
 class CPlayScene: public CScene
 {
@@ -19,6 +19,7 @@ protected:
 	// A play scene has to have player, right? 
 	CMario* player;
 	int sceneTime = SCENE_TIME;
+	ULONGLONG mario_die_start = -1;
 
 	vector<LPGAMEOBJECT> staticObjects;
 	vector<LPGAMEOBJECT> dynamicObjectsAfterMap; //venus

@@ -403,7 +403,9 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 
 
 void CMario::UpdateState() {
-	if (state == EMario_State::DIE) return;
+	if (state == EMario_State::DIE) {
+		return;
+	}
 	if (state == EMario_State::ATTACK) {
 		if (GetTickCount64() - attack_start < TIME_ATTACK_RACCON_MARIO) {
 			return; // con tg attack thi ko chuyen state

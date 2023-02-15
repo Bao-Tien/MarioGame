@@ -45,13 +45,11 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		}
 	}
 	if (dynamic_cast<CMarioSelectionScene*>(player)) {
+		CMarioSelectionScene* mario = (CMarioSelectionScene*)(player);
 		switch (KeyCode)
 		{
 			case DIK_X:
-				if (CGame::GetInstance()->GetCurrentScene2()->GetId() == "selectionScene") {
-					CGame::GetInstance()->InitiateSwitchScene("world1-1");
-					CGame::GetInstance()->SwitchScene2();
-				}
+				mario->KeyboardHandle(DIK_X, EKeyType::KEY_DOWN);
 				break;
 			default:
 				break;

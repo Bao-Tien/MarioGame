@@ -10,11 +10,12 @@ class CTree : public CGameObject {
 protected:
 public:
 	CTree(float x, float y) : CGameObject(x, y) {
-		isCollidable = 1;
-		isBlocking = 1;
+		isCollidable = 0;
+		isBlocking = 0;
 	}
-	int IsBlocking() { return 1; }
+	//int IsBlocking() { return 1; }
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	string GetAnimationFromState();
+	void OnCollisionWith(LPCOLLISIONEVENT e);
 };

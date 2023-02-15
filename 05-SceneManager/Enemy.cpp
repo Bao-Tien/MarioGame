@@ -65,6 +65,8 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 	//if (dynamic_cast<CEnemy*>(e->obj)) return;
 
 	if (dynamic_cast<CDeathPlatform*>(e->obj)) {
+		level = 0;
+		OnChangeLevel();
 		isDeleted = true;
 	}
 
@@ -88,10 +90,8 @@ void CEnemy::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (isAutoChangeDirectionWhenMoveOverRangeX == true) {
 		if (dynamic_cast<CRectPlatform*>(e->obj) || dynamic_cast<CRectCollision*>(e->obj)) {
-			if (moveRangeX.x == 0 && moveRangeX.y == 0) {
-				moveRangeX.x = e->obj->GetPosition().x - e->obj->GetBoundingBoxSize().x / 2 + this->BoundingBox_Width / 2;
-				moveRangeX.y = e->obj->GetPosition().x + e->obj->GetBoundingBoxSize().x / 2 - this->BoundingBox_Width / 2;
-			}
+			moveRangeX.x = e->obj->GetPosition().x - e->obj->GetBoundingBoxSize().x / 2 + this->BoundingBox_Width / 2;
+			moveRangeX.y = e->obj->GetPosition().x + e->obj->GetBoundingBoxSize().x / 2 - this->BoundingBox_Width / 2;
 		}
 		else if (dynamic_cast<CBrickGolden*>(e->obj) && dynamic_cast<CBrickGolden*>(e->obj)->GetLevel() == 1) {
 			if (moveRangeX.x == 0 && moveRangeX.y == 0) {

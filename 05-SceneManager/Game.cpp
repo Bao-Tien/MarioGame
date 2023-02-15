@@ -569,3 +569,61 @@ CGame* CGame::GetInstance()
 	return __instance;
 }
 
+void CGame::RenderEffect() {
+	if (GetTickCount64() - begin_effect_start < BEGIN_EFFECT_TIME) {
+		RenderBeginEffect();
+	}
+	else if (GetTickCount64() - close_effect_start < CLOSE_EFFECT_TIME) {
+		RenderCloseEffect();
+	}
+}
+
+void CGame::RenderBeginEffect() {
+	float width = CGame::GetInstance()->GetBackBufferWidth();
+	float height = CGame::GetInstance()->GetBackBufferHeight();
+	RECT rect;
+
+	LPTEXTURE bbox = CTextures::GetInstance()->Get(ID_TEX_BLACK);
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = width;
+	rect.bottom = height;
+	float ratio = ((GetTickCount64() - begin_effect_start) * 1.0f) / (BEGIN_EFFECT_TIME * 1.0f);
+	int moveX = ratio * width;
+	int moveY = ratio * height;
+	DebugOut(L"ratio: %f \n", ratio);
+	CGame::GetInstance()->Draw(width / 2, height / 2 - moveY, bbox, &rect, 1);
+	CGame::GetInstance()->Draw(width / 2 + moveX, height / 2, bbox, &rect, 1);
+	CGame::GetInstance()->Draw(width / 2, height / 2 + moveY, bbox, &rect, 1);
+	CGame::GetInstance()->Draw(width / 2 - moveX, height / 2, bbox, &rect, 1);
+
+}
+
+void CGame::RenderCloseEffect() {
+	float width = CGame::GetInstance()->GetBackBufferWidth();
+	float height = CGame::GetInstance()->GetBackBufferHeight();
+	RECT rect;
+
+	LPTEXTURE bbox = CTextures::GetInstance()->Get(ID_TEX_BLACK);
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = width;
+	rect.bottom = height;
+	float ratio = ((GetTickCount64() - close_effect_start) * 1.0f) / (BEGIN_EFFECT_TIME * 1.0f);
+	int moveX = ratio * width;
+	int moveY = ratio * height;
+	DebugOut(L"ratio: %f \n", ratio);
+	CGame::GetInstance()->Draw(width / 2, -height / 2 + moveY, bbox, &rect, 1);
+	CGame::GetInstance()->Draw((3 * width) / 2 - moveX, height / 2, bbox, &rect, 1);
+	CGame::GetInstance()->Draw(width / 2, (3 * height) / 2 - moveY, bbox, &rect, 1);
+	CGame::GetInstance()->Draw(-width / 2 + moveX, height / 2, bbox, &rect, 1);
+
+}
+
+void CGame::StartBeginEffect() {
+	begin_effect_start = GetTickCount64();
+}
+
+void CGame::StartCloseEffect() {
+	close_effect_start = GetTickCount64();
+}

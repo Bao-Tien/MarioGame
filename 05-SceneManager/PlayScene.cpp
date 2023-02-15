@@ -104,7 +104,7 @@ void CPlayScene::Load() {
 	player = obj;
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", sceneFilePath);
-
+	CGame::GetInstance()->StartBeginEffect();
 }
 
 void CPlayScene::UpdatePlayer() {
@@ -219,18 +219,33 @@ void CPlayScene::Update(DWORD dt)
 	}
 	if (cy < 0) cy = 0;
 
-	if (player->GetPosition().y < 900.0f) {
-		CGame::GetInstance()->SetCamPos(cx, cy);
-	}
-	else if(player->GetPosition().y >= 900.0f && player->GetPosition().y < 1300.0f) {
-		CGame::GetInstance()->SetCamPos(cx, 500.0f);
-	}
-	else {
-		CGame::GetInstance()->SetCamPos(cx, 1390.0f);
+	if (player->GetState() != EMario_State::DIE) {
+		if (player->GetPosition().y < 700.0f) {
+			CGame::GetInstance()->SetCamPos(cx, cy);
+		}
+		else if (player->GetPosition().y >= 700.0f && player->GetPosition().y < 1300.0f) {
+			CGame::GetInstance()->SetCamPos(cx, 700.0f);
+		}
+		else {
+			CGame::GetInstance()->SetCamPos(cx, 1390.0f);
+		}
 	}
 
 	PurgeDeletedObjects();
 	//DebugOut(L"dt %i\n", dt);
+
+	if (player->GetState() == EMario_State::DIE) {
+		if (mario_die_start == -1) {
+			mario_die_start = GetTickCount64();
+			CGame::GetInstance()->StartCloseEffect();
+		}
+		else {
+			if (GetTickCount64() - mario_die_start > DIE_TIME) {
+				CGame::GetInstance()->InitiateSwitchScene("selectionScene");
+				CGame::GetInstance()->SwitchScene2();
+			}
+		}
+	}
 }
 
 void CPlayScene::Render()

@@ -18,6 +18,9 @@ using namespace std;
 #define KEYBOARD_BUFFER_SIZE 1024
 #define KEYBOARD_STATE_SIZE 256
 
+#define BEGIN_EFFECT_TIME 3000
+#define CLOSE_EFFECT_TIME 3000
+
 
 
 /*
@@ -60,6 +63,11 @@ class CGame
 	string current_scene2;
 	string next_scene2 = "- 1";
 
+	ULONGLONG begin_effect_start = -1;
+	ULONGLONG close_effect_start = -1;
+
+	void RenderBeginEffect();
+	void RenderCloseEffect();
 
 public:
 	// Init DirectX, Sprite Handler
@@ -121,6 +129,11 @@ public:
 	void InitiateSwitchScene(string scene_id);
 
 	void _ParseSection_TEXTURES(string line);
+
+	void RenderEffect();
+	
+	void StartBeginEffect();
+	void StartCloseEffect();
 
 	~CGame();
 };

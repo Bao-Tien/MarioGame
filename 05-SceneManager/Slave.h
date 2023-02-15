@@ -15,6 +15,8 @@ public:
 		vx = SLAVE_MOVE_SPEED;
 		isAutoChangeDirectionWhenMoveOverRangeX = true;
 		moveRangeX = D3DXVECTOR2(x - RANGE_X_RADIUS, x + RANGE_X_RADIUS);
+		isCollidable = 0;
+		isBlocking = 0;
 	}
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

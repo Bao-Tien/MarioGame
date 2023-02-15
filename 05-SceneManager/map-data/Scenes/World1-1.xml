@@ -18,8 +18,7 @@
     <Animation name="Animation" path="Resources/Animations/MiscAnim.xml"/>
     <Animation name="Animation" path="Resources/Animations/UiAnim.xml"/>
   </Animations>
-  
 
-  <Player name="Player" type="smallMario" x="3500" y="850" nx="1">
+  <Player name="Player" type="smallMario" x="6000" y="850" nx="1">
   </Player>
 </Scence1>

@@ -44,7 +44,7 @@ void CSelectionScene::Load() {
 	TiXmlElement* loadMap = root->FirstChildElement("Map");
 	string loadMapPath = loadMap->Attribute("path");
 	OutputDebugStringW(ToLPCWSTR("MapPath : " + loadMapPath + '\n'));
-	map = CGameMap().LoadFromTMXFile(loadMapPath, &staticObjects);
+	map = CGameMap().LoadFromTMXFile(loadMapPath, &collisionObjects, &noCollisionObjects);
 
 	//load texture
 	TiXmlElement* textures = root->FirstChildElement("Textures");
@@ -91,7 +91,7 @@ void CSelectionScene::Load() {
 	player = obj;
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", sceneFilePath);
-
+	CGame::GetInstance()->StartBeginEffect();
 }
 
 void CSelectionScene::Update(DWORD dt)
@@ -102,13 +102,13 @@ void CSelectionScene::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects;
 	map->Update(dt);
 
-	for (size_t i = 0; i < staticObjects.size(); i++)
+	for (size_t i = 0; i < collisionObjects.size(); i++)
 	{
-		staticObjects[i]->Update(dt, &coObjects);
+		collisionObjects[i]->Update(dt, &coObjects);
 	}
-	for (size_t i = 0; i < staticObjects.size(); i++)
+	for (size_t i = 0; i < collisionObjects.size(); i++)
 	{
-		coObjects.push_back(staticObjects[i]);
+		coObjects.push_back(collisionObjects[i]);
 	}
 
 
@@ -133,10 +133,16 @@ void CSelectionScene::Render()
 	map->Render();
 
 	// Render staticObjects
-	for (int i = 0; i < staticObjects.size(); i++)
+	for (int i = 0; i < noCollisionObjects.size(); i++)
 	{
-		if (!staticObjects[i]->GetIsHidden())
-			staticObjects[i]->Render();
+		if (!noCollisionObjects[i]->GetIsHidden())
+			noCollisionObjects[i]->Render();
+	}
+
+	for (int i = 0; i < collisionObjects.size(); i++)
+	{
+		if (!collisionObjects[i]->GetIsHidden())
+			collisionObjects[i]->Render();
 	}
 
 	// Render Mario
@@ -149,12 +155,18 @@ void CSelectionScene::Render()
 void CSelectionScene::Clear()
 {
 	vector<LPGAMEOBJECT>::iterator it;
-
-	for (it = staticObjects.begin(); it != staticObjects.end(); it++)
+	for (it = noCollisionObjects.begin(); it != noCollisionObjects.end(); it++)
 	{
 		delete (*it);
 	}
-	staticObjects.clear();
+	noCollisionObjects.clear();
+
+	for (it = collisionObjects.begin(); it != collisionObjects.end(); it++)
+	{
+		delete (*it);
+	}
+	collisionObjects.clear();
+
 	player = NULL;
 }
 
@@ -167,10 +179,16 @@ void CSelectionScene::Clear()
 void CSelectionScene::Unload()
 {
 	// Unload staticObjects
-	for (int i = 0; i < staticObjects.size(); i++) {
-		delete staticObjects[i];
+	for (int i = 0; i < noCollisionObjects.size(); i++) {
+		delete noCollisionObjects[i];
 	}
-	staticObjects.clear();
+	noCollisionObjects.clear();
+
+	for (int i = 0; i < collisionObjects.size(); i++) {
+		delete collisionObjects[i];
+	}
+	collisionObjects.clear();
+
 	player = NULL;
 
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);
@@ -186,7 +204,7 @@ void CSelectionScene::PurgeDeletedObjects()
 	// then simply trim the vector, this is much more efficient than deleting individual items
 
 	// Static Object
-	for (it = staticObjects.begin(); it != staticObjects.end(); it++)
+	for (it = noCollisionObjects.begin(); it != noCollisionObjects.end(); it++)
 	{
 		LPGAMEOBJECT o = *it;
 		if (o->IsDeleted())
@@ -196,7 +214,21 @@ void CSelectionScene::PurgeDeletedObjects()
 		}
 	}
 
-	staticObjects.erase(
-		std::remove_if(staticObjects.begin(), staticObjects.end(), CSelectionScene::IsGameObjectDeleted),
-		staticObjects.end());
+	noCollisionObjects.erase(
+		std::remove_if(noCollisionObjects.begin(), noCollisionObjects.end(), CSelectionScene::IsGameObjectDeleted),
+		noCollisionObjects.end());
+
+	for (it = collisionObjects.begin(); it != collisionObjects.end(); it++)
+	{
+		LPGAMEOBJECT o = *it;
+		if (o->IsDeleted())
+		{
+			delete o;
+			*it = NULL;
+		}
+	}
+
+	collisionObjects.erase(
+		std::remove_if(collisionObjects.begin(), collisionObjects.end(), CSelectionScene::IsGameObjectDeleted),
+		collisionObjects.end());
 }

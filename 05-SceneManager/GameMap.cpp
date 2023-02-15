@@ -22,9 +22,9 @@
 
 #define MAX_ENERGY 40
 #define CAMERA_MARGIN			150
-#define HUD_X 15+250
-#define HUD_Y 850
-#define EMPTY_CARD_START 600
+#define HUD_X 250
+#define HUD_Y 650
+#define EMPTY_CARD_START 560
 #define EMPTY_CARD_D 74
 #define POINT_START 218
 #define ARROW_START 220
@@ -447,7 +447,7 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 	throw "Load map fail!!!!!!!!";
 }
 
-shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* staticObjects)
+shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJECT>* collisionObjects, vector<LPGAMEOBJECT>* noCollisionObjects)
 {
 	string fullPath = filePath;
 	TiXmlDocument doc(fullPath.c_str());
@@ -488,7 +488,7 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 						width,
 						height
 					);
-					staticObjects->push_back(obj);
+					collisionObjects->push_back(obj);
 				}
 			}
 			else if (std::string(objGroupNode->Attribute("name")) == "Tree") {
@@ -502,7 +502,7 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 						x + width / 2,
 						y + height / 2
 					);
-					staticObjects->push_back(obj);
+					noCollisionObjects->push_back(obj);
 				}
 			}
 			else if (std::string(objGroupNode->Attribute("name")) == "Gate") {
@@ -530,7 +530,7 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 						gateId
 					);
 
-					staticObjects->push_back(obj);
+					collisionObjects->push_back(obj);
 				}
 			}
 			else if (std::string(objGroupNode->Attribute("name")) == "Slave") {
@@ -544,7 +544,7 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 						x + width / 2,
 						y + height / 2
 					);
-					staticObjects->push_back(obj);
+					collisionObjects->push_back(obj);
 				}
 			}
 		}
@@ -554,6 +554,15 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 }
 
 void CGameMap::RenderHUD() {
+	//backgroud black
+	RECT rect;
+	int BLACK_Y = HUD_Y - 225;
+	LPTEXTURE bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = CGame::GetInstance()->GetBackBufferWidth();
+	rect.bottom = CGame::GetInstance()->GetBackBufferHeight() - BLACK_Y;
+	CGame::GetInstance()->Draw(0+ rect.right/2, HUD_Y - 50 + rect.bottom/2, bbox, &rect, 1);
 	//hud
 	CAnimations::GetInstance()->Get("ani-hud")->RenderFixed(HUD_X, HUD_Y);
 	ULONGLONG currentTime = GetTickCount64();

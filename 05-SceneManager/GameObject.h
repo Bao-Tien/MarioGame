@@ -11,7 +11,7 @@
 
 using namespace std;
 
-
+#define ID_TEX_BLACK "tex-black"
 #define ID_TEX_BBOX "tex-bbox"//-100		// special texture to draw object bounding box
 #define BBOX_ALPHA 0.25f		// Bounding box transparency
 #define OBJECT_DIE_TIMEOUT 500

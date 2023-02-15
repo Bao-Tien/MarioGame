@@ -12,7 +12,8 @@ protected:
 	// A play scene has to have player, right? 
 	CGameObject* player;
 
-	vector<LPGAMEOBJECT> staticObjects;
+	vector<LPGAMEOBJECT> collisionObjects;
+	vector<LPGAMEOBJECT> noCollisionObjects;
 
 public:
 	CSelectionScene(string id, string filePath);
