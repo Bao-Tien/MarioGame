@@ -2,24 +2,23 @@
 #include <fstream>
 #include "AssetIDs.h"
 
-#include "SelectionScene.h"
+#include "IntroScene.h"
 #include "Utils.h"
 #include "Sprites.h"
-#include "BigMario.h"
 
 #include "SampleKeyEventHandler.h"
 #include "MarioSelectionScene.h"
 
 using namespace std;
 
-CSelectionScene::CSelectionScene(string id, string filePath) :
+CIntroScene::CIntroScene(string id, string filePath) :
 	CScene(id, filePath)
 {
 	player = NULL;
 	key_handler = new CSampleKeyHandler(this);
 }
 
-void CSelectionScene::Load() {
+void CIntroScene::Load() {
 	TiXmlDocument document(sceneFilePath2.c_str());
 	if (!document.LoadFile())
 	{
@@ -34,7 +33,6 @@ void CSelectionScene::Load() {
 	string loadMapPath = loadMap->Attribute("path");
 	OutputDebugStringW(ToLPCWSTR("MapPath : " + loadMapPath + '\n'));
 	map = CGameMap().LoadFromTMXFile(loadMapPath, &collisionObjects, &noCollisionObjects);
-	//CGameMap().SetSceneTime(0);
 	//load texture
 	TiXmlElement* textures = root->FirstChildElement("Textures");
 	for (TiXmlElement* node = textures->FirstChildElement("Texture"); node != nullptr; node = node->NextSiblingElement("Texture"))
@@ -73,18 +71,24 @@ void CSelectionScene::Load() {
 		obj = new CMarioSelectionScene(player_x, player_y);
 	}
 
-	/*if (type_Player == "bigMario") {
-		obj = new CBigMario(player_x, player_y, player_nx);
-	}*/
-
 	player = obj;
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", sceneFilePath);
-	CGame::GetInstance()->StartBeginEffect();
+	//CGame::GetInstance()->StartBeginEffect();
+
+	curtain_start = GetTickCount64();
 }
 
-void CSelectionScene::Update(DWORD dt)
+void CIntroScene::Update(DWORD dt)
 {
+	if (change_scene_start != -1 && GetTickCount64() - change_scene_start > CHANGE_SCENE_TIME) {
+		if (CGame::GetInstance()->GetCurrentScene2()->GetId() == "introScene") {
+			CGame::GetInstance()->InitiateSwitchScene("selectionScene");
+			CGame::GetInstance()->SwitchScene2();
+		}
+		return;
+	}
+
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
@@ -116,32 +120,68 @@ void CSelectionScene::Update(DWORD dt)
 	//DebugOut(L"dt %i\n", dt);
 }
 
-void CSelectionScene::Render()
+void CIntroScene::KeyboardHandle(int KeyCode, EKeyType type) {
+	switch (KeyCode)
+	{
+		case DIK_S:
+			if (change_scene_start == -1) {
+				change_scene_start = GetTickCount64();
+				CGame::GetInstance()->StartCloseEffect();
+			}
+			break;
+		case DIK_Q:
+			changeOption *= -1;
+			break;
+		default:
+			break;
+	}
+}
+
+void CIntroScene::Render()
 {
 	// Render Map
 	map->Render();
+	
+	CAnimations::GetInstance()->Get("ani-title")->RenderFixed(376, 210);
+	CAnimations::GetInstance()->Get("ani-3")->RenderFixed(376, 400);
+
+	CAnimations::GetInstance()->Get("ani-option-0")->RenderFixed(370, 495);
+	CAnimations::GetInstance()->Get("ani-option-1")->RenderFixed(370, 545);
+	CAnimations::GetInstance()->Get("ani-option-2")->RenderFixed(370, 595);
+
+	if (changeOption == -1) {
+		CAnimations::GetInstance()->Get("ani-option-arrow")->RenderFixed(185, 495);
+	}
+	else {
+		CAnimations::GetInstance()->Get("ani-option-arrow")->RenderFixed(185, 545);
+	}
+	
+	float ratio = ((GetTickCount64() - curtain_start) * 1.0f) / (CURTAIN_SCROLL * 1.0f);
+	ratio = ratio > 1 ? 1 : ratio;
+
+	CAnimations::GetInstance()->Get("ani-full-curtain")->RenderFixed(360, CURTAIN_Y_START - (CURTAIN_Y_START - CURTAIN_Y_END) * ratio);
 
 	// Render staticObjects
-	for (int i = 0; i < noCollisionObjects.size(); i++)
-	{
-		if (!noCollisionObjects[i]->GetIsHidden())
-			noCollisionObjects[i]->Render();
-	}
+	//for (int i = 0; i < noCollisionObjects.size(); i++)
+	//{
+	//	if (!noCollisionObjects[i]->GetIsHidden())
+	//		noCollisionObjects[i]->Render();
+	//}
 
-	for (int i = 0; i < collisionObjects.size(); i++)
-	{
-		if (!collisionObjects[i]->GetIsHidden())
-			collisionObjects[i]->Render();
-	}
+	//for (int i = 0; i < collisionObjects.size(); i++)
+	//{
+	//	if (!collisionObjects[i]->GetIsHidden())
+	//		collisionObjects[i]->Render();
+	//}
 
-	// Render Mario
-	this->player->Render();
+	//// Render Mario
+	//this->player->Render();
 }
 
 /*
 *	Clear all objects from this scene
 */
-void CSelectionScene::Clear()
+void CIntroScene::Clear()
 {
 	vector<LPGAMEOBJECT>::iterator it;
 	for (it = noCollisionObjects.begin(); it != noCollisionObjects.end(); it++)
@@ -165,7 +205,7 @@ void CSelectionScene::Clear()
 	TODO: Beside objects, we need to clean up sprites, animations and textures as well
 
 */
-void CSelectionScene::Unload()
+void CIntroScene::Unload()
 {
 	// Unload staticObjects
 	for (int i = 0; i < noCollisionObjects.size(); i++) {
@@ -183,9 +223,9 @@ void CSelectionScene::Unload()
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);
 }
 
-bool CSelectionScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
+bool CIntroScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
 
-void CSelectionScene::PurgeDeletedObjects()
+void CIntroScene::PurgeDeletedObjects()
 {
 	vector<LPGAMEOBJECT>::iterator it;
 
@@ -204,7 +244,7 @@ void CSelectionScene::PurgeDeletedObjects()
 	}
 
 	noCollisionObjects.erase(
-		std::remove_if(noCollisionObjects.begin(), noCollisionObjects.end(), CSelectionScene::IsGameObjectDeleted),
+		std::remove_if(noCollisionObjects.begin(), noCollisionObjects.end(), CIntroScene::IsGameObjectDeleted),
 		noCollisionObjects.end());
 
 	for (it = collisionObjects.begin(); it != collisionObjects.end(); it++)
@@ -218,6 +258,6 @@ void CSelectionScene::PurgeDeletedObjects()
 	}
 
 	collisionObjects.erase(
-		std::remove_if(collisionObjects.begin(), collisionObjects.end(), CSelectionScene::IsGameObjectDeleted),
+		std::remove_if(collisionObjects.begin(), collisionObjects.end(), CIntroScene::IsGameObjectDeleted),
 		collisionObjects.end());
 }

@@ -8,6 +8,7 @@
 #include "Animation.h"
 #include "PlayScene.h"
 #include "SelectionScene.h"
+#include "IntroScene.h"
 
 CGame * CGame::__instance = NULL;
 
@@ -195,7 +196,7 @@ void CGame::Draw(float x, float y, LPTEXTURE tex, RECT* rect, float alpha, int s
 
 	D3DX10_SPRITE sprite;
 
-	// Set the sprite’s shader resource view
+	// Set the spriteï¿½s shader resource view
 	sprite.pTexture = tex->getShaderResourceView();
 
 	if (rect == NULL)
@@ -245,7 +246,7 @@ void CGame::Draw(float x, float y, LPTEXTURE tex, RECT* rect, float alpha, int s
 	D3DXMATRIX matScaling;
 	D3DXMatrixScaling(&matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
 
-	// Setting the sprite’s position and size
+	// Setting the spriteï¿½s position and size
 	sprite.matWorld = (matScaling * matTranslation);
 
 	spriteObject->DrawSpritesImmediate(&sprite, 1, 0, 0);}
@@ -335,6 +336,8 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 
 	return new CTexture(tex, gSpriteTextureRV);
 }
+
+
 
 int CGame::IsKeyDown(int KeyCode)
 {
@@ -484,6 +487,10 @@ void CGame::Load(string gameFile) {
 		}
 		if (type == "selection-scene") {
 			LPSCENE scene = new CSelectionScene(sceneId, scenePath);
+			scenes2[sceneId] = scene;
+		}
+		if (type == "intro-scene") {
+			LPSCENE scene = new CIntroScene(sceneId, scenePath);
 			scenes2[sceneId] = scene;
 		}
 	}

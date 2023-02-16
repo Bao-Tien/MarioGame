@@ -163,6 +163,9 @@
     <Filter Include="Framework\Object\Slave">
       <UniqueIdentifier>{362f9501-f36b-4c1e-a93d-6d8f6dbed39b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Scenes\InTroScene">
+      <UniqueIdentifier>{3735f88f-9358-4e11-a783-e7090ab978d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -344,6 +347,9 @@
     </ClCompile>
     <ClCompile Include="Slave.cpp">
       <Filter>Framework\Object\Slave</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>Framework\Scenes\InTroScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -532,6 +538,9 @@
     </ClInclude>
     <ClInclude Include="Slave.h">
       <Filter>Framework\Object\Slave</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>Framework\Scenes\InTroScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

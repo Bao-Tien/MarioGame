@@ -165,11 +165,11 @@ void CPlayScene::Update(DWORD dt)
 	// Xet va cham voi Enemy
 	for (size_t i = 0; i < dynamicObjectsAfterMap.size(); i++)
 	{
-		dynamicObjectsAfterMap[i]->Update(dt, &coObjects);
+		dynamicObjectsAfterMap[i]->UpdateIfInCameraArea(dt, &coObjects);
 	}
 	for (size_t i = 0; i < staticObjects.size(); i++)
 	{
-		staticObjects[i]->Update(dt, &coObjects);
+		staticObjects[i]->UpdateIfInCameraArea(dt, &coObjects);
 	}
 	for (size_t i = 0; i < staticObjects.size(); i++)
 	{
@@ -177,7 +177,7 @@ void CPlayScene::Update(DWORD dt)
 	}
 	for (size_t i = 0; i < dynamicObjectsFrontMap.size(); i++)
 	{
-		dynamicObjectsFrontMap[i]->Update(dt, &coObjects);
+		dynamicObjectsFrontMap[i]->UpdateIfInCameraArea(dt, &coObjects);
 	}
 
 
@@ -191,7 +191,7 @@ void CPlayScene::Update(DWORD dt)
 	}
 	for (size_t i = 0; i < dynamicTroopasFrontMap.size(); i++)
 	{
-		dynamicTroopasFrontMap[i]->Update(dt, &coObjects);
+		dynamicTroopasFrontMap[i]->UpdateIfInCameraArea(dt, &coObjects);
 	}
 	for (size_t i = 0; i < dynamicTroopasFrontMap.size(); i++)
 	{

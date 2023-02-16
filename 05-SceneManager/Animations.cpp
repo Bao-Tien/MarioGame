@@ -31,7 +31,7 @@ void CAnimations::Add(string id, LPANIMATION ani)
 		DebugOut(L"[WARNING] Animation %s already exists\n", ToLPCWSTR(id));
 
 	animations2[id] = ani;
-	DebugOut(L"[INFO] Animation %s added\n", ToLPCWSTR(id));
+	//DebugOut(L"[INFO] Animation %s added\n", ToLPCWSTR(id));
 }
 
 LPANIMATION CAnimations::Get(string id)

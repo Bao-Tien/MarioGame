@@ -3,6 +3,7 @@
 #include "KeyEventHandler.h"
 #include <string>
 #include "GameMap.h"
+//#include "GameObject.h"
 
 using namespace std;
 
@@ -43,6 +44,15 @@ public:
 	D3DXVECTOR2 GetMapSize() {
 		return this->map->GetMapSize();
 	}
+
+	//bool IsInCameraArea(LPGAMEOBJECT obj) {
+	//	D3DXVECTOR2 objPos = obj->GetPosition();
+	//	return false;
+	//	/*D3DXVECTOR2 paddingArea = D3DXVECTOR2(backBufferWidth * 0.5, backBufferHeight * 0.5);
+	//	bool conditionX = (objPos.x >= cam_x - paddingArea.x && objPos.x <= cam_x + backBufferWidth + paddingArea.x);
+	//	bool conditionY = (objPos.y >= cam_y - paddingArea.y && objPos.y <= cam_y + backBufferHeight + paddingArea.y);
+	//	return conditionX && conditionY;*/
+	//}
 };
 typedef CScene * LPSCENE;
 

@@ -19,6 +19,7 @@
 #include "Tree.h"
 #include "GateSelectionScene.h" 
 #include "Slave.h"
+#include "IntroScene.h"
 
 #define MAX_ENERGY 40
 #define CAMERA_MARGIN			150
@@ -41,6 +42,9 @@
 
 CGameMap::CGameMap()
 {
+	if (dynamic_cast<CIntroScene*>(CGame::GetInstance()->GetCurrentScene2())) {
+		isRenderedHUD = false;
+	}
 }
 
 CGameMap::CGameMap(int width, int height, int tileWidth, int tileHeight)
@@ -49,6 +53,7 @@ CGameMap::CGameMap(int width, int height, int tileWidth, int tileHeight)
 	this->height = height;
 	this->tileHeight = tileHeight;
 	this->tileWidth = tileWidth;
+	
 }
 
 D3DXVECTOR2 CGameMap::GetBound()
@@ -134,7 +139,9 @@ void CGameMap::Render()
 			}
 		}
 	}
-	RenderHUD();
+	if (isRenderedHUD == true) {
+		RenderHUD();
+	}
 }
 
 

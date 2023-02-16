@@ -21,6 +21,7 @@ class CGameMap
 	int tileWidth;
 	int tileHeight;
 	D3DXVECTOR2 camPosition;
+	bool isRenderedHUD = true;
 
 	int sceneTime = 900000;
 

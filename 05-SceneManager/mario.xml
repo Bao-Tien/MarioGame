@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GameSettings>
-  <Scenes start="selectionScene">
+  <Scenes start="introScene">
     <Scene id="world1-1" path="map-data/Scenes/World1-1.xml" type="play-scene"/>
     <Scene id="selectionScene" path="map-data/Scenes/SelectionScene.xml" type="selection-scene"/>
+    <Scene id="introScene" path="map-data/Scenes/IntroScene.xml" type="intro-scene"/>
   </Scenes>
 </GameSettings>

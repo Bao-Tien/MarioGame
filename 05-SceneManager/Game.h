@@ -21,8 +21,6 @@ using namespace std;
 #define BEGIN_EFFECT_TIME 3000
 #define CLOSE_EFFECT_TIME 3000
 
-
-
 /*
 	Our simple game framework
 */

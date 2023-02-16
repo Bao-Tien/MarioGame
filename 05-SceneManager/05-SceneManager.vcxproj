@@ -153,6 +153,7 @@
     <ClCompile Include="GateSelectionScene.cpp" />
     <ClCompile Include="GreenPiranha.cpp" />
     <ClCompile Include="GreenVenus.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="MagicObj.cpp" />
     <ClCompile Include="MarioSelectionScene.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="EndSceneItem.h" />
     <ClInclude Include="FireBullet.h" />
     <ClInclude Include="GateSelectionScene.h" />
+    <ClInclude Include="IntroScene.h" />
     <ClInclude Include="MarioSelectionScene.h" />
     <ClInclude Include="SelectionScene.h" />
     <ClInclude Include="Slave.h" />
