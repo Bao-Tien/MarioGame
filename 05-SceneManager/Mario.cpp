@@ -18,6 +18,7 @@
 #include "PlayScene.h"
 #include "SwitchBlock.h"
 #include "BrickGolden.h"
+#include "EndSceneItem.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -127,6 +128,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		AddCoin();
 		AddPoint(100);
 		//DebugOut(L"coin %i\n : ", coin);
+	}
+	else if (dynamic_cast<CEndSceneItem*>(e->obj)) {
+		isWin = true;
 	}
 }
 

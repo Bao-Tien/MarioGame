@@ -45,7 +45,7 @@ void CSelectionScene::Load() {
 	string loadMapPath = loadMap->Attribute("path");
 	OutputDebugStringW(ToLPCWSTR("MapPath : " + loadMapPath + '\n'));
 	map = CGameMap().LoadFromTMXFile(loadMapPath, &collisionObjects, &noCollisionObjects);
-
+	//CGameMap().SetSceneTime(0);
 	//load texture
 	TiXmlElement* textures = root->FirstChildElement("Textures");
 	for (TiXmlElement* node = textures->FirstChildElement("Texture"); node != nullptr; node = node->NextSiblingElement("Texture"))

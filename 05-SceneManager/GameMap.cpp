@@ -22,25 +22,25 @@
 
 #define MAX_ENERGY 40
 #define CAMERA_MARGIN			150
+#define BLACK_Y 600
 #define HUD_X 250
 #define HUD_Y 650
 #define EMPTY_CARD_START 560
 #define EMPTY_CARD_D 74
 #define POINT_START 218
 #define ARROW_START 220
-#define ARROW_Y 840
+#define ARROW_Y 640
 #define ARROW_D 23
 #define P_START 230
-#define TIME_START 423
+#define TIME_START 417
 #define TIME_D 24
-#define TIME_Y 865
-#define COIN_START 469
+#define TIME_Y 665
+#define COIN_START 462
 #define COIN_D 24
-#define COIN_Y 841
+#define COIN_Y 641
 
 CGameMap::CGameMap()
 {
-
 }
 
 CGameMap::CGameMap(int width, int height, int tileWidth, int tileHeight)
@@ -142,6 +142,7 @@ void CGameMap::Render()
 shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* playScene, vector<LPGAMEOBJECT>* staticObjects,
 	vector<LPGAMEOBJECT>* dynamicObjectsFrontMap, vector<LPGAMEOBJECT>* dynamicObjectsAfterMap, vector<LPGAMEOBJECT>* dynamicTroopasFrontMap)
 {
+	
 	string fullPath = filePath;
 	TiXmlDocument doc(fullPath.c_str());
 
@@ -556,31 +557,34 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, vector<LPGAMEOBJ
 void CGameMap::RenderHUD() {
 	//backgroud black
 	RECT rect;
-	int BLACK_Y = HUD_Y - 225;
-	LPTEXTURE bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
+	LPTEXTURE bbox = CTextures::GetInstance()->Get(ID_TEX_BLACK);
 	rect.left = 0;
 	rect.top = 0;
 	rect.right = CGame::GetInstance()->GetBackBufferWidth();
-	rect.bottom = CGame::GetInstance()->GetBackBufferHeight() - BLACK_Y;
-	CGame::GetInstance()->Draw(0+ rect.right/2, HUD_Y - 50 + rect.bottom/2, bbox, &rect, 1);
+	rect.bottom = CGame::GetInstance()->GetBackBufferHeight();
+	CGame::GetInstance()->Draw(0 + rect.right / 2, BLACK_Y + rect.bottom / 2, bbox, &rect, 1);
 	//hud
 	CAnimations::GetInstance()->Get("ani-hud")->RenderFixed(HUD_X, HUD_Y);
 	ULONGLONG currentTime = GetTickCount64();
 	// nang luong - 6 tam giac + 1P
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
+	//CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
 	CGameObject* player = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
 	float energy;
 	int intCoin;
 	int intPoint;
+	string time;
 	if (dynamic_cast<CMario*>(player)) {
+		CMario* mario = (CMario*)(player);
 		energy = mario->GetEnergy();
 		intCoin = mario->GetCoin();
 		intPoint = mario->GetPoint();
+		time = std::to_string(sceneTime / 1000);
 	}
 	else {
 		energy = 0;
 		intCoin = 0;
 		intPoint = 0;
+		time = "";
 	}
 	 
 	if (energy == 0) {
@@ -630,13 +634,11 @@ void CGameMap::RenderHUD() {
 			string a = "spr-font-";
 			char b = coin[i];
 			string spriteId = a + b;
-			if (intCoin < 10) {
-				CSprites::GetInstance()->Get(spriteId)->DrawFixed(COIN_START + COIN_D * i, COIN_Y);
-			}
-			else {
-				CSprites::GetInstance()->Get(spriteId)->DrawFixed(COIN_START - COIN_D + COIN_D * i, COIN_Y);
-			}
+			CSprites::GetInstance()->Get(spriteId)->DrawFixed(COIN_START - COIN_D + COIN_D * i, COIN_Y);
 		}
+	}
+	else {
+		CSprites::GetInstance()->Get("spr-font-0")->DrawFixed(COIN_START - COIN_D, COIN_Y);
 	}
 	// diem
 	
@@ -664,13 +666,22 @@ void CGameMap::RenderHUD() {
 		}
 	}
 	// thoi gian
-	string time = std::to_string(sceneTime/1000);
-	for (int i = 0; i < time.length(); i++) {
-		string a = "spr-font-";
-		char b = time[i];
-		string spriteId = a + b;
-		CSprites::GetInstance()->Get(spriteId)->DrawFixed(TIME_START + TIME_D * i, TIME_Y);
+	if (time == "") {
+		time = "000";
+		for (int i = 0; i < time.length(); i++) {
+			string spriteId = "spr-font-0";
+			CSprites::GetInstance()->Get(spriteId)->DrawFixed(TIME_START + TIME_D * i, TIME_Y);
+		}
 	}
+	else {
+		for (int i = 0; i < time.length(); i++) {
+			string a = "spr-font-";
+			char b = time[i];
+			string spriteId = a + b;
+			CSprites::GetInstance()->Get(spriteId)->DrawFixed(TIME_START + TIME_D * i, TIME_Y);
+		}
+	}
+	
 	
 	// 3 card empty
 	for (int i = 0; i < 3; i++) {

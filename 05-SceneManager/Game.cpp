@@ -591,7 +591,6 @@ void CGame::RenderBeginEffect() {
 	float ratio = ((GetTickCount64() - begin_effect_start) * 1.0f) / (BEGIN_EFFECT_TIME * 1.0f);
 	int moveX = ratio * width;
 	int moveY = ratio * height;
-	DebugOut(L"ratio: %f \n", ratio);
 	CGame::GetInstance()->Draw(width / 2, height / 2 - moveY, bbox, &rect, 1);
 	CGame::GetInstance()->Draw(width / 2 + moveX, height / 2, bbox, &rect, 1);
 	CGame::GetInstance()->Draw(width / 2, height / 2 + moveY, bbox, &rect, 1);
@@ -612,7 +611,6 @@ void CGame::RenderCloseEffect() {
 	float ratio = ((GetTickCount64() - close_effect_start) * 1.0f) / (BEGIN_EFFECT_TIME * 1.0f);
 	int moveX = ratio * width;
 	int moveY = ratio * height;
-	DebugOut(L"ratio: %f \n", ratio);
 	CGame::GetInstance()->Draw(width / 2, -height / 2 + moveY, bbox, &rect, 1);
 	CGame::GetInstance()->Draw((3 * width) / 2 - moveX, height / 2, bbox, &rect, 1);
 	CGame::GetInstance()->Draw(width / 2, (3 * height) / 2 - moveY, bbox, &rect, 1);

@@ -90,11 +90,11 @@ void CBrickGolden::OnChangeLevel() {
 	switch (level)
 	{
 		case 0:
-			isCollidable = 0;
+			isCollidable = 1;
 			isBlocking = 1;
 			break;
 		case 1:
-			isCollidable = 0;
+			isCollidable = 1;
 			isBlocking = 1;
 			break;
 		case 2:

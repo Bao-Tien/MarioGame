@@ -25,6 +25,7 @@ public:
 		die_start = -1;
 		switch_start = -1;
 		isSWitched = false;
+		OnChangeLevel();
 	}
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);

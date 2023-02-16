@@ -33,7 +33,6 @@ public:
 	CGameMap();
 	CGameMap(int width, int height, int tileWidth, int tileHeight);
 
-
 	virtual D3DXVECTOR2 GetBound();
 
 	virtual CTileSet* GetTileSetByTileID(int id);

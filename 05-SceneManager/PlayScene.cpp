@@ -57,7 +57,7 @@ void CPlayScene::Load() {
 	string loadMapPath = loadMap->Attribute("path");
 	OutputDebugStringW(ToLPCWSTR("MapPath : " + loadMapPath + '\n'));
 	map = CGameMap().LoadFromTMXFile(loadMapPath, this, &staticObjects, &dynamicObjectsFrontMap, &dynamicObjectsAfterMap , &dynamicTroopasFrontMap);
-
+	
 	//load texture
 	TiXmlElement* textures = root->FirstChildElement("Textures");
 	for (TiXmlElement* node = textures->FirstChildElement("Texture"); node != nullptr; node = node->NextSiblingElement("Texture"))
@@ -234,7 +234,7 @@ void CPlayScene::Update(DWORD dt)
 	PurgeDeletedObjects();
 	//DebugOut(L"dt %i\n", dt);
 
-	if (player->GetState() == EMario_State::DIE) {
+	if (player->GetState() == EMario_State::DIE || player->IsWin() == true) {
 		if (mario_die_start == -1) {
 			mario_die_start = GetTickCount64();
 			CGame::GetInstance()->StartCloseEffect();

@@ -52,6 +52,7 @@ protected:
 	bool canFly;
 	ULONGLONG attack_start;
 	LPGAMEOBJECT heldObj;
+	bool isWin;
 
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
 	void OnCollisionWithDeathPlatform(LPCOLLISIONEVENT e);
@@ -81,7 +82,9 @@ public:
 		state = EMario_State::IDLE;
 		isCollidable = 1;
 		isBlocking = 1;
+		isWin = false;
 	}
+	bool IsWin() { return this->isWin; }
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void UpdateState();
 	void Render();
