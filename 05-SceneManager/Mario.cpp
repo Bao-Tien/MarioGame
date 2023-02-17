@@ -59,6 +59,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	ay = 0;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 	//update Troopas bi nam
+	if (dynamic_cast<CTroopas*>(heldObj) && dynamic_cast<CTroopas*>(heldObj)->GetLevel() == 2) {
+		//van giu trang thai hold
+	}
+	else {
+		heldObj = NULL;
+	}
 	// nha rua
 	if (accelerated == 1 && heldObj != NULL) {
 		((CTroopas*)heldObj)->SetIsHeld(false);
@@ -70,6 +76,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		else {
 			((CTroopas*)heldObj)->SetSpeedX(-ENEMY_MOVE_SPEED * 5);
 		}
+		((CTroopas*)heldObj)->SetLevel(1);
+		((CTroopas*)heldObj)->OnChangeLevel();
+
 		heldObj = NULL;
 	}
 	//lay vi tri theo Mario
@@ -230,12 +239,12 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e) {
 				if (accelerated != 2.0f) {
 					//da rua
 					SetState(EMario_State::KICK);
-					if (nx > 0) {
+					/*if (nx > 0) {
 						dynamic_cast<CTroopas*>(e->obj)->SetSpeedX(ENEMY_MOVE_SPEED * 5);
 					}
 					else {
 						dynamic_cast<CTroopas*>(e->obj)->SetSpeedX(-ENEMY_MOVE_SPEED * 5);
-					}
+					}*/
 				}
 				else {
 					// cam rua
@@ -364,18 +373,12 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 		}
 		break;
 	case DIK_RIGHT:
-		if (state == EMario_State::HOLD) {
-			int a = 0;
-		}
 		if (isSitting) break;
 		maxVx = MARIO_WALKING_SPEED * accelerated;
 		ax = MARIO_ACCEL_WALK_X * accelerated * 3 / 4;
 		nx = 1;
 		break;
 	case DIK_LEFT:
-		if (state == EMario_State::HOLD) {
-			int a = 0;
-		}
 		if (isSitting) break;
 		maxVx = -MARIO_WALKING_SPEED * accelerated;
 		ax = -MARIO_ACCEL_WALK_X * accelerated * 3 / 4;
@@ -408,7 +411,6 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 				vy = 0.05f;
 				//DebugOut(L" Mario bay cham xuong >>> \n");
 			}
-			DebugOut(L" Mario bay %d>>> \n", GetTickCount64()/100);
 		}
 		break;
 	case DIK_DOWN:

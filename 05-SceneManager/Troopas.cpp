@@ -51,7 +51,7 @@ void CTroopas::OnChangeLevel() {
 			attackFromBottom = true;
 			isAutoChangeDirectionWhenMoveOverRangeX = false;
 			isCollidable = 1;
-			isBlocking = 1;
+			isBlocking = 0;
 			break;
 		}
 		case 2: { //mai rua dung im
@@ -63,7 +63,7 @@ void CTroopas::OnChangeLevel() {
 			vx = 0;
 			isAutoChangeDirectionWhenMoveOverRangeX = false;
 			isCollidable = 1;
-			isBlocking = 1;
+			isBlocking = 0;
 			break;
 		}
 		case 3: { //di bo
@@ -72,6 +72,9 @@ void CTroopas::OnChangeLevel() {
 			attackFromRight = true;
 			attackFromBottom = true;
 			vx = nx * ENEMY_MOVE_SPEED;
+			isCollidable = 1;
+			isBlocking = 0;
+			isAutoChangeDirectionWhenMoveOverRangeX = true;
 			break;
 		}
 		case 4: { // bay nhay
@@ -81,6 +84,8 @@ void CTroopas::OnChangeLevel() {
 			attackFromBottom = true;
 			vx = nx * ENEMY_MOVE_SPEED * 3;
 			vy = -ENEMY_MOVE_SPEED * 16;
+			isCollidable = 1;
+			isBlocking = 0;
 			break;
 		}
 		default: {
@@ -110,6 +115,14 @@ void CTroopas::OnCollisionWith(LPCOLLISIONEVENT e) {
 		OnChangeLevel();
 		return;
 	}
+	if (level == 2 && dynamic_cast<CMario*>(e->obj) && dynamic_cast<CMario*>(e->obj)->GetState() == EMario_State::KICK) {
+		if (e->nx > 0) {
+			vx = ENEMY_MOVE_SPEED * 5;
+		}
+		else {
+			vx = -ENEMY_MOVE_SPEED * 5;
+		}
+	}
 	CEnemy::OnCollisionWith(e);
 }
 
@@ -125,11 +138,8 @@ void CTroopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		isCollidable = 0;
 		isBlocking = 0;
 	}
-	else {
-		isCollidable = 1;
-		isBlocking = 1;
-	}
-	
+
+	DebugOut(L"isCollidable: %i, isBlocking: %i, nx: %i, level: %i, %d \n", isCollidable, isBlocking, nx, level, GetTickCount64()/100);
 	//DebugOut(L"vx: %f, ax: %f, nx: %i\n", vx, ax, nx);
 	CEnemy::Update(dt, coObjects);
 }

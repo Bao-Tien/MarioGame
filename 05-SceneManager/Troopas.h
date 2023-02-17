@@ -27,10 +27,10 @@ public:
 		flipX = -1;
 		isHeld = false;
 		justIsHeld = false;
-		isAutoChangeDirectionWhenMoveOverRangeX = true;
 		OnChangeLevel();
 		
 	}
+	void SetLevel(int l) { this->level = l; }
 	void OnChangeLevel() override;
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
