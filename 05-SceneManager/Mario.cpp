@@ -87,10 +87,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// reset nha nut A
 	accelerated = 1;
 	//canFly = false;
-	//DebugOut(L"state: %i", state);
+	//DebugOut(L"state: %i\n", state);
 	DebugOutTitle(L"untouchable: %i, state: %i, level: %i, x: %f, y: %f, vx: %f, vy:%f", 
 		untouchable, state, level, x, y, vx, vy);
 	//DebugOut(L"canFly: %i \n", canFly);
+	// reset nha nut 
+	/*ax = 0;
+	ay = 0;*/
 }
 
 // e->ny < 0 : va cham o duoi chan mario
@@ -266,7 +269,10 @@ string CMario::GetAnimationFromState() {
 	else if (state == EMario_State::RUN && energy == MAX_ENERGY) stateString = ANI_MARIO_STATE_RUN;
 	else if (state == EMario_State::JUMP) stateString = ANI_MARIO_STATE_WALK_JUMP;
 	else if (state == EMario_State::JUMP_HIGH) stateString = ANI_MARIO_STATE_RUN_JUMP;
-	else if (state == EMario_State::SIT) stateString = ANI_MARIO_STATE_SIT;
+	else if (state == EMario_State::SIT)
+	{
+		stateString = ANI_MARIO_STATE_SIT;
+	}
 	else if (state == EMario_State::HOLD) stateString = ANI_MARIO_STATE_HOLD;
 	else if (state == EMario_State::KICK) stateString = ANI_MARIO_STATE_KICK;
 	else if (state == EMario_State::FALL) stateString = ANI_MARIO_STATE_FALL;
@@ -316,6 +322,21 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 	case DIK_4:
 		SetLevel(EMario_Level::FIRE);
 		break;
+	case DIK_5:
+		SetPosition(1400, 850);
+		break;
+	case DIK_6:
+		SetPosition(3500, 850);
+		break;
+	case DIK_7:
+		SetPosition(6000, 850);
+		break;
+	case DIK_8:
+		SetPosition(7500, 850);
+		break;
+	case DIK_9:
+		SetPosition(6710, 400);
+		break;
 	case DIK_0:
 		SetState(EMario_State::DIE);
 		break;
@@ -343,12 +364,18 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 		}
 		break;
 	case DIK_RIGHT:
+		if (state == EMario_State::HOLD) {
+			int a = 0;
+		}
 		if (isSitting) break;
 		maxVx = MARIO_WALKING_SPEED * accelerated;
 		ax = MARIO_ACCEL_WALK_X * accelerated * 3 / 4;
 		nx = 1;
 		break;
 	case DIK_LEFT:
+		if (state == EMario_State::HOLD) {
+			int a = 0;
+		}
 		if (isSitting) break;
 		maxVx = -MARIO_WALKING_SPEED * accelerated;
 		ax = -MARIO_ACCEL_WALK_X * accelerated * 3 / 4;
@@ -381,6 +408,7 @@ void CMario::KeyboardHandle(int KeyCode, EKeyType type) {
 				vy = 0.05f;
 				//DebugOut(L" Mario bay cham xuong >>> \n");
 			}
+			DebugOut(L" Mario bay %d>>> \n", GetTickCount64()/100);
 		}
 		break;
 	case DIK_DOWN:
@@ -461,7 +489,7 @@ void CMario::UpdateState() {
 			}
 		}
 		else {
-				if (canFly || level == EMario_Level::RACCOON) {
+				if (canFly) {
 					SetState(EMario_State::FALL);
 				}
 			}

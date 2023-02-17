@@ -71,7 +71,10 @@ void CMarioSelectionScene::Render()
 void CMarioSelectionScene::OnOverlapWith(LPCOLLISIONEVENT e) {
 	if (e->obj) {
 		if (dynamic_cast<CGateSelectionScene*>(e->obj)) {
-			isStandAtGate = true;
+			CGateSelectionScene* gate = (CGateSelectionScene*)(e->obj);
+			if (gate->GetId() != 0 && gate->GetId() != 7) {
+				isStandAtGate = true;
+			}
 		}
 	}
 }

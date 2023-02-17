@@ -9,16 +9,16 @@ void CRedVenus::GetBoundingBox(float& left, float& top, float& right, float& bot
 
 void CRedVenus::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (isMoveUp && y >= yStart - BoundingBox_Height) {
-		y -= 2;
+		y -= VENUS_MOVE_D;
 		if (y == yStart - BoundingBox_Height) {
 			isMoveUp = false;
-			CFireFlower* fireFlower = new CFireFlower(x, y);
+			CFireFlower* fireFlower = new CFireFlower(x, y - 30);
 			playScene->PushToDynamicObjectsFrontMap(fireFlower);
 		}
 	}
 
 	if (!isMoveUp && y < yStart) {
-		y += 2;
+		y += VENUS_MOVE_D;
 		if (y == yStart) {
 			isMoveUp = true;
 		}

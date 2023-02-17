@@ -49,6 +49,18 @@ public:
 
 	vector<LPGAMEOBJECT> GetStaticObjects() { return staticObjects; }
 	vector<LPGAMEOBJECT> GetDynamicObjectsFrontMap() { return dynamicObjectsFrontMap; }
+
+	void UpdateIfInCameraArea(LPGAMEOBJECT obj, DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {
+		if (CGame::GetInstance()->IsInCameraArea(obj->GetPosition())) {
+			obj->Update(dt, coObjects);
+		}
+	}
+
+	void RenderIfInCameraArea(LPGAMEOBJECT obj) {
+		if (CGame::GetInstance()->IsInCameraArea(obj->GetPosition())) {
+			obj->Render();
+		}
+	}
 };
 
 typedef CPlayScene* LPPLAYSCENE;

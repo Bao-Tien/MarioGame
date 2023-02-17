@@ -121,6 +121,14 @@ void CTroopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			OnChangeLevel();
 		}
 	}
+	if (level == 2 && isHeld) {
+		isCollidable = 0;
+		isBlocking = 0;
+	}
+	else {
+		isCollidable = 1;
+		isBlocking = 1;
+	}
 	
 	//DebugOut(L"vx: %f, ax: %f, nx: %i\n", vx, ax, nx);
 	CEnemy::Update(dt, coObjects);

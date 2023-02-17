@@ -54,10 +54,7 @@ class CGame
 
 	ID3D10SamplerState* pPointSamplerState;
 
-	unordered_map<int, LPSCENE> scenes;
 	unordered_map<string, LPSCENE> scenes2;
-	int current_scene;
-	int next_scene = -1;
 	string current_scene2;
 	string next_scene2 = "- 1";
 
@@ -84,7 +81,10 @@ public:
 		rect.top = t;
 		rect.right = r;
 		rect.bottom = b;
-		this->Draw(x, y, tex, &rect, alpha, sprite_width, sprite_height);
+		if (this->IsInWindowArea(D3DXVECTOR2(x,y))) {
+			this->Draw(x, y, tex, &rect, alpha, sprite_width, sprite_height);
+		}
+		
 	}
 
 	LPTEXTURE LoadTexture(LPCWSTR texturePath);
@@ -117,16 +117,26 @@ public:
 		return D3DXVECTOR2(cam_x, cam_y);
 	}
 
-	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
+	bool IsInCameraArea(D3DXVECTOR2 objPos) {
+		D3DXVECTOR2 paddingArea = D3DXVECTOR2(backBufferWidth * 0.5f, backBufferHeight * 0.5f);
+		bool conditionX = (objPos.x >= cam_x - paddingArea.x && objPos.x <= cam_x + backBufferWidth + paddingArea.x);
+		bool conditionY = (objPos.y >= cam_y - paddingArea.y && objPos.y <= cam_y + backBufferHeight + paddingArea.y);
+		return conditionX && conditionY;
+	}
+
+	bool IsInWindowArea(D3DXVECTOR2 objPos) {
+		D3DXVECTOR2 paddingArea = D3DXVECTOR2(backBufferWidth * 0.5f, backBufferHeight * 0.5f);
+		bool conditionX = (objPos.x >= - paddingArea.x && objPos.x <= backBufferWidth + paddingArea.x);
+		bool conditionY = (objPos.y >= - paddingArea.y && objPos.y <= backBufferHeight + paddingArea.y);
+		return conditionX && conditionY;
+	}
+
 	LPSCENE GetCurrentScene2() { return scenes2[current_scene2]; }
 
 	void Load(string gameFile);
-	void SwitchScene();
 	void SwitchScene2();
-	void InitiateSwitchScene(int scene_id);
 	void InitiateSwitchScene(string scene_id);
 
-	void _ParseSection_TEXTURES(string line);
 
 	void RenderEffect();
 	

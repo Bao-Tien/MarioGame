@@ -78,11 +78,19 @@ void CAnimations::LoadAnimations(string path)
 
 void CAnimations::Clear()
 {
+	// animations
 	for (auto x : animations)
 	{
 		LPANIMATION ani = x.second;
 		delete ani;
 	}
-
 	animations.clear();
+
+	// animations2
+	for (auto x : animations2)
+	{
+		LPANIMATION ani = x.second;
+		delete ani;
+	}
+	animations2.clear();
 }

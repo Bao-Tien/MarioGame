@@ -6,6 +6,7 @@
 #define ANI_VENUS_RED_DOWN "ani-red-venus-fire-trap-headdown"
 #define VENUS_RED_BBOX_WIDTH 48
 #define VENUS_RED_BBOX_HEIGHT 48*2
+#define VENUS_MOVE_D 0.5f
 
 class CRedVenus : public CEnemy
 {

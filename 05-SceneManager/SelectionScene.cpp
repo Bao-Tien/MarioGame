@@ -178,7 +178,10 @@ void CSelectionScene::Unload()
 	}
 	collisionObjects.clear();
 
+	delete player;
 	player = NULL;
+
+	map.reset();
 
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);
 }

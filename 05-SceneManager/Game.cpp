@@ -500,23 +500,6 @@ void CGame::Load(string gameFile) {
 	SwitchScene2();
 }
 
-void CGame::SwitchScene()
-{
-	if (next_scene < 0 || next_scene == current_scene) return; 
-
-	DebugOut(L"[INFO] Switching to scene %d\n", next_scene);
-
-	scenes[current_scene]->Unload();
-
-	CSprites::GetInstance()->Clear();
-	CAnimations::GetInstance()->Clear();
-
-	current_scene = next_scene;
-	LPSCENE s = scenes[next_scene];
-	this->SetKeyHandler(s->GetKeyEventHandler());
-	s->Load();
-}
-
 void CGame::SwitchScene2()
 {
 	if (next_scene2.empty() || next_scene2.compare(current_scene2) == 0)
@@ -526,10 +509,14 @@ void CGame::SwitchScene2()
 
 	DebugOut(L"[INFO] Switching to scene %d\n", ToLPCWSTR(next_scene2));
 
-	if (current_scene2 != "") scenes2[current_scene2]->Unload();
+	if (current_scene2 != "") {
+		scenes2[current_scene2]->Unload();
+	}
 
+	CTextures::GetInstance()->Clear();
 	CSprites::GetInstance()->Clear();
 	CAnimations::GetInstance()->Clear();
+
 
 	current_scene2 = next_scene2;
 	LPSCENE s = scenes2[next_scene2];
@@ -537,10 +524,6 @@ void CGame::SwitchScene2()
 	s->Load();
 }
 
-void CGame::InitiateSwitchScene(int scene_id)
-{
-	next_scene = scene_id;
-}
 
 void CGame::InitiateSwitchScene(string scene_id)
 {
@@ -548,17 +531,6 @@ void CGame::InitiateSwitchScene(string scene_id)
 }
 
 
-void CGame::_ParseSection_TEXTURES(string line)
-{
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 2) return;
-
-	int texID = atoi(tokens[0].c_str());
-	wstring path = ToWSTR(tokens[1]);
-
-	CTextures::GetInstance()->Add(texID, path.c_str());
-}
 
 
 CGame::~CGame()

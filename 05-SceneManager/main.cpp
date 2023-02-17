@@ -167,6 +167,8 @@ int Run()
 		// this frame: the frame we are about to render
 		DWORD dt = (DWORD)(now - frameStart);
 
+		CGame* a = CGame::GetInstance();
+
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
@@ -175,7 +177,7 @@ int Run()
 			Update(dt);
 			Render();
 
-			CGame::GetInstance()->SwitchScene();
+			CGame::GetInstance()->SwitchScene2();
 		}
 		else
 			Sleep(tickPerFrame - dt);	

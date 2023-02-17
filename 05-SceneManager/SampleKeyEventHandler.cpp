@@ -40,6 +40,21 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 			case DIK_4:
 				mario->KeyboardHandle(DIK_4, EKeyType::KEY_DOWN);
 				break;
+			case DIK_5:
+				mario->KeyboardHandle(DIK_5, EKeyType::KEY_DOWN);
+				break;
+			case DIK_6:
+				mario->KeyboardHandle(DIK_6, EKeyType::KEY_DOWN);
+				break;
+			case DIK_7:
+				mario->KeyboardHandle(DIK_7, EKeyType::KEY_DOWN);
+				break;
+			case DIK_8:
+				mario->KeyboardHandle(DIK_8, EKeyType::KEY_DOWN);
+				break;
+			case DIK_9:
+				mario->KeyboardHandle(DIK_9, EKeyType::KEY_DOWN);
+				break;
 			case DIK_0:
 				mario->KeyboardHandle(DIK_0, EKeyType::KEY_DOWN);
 				break;
@@ -118,10 +133,10 @@ void CSampleKeyHandler::KeyState(BYTE* states)
 		{
 			mario->KeyboardHandle(DIK_LEFT, EKeyType::KEY_STATE);
 		}
-		if (game->IsKeyDown(DIK_S))
+		/*if (game->IsKeyDown(DIK_S))
 		{
 			mario->KeyboardHandle(DIK_S, EKeyType::KEY_STATE);
-		}
+		}*/
 	}
 	if (dynamic_cast<CMarioSelectionScene*>(player)) {
 		CMarioSelectionScene* mario = (CMarioSelectionScene*)(player);

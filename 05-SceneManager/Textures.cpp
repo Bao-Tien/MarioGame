@@ -17,19 +17,6 @@ CTextures* CTextures::GetInstance()
 	return __instance;
 }
 
-void CTextures::Add(int id, LPCWSTR filePath)
-{
-	textures[id] = CGame::GetInstance()->LoadTexture(filePath);
-}
-
-LPTEXTURE CTextures::Get(unsigned int i)
-{
-	LPTEXTURE t = textures[i];
-	if (t == NULL)
-		DebugOut(L"[ERROR] Texture Id %d not found !\n", i);
-	
-	return t;
-}
 
 void CTextures::Add(string id, LPCWSTR filePath)
 {
@@ -55,13 +42,13 @@ void CTextures::LoadTextures(string path, string id)
 */
 void CTextures::Clear()
 {
-	for (auto x : textures)
+	//textures2
+	for (auto x : textures2)
 	{
 		LPTEXTURE tex = x.second;
 		if (tex != NULL) delete tex;
 	}
-
-	textures.clear();
+	textures2.clear();
 }
 
 

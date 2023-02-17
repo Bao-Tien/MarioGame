@@ -165,11 +165,11 @@ void CPlayScene::Update(DWORD dt)
 	// Xet va cham voi Enemy
 	for (size_t i = 0; i < dynamicObjectsAfterMap.size(); i++)
 	{
-		dynamicObjectsAfterMap[i]->UpdateIfInCameraArea(dt, &coObjects);
+		this->UpdateIfInCameraArea(dynamicObjectsAfterMap[i], dt, &coObjects);
 	}
 	for (size_t i = 0; i < staticObjects.size(); i++)
 	{
-		staticObjects[i]->UpdateIfInCameraArea(dt, &coObjects);
+		this->UpdateIfInCameraArea(staticObjects[i], dt, &coObjects);
 	}
 	for (size_t i = 0; i < staticObjects.size(); i++)
 	{
@@ -177,7 +177,7 @@ void CPlayScene::Update(DWORD dt)
 	}
 	for (size_t i = 0; i < dynamicObjectsFrontMap.size(); i++)
 	{
-		dynamicObjectsFrontMap[i]->UpdateIfInCameraArea(dt, &coObjects);
+		this->UpdateIfInCameraArea(dynamicObjectsFrontMap[i], dt, &coObjects);
 	}
 
 
@@ -191,7 +191,7 @@ void CPlayScene::Update(DWORD dt)
 	}
 	for (size_t i = 0; i < dynamicTroopasFrontMap.size(); i++)
 	{
-		dynamicTroopasFrontMap[i]->UpdateIfInCameraArea(dt, &coObjects);
+		this->UpdateIfInCameraArea(dynamicTroopasFrontMap[i], dt, &coObjects);
 	}
 	for (size_t i = 0; i < dynamicTroopasFrontMap.size(); i++)
 	{
@@ -253,24 +253,30 @@ void CPlayScene::Render()
 	// Render enemyObjectsBehindMap
 	// ...
 
-	for (int i = 0; i < dynamicObjectsAfterMap.size(); i++)
-		dynamicObjectsAfterMap[i]->Render();
+	for (int i = 0; i < dynamicObjectsAfterMap.size(); i++) {
+		this->RenderIfInCameraArea(dynamicObjectsAfterMap[i]);
+	}
 	// Render Map
 	map->Render();
 	// Render staticObjects
 	for (int i = 0; i < staticObjects.size(); i++)
 	{
-		if (!staticObjects[i]->GetIsHidden())
-			staticObjects[i]->Render();
+		if (!staticObjects[i]->GetIsHidden()) {
+			this->RenderIfInCameraArea(staticObjects[i]);
+		}
 	}
 
 	// Render ObjectsInfrontOfMap
-	for (int i = 0; i < dynamicObjectsFrontMap.size(); i++)
-		dynamicObjectsFrontMap[i]->Render();
+	for (int i = 0; i < dynamicObjectsFrontMap.size(); i++) {
+		this->RenderIfInCameraArea(dynamicObjectsFrontMap[i]);
+	}
+		
 
 	// Render TroopasInFrontMap
-	for (int i = 0; i < dynamicTroopasFrontMap.size(); i++)
-		dynamicTroopasFrontMap[i]->Render();
+	for (int i = 0; i < dynamicTroopasFrontMap.size(); i++) {
+		this->RenderIfInCameraArea(dynamicTroopasFrontMap[i]);
+	}
+		
 
 	// Render Mario
 	this->player->Render();
@@ -315,28 +321,20 @@ void CPlayScene::Clear()
 */
 void CPlayScene::Unload()
 {
-	// Unload enemy
-	for (int i = 0; i < dynamicObjectsFrontMap.size(); i++) {
-		delete dynamicObjectsFrontMap[i];
-	}
-	dynamicObjectsFrontMap.clear();
+	CleanObjList(dynamicObjectsFrontMap);
+	CleanObjList(dynamicObjectsAfterMap);
+	CleanObjList(dynamicTroopasFrontMap);
+	CleanObjList(staticObjects);
+	CleanObjList(dynamicObjectsFrontMap);
+	CleanObjList(dynamicObjectsFrontMap);
 
-	for (int i = 0; i < dynamicObjectsAfterMap.size(); i++) {
-		delete dynamicObjectsAfterMap[i];
-	}
-	dynamicObjectsAfterMap.clear();
-
-	for (int i = 0; i < dynamicTroopasFrontMap.size(); i++) {
-		delete dynamicTroopasFrontMap[i];
-	}
-	dynamicTroopasFrontMap.clear();
-
-	// Unload staticObjects
-	for (int i = 0; i < staticObjects.size(); i++) {
-		delete staticObjects[i];
-	}
-	staticObjects.clear();
+	delete player;
 	player = NULL;
+
+	map.reset();
+
+
+	this->Clear();
 
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);
 }

@@ -3,7 +3,6 @@
 #include "KeyEventHandler.h"
 #include <string>
 #include "GameMap.h"
-//#include "GameObject.h"
 
 using namespace std;
 
@@ -21,6 +20,15 @@ protected:
 	string sceneFilePath2;
 	shared_ptr<CGameMap> map;
 
+
+	void CleanObjList(vector<LPGAMEOBJECT>& objList) {
+		for (int i = 0; i < objList.size(); i++)
+			if (objList[i] != nullptr)
+				delete objList[i];
+
+		objList.clear();
+	}
+
 public: 
 	CScene(int id, LPCWSTR filePath)
 	{
@@ -35,6 +43,7 @@ public:
 		this->key_handler = NULL;
 	}
 
+
 	LPKEYEVENTHANDLER GetKeyEventHandler() { return key_handler; }
 	string GetId() { return this->id2; }
 	virtual void Load() = 0;
@@ -44,15 +53,6 @@ public:
 	D3DXVECTOR2 GetMapSize() {
 		return this->map->GetMapSize();
 	}
-
-	//bool IsInCameraArea(LPGAMEOBJECT obj) {
-	//	D3DXVECTOR2 objPos = obj->GetPosition();
-	//	return false;
-	//	/*D3DXVECTOR2 paddingArea = D3DXVECTOR2(backBufferWidth * 0.5, backBufferHeight * 0.5);
-	//	bool conditionX = (objPos.x >= cam_x - paddingArea.x && objPos.x <= cam_x + backBufferWidth + paddingArea.x);
-	//	bool conditionY = (objPos.y >= cam_y - paddingArea.y && objPos.y <= cam_y + backBufferHeight + paddingArea.y);
-	//	return conditionX && conditionY;*/
-	//}
 };
 typedef CScene * LPSCENE;
 

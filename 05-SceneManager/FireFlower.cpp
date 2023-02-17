@@ -1,7 +1,7 @@
 #include "FireFlower.h"
 #include "Mario.h"
 
-#define FIRE_BULLET_DIE_TIMEOUT 10000
+#define FIRE_BULLET_DIE_TIMEOUT 11000
 
 void CFireFlower::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 	switch (level) {

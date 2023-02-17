@@ -33,7 +33,7 @@
 #define ARROW_Y 640
 #define ARROW_D 23
 #define P_START 230
-#define TIME_START 417
+#define TIME_START 410
 #define TIME_D 24
 #define TIME_Y 665
 #define COIN_START 462
@@ -96,8 +96,6 @@ void CGameMap::Update(int dt)
 
 void CGameMap::Render()
 {
-	/*int col = CGame::GetInstance()->GetPosCamera().x / tileWidth;
-	int row = CGame::GetInstance()->GetPosCamera().y / tileHeight;*/
 	int col = 0;
 	int row = 0;
 	
@@ -105,21 +103,6 @@ void CGameMap::Render()
 	if (row > 0) row--;
 	if (col < 0) col = 0;
 	if (row < 0) row = 0;
-
-	/*D3DXVECTOR2 camSize = D3DXVECTOR2((CGame::GetInstance()->GetBackBufferWidth() + CAMERA_MARGIN) / tileWidth,
-								(CGame::GetInstance()->GetBackBufferHeight() + CAMERA_MARGIN) / tileHeight);*/
-
-	//D3DXVECTOR2 deltaSize = D3DXVECTOR2(0, 0);
-
-	//if (camSize.x > width) {
-	//	//deltaSize.x = ( camSize.x - width ) / 2 - 1;
-	//	camSize.x = width;
-	//} 
-	//if (camSize.y > height) {
-	//	//deltaSize.y = (camSize.y - height) / 2 ;
-	//	camSize.y = height;
-	//} 
-
 	
 	D3DXVECTOR2 camPos = CGame::GetInstance()->GetCamPos();
 
@@ -134,7 +117,8 @@ void CGameMap::Render()
 				int id = layer->GetTileID(i % width, j % height);
 				CTileSet* tilesetPtr = this->GetTileSetByTileID(id);
 				if (tilesetPtr != nullptr) {
-					tilesetPtr->Draw(id, D3DXVECTOR2(x + floor(tileWidth / 2 - camPos.x), floor(y + tileHeight / 2 - camPos.y)));
+					D3DXVECTOR2 renderPos = D3DXVECTOR2(x + floor(tileWidth / 2 - camPos.x), floor(y + tileHeight / 2 - camPos.y));
+					tilesetPtr->Draw(id, renderPos);
 				}
 			}
 		}
@@ -647,8 +631,8 @@ void CGameMap::RenderHUD() {
 	else {
 		CSprites::GetInstance()->Get("spr-font-0")->DrawFixed(COIN_START - COIN_D, COIN_Y);
 	}
+
 	// diem
-	
 	string point = std::to_string(intPoint);
 	if (intPoint == 0) {
 		point = "0000000";

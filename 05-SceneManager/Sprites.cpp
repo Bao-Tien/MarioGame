@@ -57,11 +57,19 @@ void CSprites::LoadSprites(TiXmlElement* sprNode, string textureID, string& spri
 */
 void CSprites::Clear()
 {
+	//sprites
 	for (auto x : sprites)
 	{
 		LPSPRITE s = x.second;
 		delete s;
 	}
-
 	sprites.clear();
+
+	//sprites2
+	for (auto x : sprites2)
+	{
+		LPSPRITE s = x.second;
+		delete s;
+	}
+	sprites2.clear();
 }

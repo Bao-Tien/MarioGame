@@ -63,7 +63,7 @@ public:
 	{
 		isSitting = false;
 		maxVx = 0.0f;
-		maxVy = 0.0f;
+		maxVy = 0.85f;
 		ax = 0.0f;
 		ay = 0.0f;
 		g = MARIO_GRAVITY;

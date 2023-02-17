@@ -15,7 +15,7 @@
 
 #define ID_ANI_COININBRICK "ani-coin-in-question-block"
 #define RANGE_Y_COIN 150
-#define DIFFERENCE_OFCOIN_EACHCHANGE 30
+#define DIFFERENCE_OFCOIN_EACHCHANGE 10
 #define HIGH_HIDE_COIN 60
 
 enum EGift_Type {

@@ -132,12 +132,6 @@ public:
 		}
 	};
 
-	void UpdateIfInCameraArea(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {
-		/*if (CGame::GetInstance()->IsInCameraArea(this)) {
-			Update(dt, coObjects);
-		}*/
-		Update(dt, coObjects);
-	}
 	virtual void Render();
 	virtual void SetState(int state) { this->state = state; }
 	virtual string GetAnimationFromState() { return ""; };
