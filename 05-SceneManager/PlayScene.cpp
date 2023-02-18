@@ -56,7 +56,7 @@ void CPlayScene::Load() {
 	TiXmlElement* loadMap = root->FirstChildElement("Map");
 	string loadMapPath = loadMap->Attribute("path");
 	OutputDebugStringW(ToLPCWSTR("MapPath : " + loadMapPath + '\n'));
-	map = CGameMap().LoadFromTMXFile(loadMapPath, this, &staticObjects, &dynamicObjectsFrontMap, &dynamicObjectsAfterMap , &dynamicTroopasFrontMap);
+	map = CGameMap().LoadFromTMXFile(loadMapPath, this, &staticObjects, &dynamicObjectsFrontMap, &dynamicObjectsAfterMap , &dynamicTroopasFrontMap, &deathPlatformObjects);
 	
 	//load texture
 	TiXmlElement* textures = root->FirstChildElement("Textures");
@@ -167,6 +167,14 @@ void CPlayScene::Update(DWORD dt)
 	{
 		this->UpdateIfInCameraArea(dynamicObjectsAfterMap[i], dt, &coObjects);
 	}
+	for (size_t i = 0; i < deathPlatformObjects.size(); i++)
+	{
+		deathPlatformObjects[i]->Update(dt, &coObjects);
+	}
+	for (size_t i = 0; i < deathPlatformObjects.size(); i++)
+	{
+		coObjects.push_back(deathPlatformObjects[i]);
+	}
 	for (size_t i = 0; i < staticObjects.size(); i++)
 	{
 		this->UpdateIfInCameraArea(staticObjects[i], dt, &coObjects);
@@ -259,6 +267,12 @@ void CPlayScene::Render()
 	// Render Map
 	map->Render();
 	// Render staticObjects
+	for (int i = 0; i < deathPlatformObjects.size(); i++)
+	{
+		if (!staticObjects[i]->GetIsHidden()) {
+			deathPlatformObjects[i]->Render();
+		}
+	}
 	for (int i = 0; i < staticObjects.size(); i++)
 	{
 		if (!staticObjects[i]->GetIsHidden()) {
@@ -310,6 +324,13 @@ void CPlayScene::Clear()
 		delete (*it);
 	}
 	staticObjects.clear();
+
+	for (it = deathPlatformObjects.begin(); it != deathPlatformObjects.end(); it++)
+	{
+		delete (*it);
+	}
+	deathPlatformObjects.clear();
+
 	player = NULL;
 }
 
@@ -325,8 +346,7 @@ void CPlayScene::Unload()
 	CleanObjList(dynamicObjectsAfterMap);
 	CleanObjList(dynamicTroopasFrontMap);
 	CleanObjList(staticObjects);
-	CleanObjList(dynamicObjectsFrontMap);
-	CleanObjList(dynamicObjectsFrontMap);
+	CleanObjList(deathPlatformObjects);
 
 	delete player;
 	player = NULL;
@@ -376,7 +396,7 @@ void CPlayScene::PurgeDeletedObjects()
 		std::remove_if(staticObjects.begin(), staticObjects.end(), CPlayScene::IsGameObjectDeleted),
 		staticObjects.end());
 
-	// Static Object
+	// dynamicAfterMap Object
 	for (it = dynamicObjectsAfterMap.begin(); it != dynamicObjectsAfterMap.end(); it++)
 	{
 		LPGAMEOBJECT o = *it;
@@ -390,4 +410,34 @@ void CPlayScene::PurgeDeletedObjects()
 	dynamicObjectsAfterMap.erase(
 		std::remove_if(dynamicObjectsAfterMap.begin(), dynamicObjectsAfterMap.end(), CPlayScene::IsGameObjectDeleted),
 		dynamicObjectsAfterMap.end());
+
+	// dynamicTroopasFrontMap
+	for (it = dynamicTroopasFrontMap.begin(); it != dynamicTroopasFrontMap.end(); it++)
+	{
+		LPGAMEOBJECT o = *it;
+		if (o->IsDeleted())
+		{
+			delete o;
+			*it = NULL;
+		}
+	}
+
+	dynamicTroopasFrontMap.erase(
+		std::remove_if(dynamicTroopasFrontMap.begin(), dynamicTroopasFrontMap.end(), CPlayScene::IsGameObjectDeleted),
+		dynamicTroopasFrontMap.end());
+
+	// deathPlatformObjects
+	for (it = deathPlatformObjects.begin(); it != deathPlatformObjects.end(); it++)
+	{
+		LPGAMEOBJECT o = *it;
+		if (o->IsDeleted())
+		{
+			delete o;
+			*it = NULL;
+		}
+	}
+
+	deathPlatformObjects.erase(
+		std::remove_if(deathPlatformObjects.begin(), deathPlatformObjects.end(), CPlayScene::IsGameObjectDeleted),
+		deathPlatformObjects.end());
 }

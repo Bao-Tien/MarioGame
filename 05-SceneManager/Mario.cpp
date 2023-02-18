@@ -100,9 +100,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	DebugOutTitle(L"untouchable: %i, state: %i, level: %i, x: %f, y: %f, vx: %f, vy:%f", 
 		untouchable, state, level, x, y, vx, vy);
 	//DebugOut(L"canFly: %i \n", canFly);
-	// reset nha nut 
-	/*ax = 0;
-	ay = 0;*/
 }
 
 // e->ny < 0 : va cham o duoi chan mario
@@ -491,8 +488,12 @@ void CMario::UpdateState() {
 			}
 		}
 		else {
-				if (canFly) {
-					SetState(EMario_State::FALL);
+				if (canFly || level == EMario_Level::RACCOON) {
+					if (isSitting)
+					{
+						SetState(EMario_State::SIT);
+					}
+					else SetState(EMario_State::FALL);
 				}
 			}
 	}
@@ -556,7 +557,7 @@ bool CMario::CheckChangeState(EMario_State newState) {
 	}
 	if (state == EMario_State::FALL) {
 		if (newState == EMario_State::IDLE || newState == EMario_State::FALL
-			|| newState == EMario_State::ATTACK)
+			|| newState == EMario_State::ATTACK || newState == EMario_State::SIT)
 		{
 			return true;
 		}

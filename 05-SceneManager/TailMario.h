@@ -13,6 +13,7 @@ public:
 	}
 	int IsCollidable() { return 1; };
 	void Render();
+	void OnOverlapWith(LPCOLLISIONEVENT e);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	string GetAnimationFromState();
 	void SetLevel(int x) { this->level = x; }

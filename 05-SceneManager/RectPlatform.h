@@ -15,7 +15,6 @@ public:
 		CGameObject::RenderBoundingBox();
 	}
 
-	
 	virtual int IsBlockingLeft() override { return 0; }
 	virtual int IsBlockingRight() override { return 0; }
 	virtual int IsBlockingBottom() override { return 0; }

@@ -31,10 +31,8 @@ void CEnemy::GetBoundingBox(float& left, float& top, float& right, float& bottom
 }
 
 void CEnemy::ActionIsAttacked() {
-	// enemy die
 	this->flipY = -1;
 	this->ay = -ENEMY_ISATTACKED_AY;
-	//this->vx = 0;
 	this->isAttacked = true;
 	this->isAttacked_start = GetTickCount64();
 }

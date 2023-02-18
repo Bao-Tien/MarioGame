@@ -131,7 +131,7 @@ void CGameMap::Render()
 
 
 shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* playScene, vector<LPGAMEOBJECT>* staticObjects,
-	vector<LPGAMEOBJECT>* dynamicObjectsFrontMap, vector<LPGAMEOBJECT>* dynamicObjectsAfterMap, vector<LPGAMEOBJECT>* dynamicTroopasFrontMap)
+	vector<LPGAMEOBJECT>* dynamicObjectsFrontMap, vector<LPGAMEOBJECT>* dynamicObjectsAfterMap, vector<LPGAMEOBJECT>* dynamicTroopasFrontMap, vector<LPGAMEOBJECT>* deathPlatformObjects)
 {
 	
 	string fullPath = filePath;
@@ -205,7 +205,7 @@ shared_ptr<CGameMap> CGameMap::LoadFromTMXFile(string filePath, CPlayScene* play
 						width,
 						height
 					);
-					staticObjects->push_back(obj);
+					deathPlatformObjects->push_back(obj);
 				}
 			}
 			else if (std::string(objGroupNode->Attribute("name")) == "Gate") {

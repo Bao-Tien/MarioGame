@@ -1,4 +1,7 @@
 #include "TailMario.h"
+#include "Enemy.h"
+#include "Game.h"
+#include "PlayScene.h"
 
 void CTailMario::Render()
 {
@@ -34,4 +37,14 @@ void CTailMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		CCollision::GetInstance()->Process(this, dt, coObjects); // dich chuyen tuc thoi, ko co van toc => ko xai dc SweptAABB
 	}
 	//DebugOut(L"level: %i - x: %f - y: %f \n", this->level, this->x, this->y);
+}
+
+void CTailMario::OnOverlapWith(LPCOLLISIONEVENT e) {
+	if (e->obj) {
+		if (dynamic_cast<CEnemy*>(e->obj)) {
+			CGameObject* player = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
+			CMario* mario = (CMario*)(player);
+			mario->AddPoint(100);
+		}
+	}
 }

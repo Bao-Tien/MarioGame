@@ -22,6 +22,7 @@ protected:
 	ULONGLONG mario_die_start = -1;
 
 	vector<LPGAMEOBJECT> staticObjects;
+	vector<LPGAMEOBJECT> deathPlatformObjects;
 	vector<LPGAMEOBJECT> dynamicObjectsAfterMap; //venus
 	vector<LPGAMEOBJECT> dynamicObjectsFrontMap; //quai
 	vector<LPGAMEOBJECT> dynamicTroopasFrontMap; //Troopas

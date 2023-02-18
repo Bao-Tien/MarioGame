@@ -139,7 +139,7 @@ void CTroopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		isBlocking = 0;
 	}
 
-	DebugOut(L"isCollidable: %i, isBlocking: %i, nx: %i, level: %i, %d \n", isCollidable, isBlocking, nx, level, GetTickCount64()/100);
+	//DebugOut(L"isCollidable: %i, isBlocking: %i, nx: %i, level: %i, %d \n", isCollidable, isBlocking, nx, level, GetTickCount64()/100);
 	//DebugOut(L"vx: %f, ax: %f, nx: %i\n", vx, ax, nx);
 	CEnemy::Update(dt, coObjects);
 }

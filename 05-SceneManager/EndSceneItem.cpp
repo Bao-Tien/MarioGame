@@ -49,7 +49,7 @@ void CEndSceneItem::OnCollisionWith(LPCOLLISIONEVENT e) {
 }
 
 void CEndSceneItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	DebugOut(L"update %d\n", GetTickCount64() / 1000);
+	//DebugOut(L"update %d\n", GetTickCount64() / 1000);
 	if ((level == 0))
 	{
 		if ((GetTickCount64() - die_start > OBJECT_DIE_TIMEOUT)) {

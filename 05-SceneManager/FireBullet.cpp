@@ -4,6 +4,8 @@
 #include "RectPlatform.h"
 #include "BrickGolden.h"
 #include "Enemy.h"
+#include "Game.h"
+#include "PlayScene.h"
 
 void CFireBullet::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 	switch (level) {
@@ -40,6 +42,7 @@ void CFireBullet::OnChangeLevel() {
 }
 
 void CFireBullet::OnCollisionWith(LPCOLLISIONEVENT e) {
+	if (level == 0) return;
 	if (e->obj) {
 		if (dynamic_cast<CRectPlatform*>(e->obj) || dynamic_cast<CRectCollision*>(e->obj) || dynamic_cast<CBrickGolden*>(e->obj)) {
 			level = 1;
@@ -48,6 +51,9 @@ void CFireBullet::OnCollisionWith(LPCOLLISIONEVENT e) {
 		}
 		if (dynamic_cast<CEnemy*>(e->obj)) {
 			level = 0;
+			CGameObject* player = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene2())->GetPlayer();
+			CMario* mario = (CMario*)(player);
+			mario->AddPoint(100);
 		}
 	}
 }

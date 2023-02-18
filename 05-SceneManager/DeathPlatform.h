@@ -13,6 +13,7 @@ public:
 		isBlocking = 0;
 	}
 	void Render() {
-		CGameObject::RenderBoundingBox();
+		CGameObject::Render();
+		//CGameObject::RenderBoundingBox();
 	}
 };

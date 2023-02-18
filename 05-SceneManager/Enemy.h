@@ -6,7 +6,7 @@
 #define ENEMY_DIE_TIMEOUT 500
 #define ENEMY_CROUCH_TIMEOUT 5000
 #define ENEMY_CHANGESTATE_TIMEOUT 360
-#define ENEMY_ISATTACKED_AY 0.0339f
+#define ENEMY_ISATTACKED_AY 0.03f
 
 enum class EEnemy_Type {
 	GOOMBA = 0,
@@ -48,7 +48,7 @@ protected:
 		{
 		case 0:
 			isCollidable = 0;
-			isBlocking = 1;
+			isBlocking = 0;
 			break;
 		default:
 			break;
